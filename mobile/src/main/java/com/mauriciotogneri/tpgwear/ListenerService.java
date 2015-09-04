@@ -1,38 +1,98 @@
 package com.mauriciotogneri.tpgwear;
 
-import android.widget.Toast;
-
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.wearable.MessageEvent;
-import com.google.android.gms.wearable.Wearable;
 import com.google.android.gms.wearable.WearableListenerService;
+import com.mauriciotogneri.common.Connection;
+import com.mauriciotogneri.common.Connection.ConnectivityEvents;
+import com.mauriciotogneri.common.Connection.MessageResult;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 
-import java.util.concurrent.TimeUnit;
+import java.io.IOException;
 
-public class ListenerService extends WearableListenerService
+public class ListenerService extends WearableListenerService implements ConnectivityEvents
 {
-    private String nodeId;
+    private Connection connection;
+    private final OkHttpClient client = new OkHttpClient();
+
+    @Override
+    public void onCreate()
+    {
+        super.onCreate();
+
+        this.connection = new Connection(this, this);
+    }
 
     @Override
     public void onMessageReceived(MessageEvent messageEvent)
     {
-        nodeId = messageEvent.getSourceNodeId();
+        String nodeId = messageEvent.getSourceNodeId();
+        String path = messageEvent.getPath();
 
-        showToast(messageEvent.getPath());
+        getAllStops(nodeId);
     }
 
-    private void showToast(String message)
+    private void getAllStops(final String nodeId)
     {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        Request.Builder builder = new Request.Builder();
+        builder.url("http://pitre-iphone.tpg.ch/GetTousArrets.json");
 
-        reply("DEMOR!");
+        Request request = builder.build();
+
+        try
+        {
+            client.newCall(request).enqueue(new Callback()
+            {
+                @Override
+                public void onResponse(Response response) throws IOException
+                {
+                    if (response.isSuccessful())
+                    {
+                        String result = response.body().string();
+
+                        sendData(nodeId, "RESULT_STOPS", result);
+                    }
+                    else
+                    {
+                        System.out.println();
+                    }
+                }
+
+                @Override
+                public void onFailure(Request request, IOException e)
+                {
+                    System.out.println();
+                }
+            });
+        }
+        catch (Exception e)
+        {
+            System.out.println();
+        }
     }
 
-    private void reply(String message)
+    @Override
+    public void onNodeDetected(String nodeId)
     {
-        GoogleApiClient client = new GoogleApiClient.Builder(this).addApi(Wearable.API).build();
-        client.blockingConnect(1000 * 10, TimeUnit.MILLISECONDS);
-        Wearable.MessageApi.sendMessage(client, nodeId, message, null);
-        client.disconnect();
+    }
+
+    private void sendData(String nodeId, String path, String payload)
+    {
+        connection.sendMessage(nodeId, path, payload, new MessageResult()
+        {
+            @Override
+            public void onSuccess()
+            {
+                System.out.println();
+            }
+
+            @Override
+            public void onFailure()
+            {
+                System.out.println();
+            }
+        });
     }
 }
