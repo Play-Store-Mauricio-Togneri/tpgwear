@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
+        android:name=".TpgWearMobile"
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
@@ -23,6 +24,10 @@
         </activity>
 
         <service
+            android:name=".TestService"/>
+
+        <!--
+        <service
             android:name=".ListenerService">
 
             <intent-filter>
@@ -30,6 +35,7 @@
             </intent-filter>
 
         </service>
+        -->
 
     </application>
 
