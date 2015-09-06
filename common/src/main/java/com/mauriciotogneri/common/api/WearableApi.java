@@ -1,6 +1,6 @@
 package com.mauriciotogneri.common.api;
 
-import com.mauriciotogneri.common.Message;
+import com.mauriciotogneri.common.model.Message;
 import com.mauriciotogneri.common.model.BusStopList;
 
 public class WearableApi

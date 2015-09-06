@@ -10,9 +10,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.wearable.MessageApi.SendMessageResult;
-import com.mauriciotogneri.common.Message;
 import com.mauriciotogneri.common.WearableConnectivity;
 import com.mauriciotogneri.common.WearableConnectivity.OnConnectionEvent;
 import com.mauriciotogneri.common.WearableConnectivity.OnMessageReceived;
@@ -20,7 +17,10 @@ import com.mauriciotogneri.common.api.TpgApi;
 import com.mauriciotogneri.common.api.TpgApi.OnHttpResult;
 import com.mauriciotogneri.common.api.WearableApi.Calls;
 import com.mauriciotogneri.common.api.WearableApi.Paths;
+import com.mauriciotogneri.common.model.BusLine;
+import com.mauriciotogneri.common.model.BusStop;
 import com.mauriciotogneri.common.model.BusStopList;
+import com.mauriciotogneri.common.model.Message;
 import com.mauriciotogneri.common.utils.Preferences;
 
 public class WearableService extends Service implements OnConnectionEvent, OnMessageReceived
@@ -38,12 +38,6 @@ public class WearableService extends Service implements OnConnectionEvent, OnMes
 
         this.wearableConnectivity = new WearableConnectivity(this, this, this);
         this.wearableConnectivity.connect();
-
-        //        BusStopList busStopList = new BusStopList();
-        //        busStopList.add(new BusStop("A", "1"));
-        //        busStopList.add(new BusStop("B", "2"));
-        //        busStopList.add(new BusStop("C", "3"));
-        //        preferences.saveFavoriteStops(busStopList);
     }
 
     @Nullable
@@ -56,7 +50,6 @@ public class WearableService extends Service implements OnConnectionEvent, OnMes
     @Override
     public void onConnectedSuccess()
     {
-        toast("CLIENT CONNECTED");
     }
 
     @Override
@@ -80,15 +73,46 @@ public class WearableService extends Service implements OnConnectionEvent, OnMes
 
     private void getFavoriteStops(final String nodeId)
     {
-        BusStopList busStopList = preferences.getFavoriteStops();
-        wearableConnectivity.sendMessage(Calls.resultFavoriteStops(nodeId, busStopList), new ResultCallback<SendMessageResult>()
-        {
-            @Override
-            public void onResult(SendMessageResult sendMessageResult)
-            {
-                toast("MESSAGE SENT: " + sendMessageResult.getStatus().isSuccess() + " -> " + nodeId);
-            }
-        });
+        //BusStopList busStopList = preferences.getFavoriteStops();
+        BusStopList busStopList = getDefaultList();
+
+        wearableConnectivity.sendMessage(Calls.resultFavoriteStops(nodeId, busStopList));
+    }
+
+    private BusStopList getDefaultList()
+    {
+        BusLine busLine2 = new BusLine("2", "#CCCC33");
+        BusLine busLine7 = new BusLine("7", "#009933");
+        BusLine busLine9 = new BusLine("9", "#CC0033");
+        BusLine busLine11 = new BusLine("11", "#993399");
+        BusLine busLine19 = new BusLine("19", "#FFCC00");
+        BusLine busLine22 = new BusLine("22", "#5A1E82");
+        BusLine busLine23 = new BusLine("23", "#CC3399");
+
+        BusStop busStopCamilleMartin = new BusStop("Camille-Martin", "CMAR");
+        busStopCamilleMartin.addLine(busLine7);
+        busStopCamilleMartin.addLine(busLine9);
+
+        BusStop busStopMileant = new BusStop("Miléant", "MILE");
+        busStopMileant.addLine(busLine7);
+        busStopMileant.addLine(busLine9);
+        busStopMileant.addLine(busLine11);
+
+        BusStop busStopBains = new BusStop("Bains", "BANS");
+        busStopBains.addLine(busLine2);
+        busStopBains.addLine(busLine19);
+
+        BusStop busStopPalettes = new BusStop("Palettes", "PALE");
+        busStopPalettes.addLine(busLine22);
+        busStopPalettes.addLine(busLine23);
+
+        BusStopList busStopList = new BusStopList();
+        busStopList.add(busStopCamilleMartin);
+        busStopList.add(busStopMileant);
+        busStopList.add(busStopBains);
+        busStopList.add(busStopPalettes);
+
+        return busStopList;
     }
 
     private void getStops(final String nodeId)

@@ -2,6 +2,8 @@ package com.mauriciotogneri.common;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -17,6 +19,7 @@ import com.google.android.gms.wearable.MessageEvent;
 import com.google.android.gms.wearable.Node;
 import com.google.android.gms.wearable.NodeApi;
 import com.google.android.gms.wearable.Wearable;
+import com.mauriciotogneri.common.model.Message;
 
 import java.util.concurrent.TimeUnit;
 
@@ -84,8 +87,17 @@ public class WearableConnectivity
                                 String path = messageEvent.getPath();
                                 byte[] payload = messageEvent.getData();
 
-                                Message message = new Message(nodeId, path, payload);
-                                onMessageReceived.onMessageReceived(message);
+                                final Message message = new Message(nodeId, path, payload);
+
+                                Handler handler = new Handler(Looper.getMainLooper());
+                                handler.post(new Runnable()
+                                {
+                                    @Override
+                                    public void run()
+                                    {
+                                        onMessageReceived.onMessageReceived(message);
+                                    }
+                                });
                             }
                         });
                         pendingResult.setResultCallback(new ResultCallback<Status>()
