@@ -29,75 +29,89 @@ public class WearableConnectivity
 
     public WearableConnectivity(Context context, final OnConnectionEvent onConnectionEvent, final OnMessageReceived onMessageReceived)
     {
-        apiClient = new GoogleApiClient.Builder(context).addConnectionCallbacks(new ConnectionCallbacks()
+        this.apiClient = new GoogleApiClient.Builder(context).addConnectionCallbacks(new ConnectionCallbacks()
         {
             @Override
             public void onConnected(Bundle connectionHint)
             {
-                if (!isConnected)
-                {
-                    isConnected = true;
-
-                    if (onMessageReceived != null)
-                    {
-                        new Thread(new Runnable()
-                        {
-                            @Override
-                            public void run()
-                            {
-                                try
-                                {
-                                    PendingResult<Status> pendingResult = Wearable.MessageApi.addListener(apiClient, new MessageListener()
-                                    {
-                                        @Override
-                                        public void onMessageReceived(MessageEvent messageEvent)
-                                        {
-                                            String nodeId = messageEvent.getSourceNodeId();
-                                            String path = messageEvent.getPath();
-                                            byte[] payload = messageEvent.getData();
-
-                                            Message message = new Message(nodeId, path, payload);
-                                            onMessageReceived.onMessageReceived(message);
-                                        }
-                                    });
-                                    pendingResult.await();
-                                }
-                                catch (Exception e)
-                                {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }).start();
-                    }
-
-                    if (onConnectionEvent != null)
-                    {
-                        onConnectionEvent.onConnectedSuccess();
-                    }
-                }
+                onClientConnected(onConnectionEvent, onMessageReceived);
             }
 
             @Override
             public void onConnectionSuspended(int cause)
             {
-                if (onConnectionEvent != null)
-                {
-                    onConnectionEvent.onConnectedFail();
-                }
+                onConnectionEvent.onConnectedFail();
             }
         }).addOnConnectionFailedListener(new OnConnectionFailedListener()
         {
             @Override
             public void onConnectionFailed(ConnectionResult result)
             {
-                if (onConnectionEvent != null)
-                {
-                    onConnectionEvent.onConnectedFail();
-                }
+                onConnectionEvent.onConnectedFail();
             }
         }).addApi(Wearable.API).build();
+    }
 
+    public synchronized void connect()
+    {
         apiClient.connect();
+    }
+
+    public synchronized void disconnect()
+    {
+        apiClient.disconnect();
+    }
+
+    private synchronized void onClientConnected(final OnConnectionEvent onConnectionEvent, final OnMessageReceived onMessageReceived)
+    {
+        if (!isConnected)
+        {
+            isConnected = true;
+
+            new Thread(new Runnable()
+            {
+                @Override
+                public void run()
+                {
+                    try
+                    {
+                        PendingResult<Status> pendingResult = Wearable.MessageApi.addListener(apiClient, new MessageListener()
+                        {
+                            @Override
+                            public void onMessageReceived(MessageEvent messageEvent)
+                            {
+                                String nodeId = messageEvent.getSourceNodeId();
+                                String path = messageEvent.getPath();
+                                byte[] payload = messageEvent.getData();
+
+                                Message message = new Message(nodeId, path, payload);
+                                onMessageReceived.onMessageReceived(message);
+                            }
+                        });
+                        pendingResult.setResultCallback(new ResultCallback<Status>()
+                        {
+                            @Override
+                            public void onResult(Status status)
+                            {
+                                if (status.isSuccess())
+                                {
+                                    onConnectionEvent.onConnectedSuccess();
+                                }
+                                else
+                                {
+                                    onConnectionEvent.onConnectedFail();
+                                }
+                            }
+                        });
+                        //pendingResult.await();
+                    }
+                    catch (Exception e)
+                    {
+                        onConnectionEvent.onConnectedFail();
+                    }
+                }
+            }).start();
+        }
     }
 
     public synchronized void sendMessage(final Message message, final ResultCallback<SendMessageResult> callback)
@@ -107,15 +121,18 @@ public class WearableConnectivity
             @Override
             public void run()
             {
+                apiClient.blockingConnect(TIMEOUT, TimeUnit.MILLISECONDS);
+
                 try
                 {
-                    apiClient.blockingConnect(TIMEOUT, TimeUnit.MILLISECONDS);
-
                     PendingResult<MessageApi.SendMessageResult> pendingResult = Wearable.MessageApi.sendMessage(apiClient, message.getNodeId(), message.getPath(), message.getPayloadAsBytes());
-                    pendingResult.setResultCallback(callback);
-                    pendingResult.await();
 
-                    apiClient.disconnect();
+                    if (callback != null)
+                    {
+                        pendingResult.setResultCallback(callback);
+                    }
+
+                    pendingResult.await();
                 }
                 catch (Exception e)
                 {
@@ -125,7 +142,12 @@ public class WearableConnectivity
         }).start();
     }
 
-    public synchronized void getDeviceNode(final OnDeviceNodeDetected onDeviceNodeDetected)
+    public synchronized void sendMessage(Message message)
+    {
+        sendMessage(message, null);
+    }
+
+    public synchronized void getDefaultDeviceNode(final OnDeviceNodeDetected onDeviceNodeDetected)
     {
         new Thread(new Runnable()
         {
@@ -134,18 +156,23 @@ public class WearableConnectivity
             {
                 apiClient.blockingConnect(TIMEOUT, TimeUnit.MILLISECONDS);
 
-                NodeApi.GetConnectedNodesResult result = Wearable.NodeApi.getConnectedNodes(apiClient).await();
-
-                for (Node node : result.getNodes())
+                try
                 {
-                    if (node.isNearby())
+                    NodeApi.GetConnectedNodesResult result = Wearable.NodeApi.getConnectedNodes(apiClient).await();
+
+                    for (Node node : result.getNodes())
                     {
-                        onDeviceNodeDetected.onDeviceNodeDetected(node.getId());
-                        break;
+                        if (node.isNearby())
+                        {
+                            onDeviceNodeDetected.onDefaultDeviceNode(node.getId());
+                            break;
+                        }
                     }
                 }
-
-                apiClient.disconnect();
+                catch (Exception e)
+                {
+                    onDeviceNodeDetected.onDefaultDeviceNode(null);
+                }
             }
         }).start();
     }
@@ -164,6 +191,6 @@ public class WearableConnectivity
 
     public interface OnDeviceNodeDetected
     {
-        void onDeviceNodeDetected(String nodeId);
+        void onDefaultDeviceNode(String nodeId);
     }
 }

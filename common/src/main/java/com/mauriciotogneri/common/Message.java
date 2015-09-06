@@ -10,6 +10,8 @@ public class Message
     private final String path;
     private final String payload;
 
+    private static final String ENCODING = "UTF-8";
+
     public Message(String nodeId, String path, String payload)
     {
         this.nodeId = nodeId;
@@ -54,7 +56,7 @@ public class Message
         {
             try
             {
-                return payload.getBytes("UTF-8");
+                return payload.getBytes(ENCODING);
             }
             catch (UnsupportedEncodingException e)
             {
@@ -73,7 +75,7 @@ public class Message
         {
             try
             {
-                return new String(data, "UTF-8");
+                return new String(data, ENCODING);
             }
             catch (UnsupportedEncodingException e)
             {

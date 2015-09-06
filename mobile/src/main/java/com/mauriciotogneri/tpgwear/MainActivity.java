@@ -13,7 +13,7 @@ public class MainActivity extends Activity
 
         setContentView(R.layout.activity_main);
 
-        Intent intent = new Intent(this, TestService.class);
+        Intent intent = new Intent(this, WearableService.class);
         startService(intent);
     }
 }

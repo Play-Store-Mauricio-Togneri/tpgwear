@@ -14,6 +14,7 @@ import com.mauriciotogneri.common.WearableConnectivity;
 import com.mauriciotogneri.common.WearableConnectivity.OnConnectionEvent;
 import com.mauriciotogneri.common.WearableConnectivity.OnDeviceNodeDetected;
 import com.mauriciotogneri.common.WearableConnectivity.OnMessageReceived;
+import com.mauriciotogneri.common.api.WearableApi.Calls;
 
 public class MainActivity extends Activity implements OnConnectionEvent, OnMessageReceived
 {
@@ -35,46 +36,46 @@ public class MainActivity extends Activity implements OnConnectionEvent, OnMessa
         });
 
         wearableConnectivity = new WearableConnectivity(this, this, this);
-        wearableConnectivity.getDeviceNode(new OnDeviceNodeDetected()
-        {
-            @Override
-            public void onDeviceNodeDetected(String nodeId)
-            {
-                deviceDetected(nodeId);
-            }
-        });
+        wearableConnectivity.connect();
     }
 
-    private void deviceDetected(String nodeId)
+    private void requestFavoriteStops(final String nodeId)
     {
-        Message message = new Message(nodeId, "GET_STOPS");
-
-        wearableConnectivity.sendMessage(message, new ResultCallback<SendMessageResult>()
+        wearableConnectivity.sendMessage(Calls.getFavoriteStops(nodeId), new ResultCallback<SendMessageResult>()
         {
             @Override
             public void onResult(SendMessageResult sendMessageResult)
             {
-                toast("MESSAGE SENT: " + sendMessageResult.getStatus().isSuccess());
+                toast("MESSAGE SENT: " + sendMessageResult.getStatus().isSuccess() + " -> " + nodeId);
             }
         });
-    }
-
-    @Override
-    public void onConnectedSuccess()
-    {
-        System.out.println();
-    }
-
-    @Override
-    public void onConnectedFail()
-    {
-        System.out.println();
     }
 
     @Override
     public void onMessageReceived(Message message)
     {
         toast(message.getPayloadAsString());
+    }
+
+    @Override
+    public void onConnectedSuccess()
+    {
+        //toast("CLIENT CONNECTED");
+
+        wearableConnectivity.getDefaultDeviceNode(new OnDeviceNodeDetected()
+        {
+            @Override
+            public void onDefaultDeviceNode(String nodeId)
+            {
+                requestFavoriteStops(nodeId);
+            }
+        });
+    }
+
+    @Override
+    public void onConnectedFail()
+    {
+        toast("CLIENT DISCONNECTED");
     }
 
     private void toast(final String message)

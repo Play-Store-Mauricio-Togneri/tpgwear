@@ -6,7 +6,6 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-        android:name=".TpgWearMobile"
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
@@ -24,18 +23,7 @@
         </activity>
 
         <service
-            android:name=".TestService"/>
-
-        <!--
-        <service
-            android:name=".ListenerService">
-
-            <intent-filter>
-                <action android:name="com.google.android.gms.wearable.BIND_LISTENER"/>
-            </intent-filter>
-
-        </service>
-        -->
+            android:name=".WearableService"/>
 
     </application>
 
