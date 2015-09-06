@@ -2,8 +2,6 @@ package com.mauriciotogneri.common.utils;
 
 import android.text.TextUtils;
 
-import java.io.UnsupportedEncodingException;
-
 public class EncodingHelper
 {
     private static final String ISO_8859_1 = "ISO-8859-1";

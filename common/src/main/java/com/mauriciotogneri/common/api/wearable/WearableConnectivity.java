@@ -1,4 +1,4 @@
-package com.mauriciotogneri.common;
+package com.mauriciotogneri.common.api.wearable;
 
 import android.content.Context;
 import android.os.Bundle;

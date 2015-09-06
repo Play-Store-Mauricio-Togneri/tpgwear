@@ -10,15 +10,16 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.mauriciotogneri.common.WearableConnectivity;
-import com.mauriciotogneri.common.WearableConnectivity.OnConnectionEvent;
-import com.mauriciotogneri.common.WearableConnectivity.OnMessageReceived;
-import com.mauriciotogneri.common.api.TpgApi;
-import com.mauriciotogneri.common.api.TpgApi.OnHttpResult;
-import com.mauriciotogneri.common.api.WearableApi.Calls;
-import com.mauriciotogneri.common.api.WearableApi.Paths;
+import com.mauriciotogneri.common.api.tpg.TpgApi;
+import com.mauriciotogneri.common.api.tpg.TpgApi.OnHttpResult;
+import com.mauriciotogneri.common.api.wearable.WearableApi.Calls;
+import com.mauriciotogneri.common.api.wearable.WearableApi.Paths;
+import com.mauriciotogneri.common.api.wearable.WearableConnectivity;
+import com.mauriciotogneri.common.api.wearable.WearableConnectivity.OnConnectionEvent;
+import com.mauriciotogneri.common.api.wearable.WearableConnectivity.OnMessageReceived;
 import com.mauriciotogneri.common.model.BusLine;
 import com.mauriciotogneri.common.model.BusStop;
+import com.mauriciotogneri.common.model.BusStopDepartureList;
 import com.mauriciotogneri.common.model.BusStopList;
 import com.mauriciotogneri.common.model.Message;
 import com.mauriciotogneri.common.utils.Preferences;
@@ -63,23 +64,47 @@ public class WearableService extends Service implements OnConnectionEvent, OnMes
     {
         String nodeId = message.getNodeId();
         String path = message.getPath();
-        byte[] payload = message.getPayloadAsBytes();
+        String payload = message.getPayloadAsString();
 
-        if (TextUtils.equals(path, Paths.GET_FAVORITE_STOPS))
+        if (TextUtils.equals(path, Paths.GET_FAVORITE_BUS_STOPS))
         {
             getFavoriteStops(nodeId);
         }
+        else if (TextUtils.equals(path, Paths.GET_BUS_STOP_DEPARTURES))
+        {
+            getBusStopDepartures(nodeId, payload);
+        }
     }
 
-    private void getFavoriteStops(final String nodeId)
+    private void getFavoriteStops(String nodeId)
     {
-        //BusStopList busStopList = preferences.getFavoriteStops();
-        BusStopList busStopList = getDefaultList();
+        //BusStopList busStopList = preferences.getFavoriteBusStops();
+        BusStopList busStopList = getDefaultBusStopList();
 
-        wearableConnectivity.sendMessage(Calls.resultFavoriteStops(nodeId, busStopList));
+        wearableConnectivity.sendMessage(Calls.resultFavoriteBusStops(nodeId, busStopList));
     }
 
-    private BusStopList getDefaultList()
+    private void getBusStopDepartures(final String nodeId, String busStopCode)
+    {
+        tpgApi.getBusStopDepartures(busStopCode, new OnHttpResult<BusStopDepartureList>()
+        {
+            @Override
+            public void onSuccess(BusStopDepartureList busStopDepartureList)
+            {
+                //BusStopDepartureList busStopDepartureList = getDefaultBusStopDepartureList();
+
+                wearableConnectivity.sendMessage(Calls.resultBusStopDepartures(nodeId, busStopDepartureList));
+            }
+
+            @Override
+            public void onFailure()
+            {
+
+            }
+        });
+    }
+
+    private BusStopList getDefaultBusStopList()
     {
         BusLine busLine2 = new BusLine("2", "#CCCC33");
         BusLine busLine7 = new BusLine("7", "#009933");
@@ -117,7 +142,7 @@ public class WearableService extends Service implements OnConnectionEvent, OnMes
 
     private void getStops(final String nodeId)
     {
-        tpgApi.getStops(new OnHttpResult<BusStopList>()
+        tpgApi.getBusStops(new OnHttpResult<BusStopList>()
         {
             @Override
             public void onSuccess(BusStopList busStopList)

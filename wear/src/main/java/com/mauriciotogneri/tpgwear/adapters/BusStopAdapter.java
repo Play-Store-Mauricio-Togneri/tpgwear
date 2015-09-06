@@ -1,4 +1,4 @@
-package com.mauriciotogneri.tpgwear;
+package com.mauriciotogneri.tpgwear.adapters;
 
 import android.content.Context;
 import android.support.wearable.view.WearableListView;
@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mauriciotogneri.common.model.BusStop;
+import com.mauriciotogneri.tpgwear.R;
 
 import java.util.List;
 
@@ -31,11 +32,11 @@ public class BusStopAdapter extends WearableListView.Adapter
     @Override
     public void onBindViewHolder(WearableListView.ViewHolder viewHolder, final int position)
     {
-        BusStop item = items.get(position);
-        viewHolder.itemView.setTag(item);
+        BusStop busStop = items.get(position);
+        viewHolder.itemView.setTag(busStop);
 
         BusStopViewHolder busStopViewHolder = (BusStopViewHolder) viewHolder;
-        busStopViewHolder.name.setText(item.getName());
+        busStopViewHolder.name.setText(busStop.getName());
     }
 
     @Override
