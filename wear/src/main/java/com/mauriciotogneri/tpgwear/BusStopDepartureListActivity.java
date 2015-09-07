@@ -31,7 +31,7 @@ public class BusStopDepartureListActivity extends Activity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_bus_stop_departure);
+        setContentView(R.layout.stub_bus_stop_departure);
 
         WatchViewStub stub = (WatchViewStub) findViewById(R.id.watch_view_stub);
         stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener()

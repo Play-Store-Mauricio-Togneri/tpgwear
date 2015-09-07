@@ -29,7 +29,17 @@ public class BusStopDeparture
         {
             int milliseconds = Integer.parseInt(waitingTime);
 
-            return String.valueOf(milliseconds / 1000);
+            if (milliseconds <= 0)
+            {
+                return "0'";
+            }
+            else
+            {
+                float seconds = milliseconds / 1000f;
+                float minutes = (seconds / 60f);
+
+                return ((int) Math.floor(minutes)) + "'";
+            }
         }
         catch (Exception e)
         {

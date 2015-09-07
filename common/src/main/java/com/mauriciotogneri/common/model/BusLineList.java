@@ -6,20 +6,20 @@ import com.mauriciotogneri.common.utils.JsonUtils;
 
 import java.util.ArrayList;
 
-public class BusStopList extends ArrayList<BusStop>
+public class BusLineList extends ArrayList<BusLine>
 {
-    public static BusStopList fromString(String input)
+    public static BusLineList fromString(String input)
     {
-        return JsonUtils.fromJson(input, BusStopList.class);
+        return JsonUtils.fromJson(input, BusLineList.class);
     }
 
-    public BusStop getByName(String name)
+    public BusLine getByName(String name)
     {
-        for (BusStop busStop : this)
+        for (BusLine busLine : this)
         {
-            if (TextUtils.equals(busStop.getName(), name))
+            if (TextUtils.equals(busLine.getName(), name))
             {
-                return busStop;
+                return busLine;
             }
         }
 

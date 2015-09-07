@@ -37,7 +37,7 @@ public class BusStopListActivity extends Activity implements OnConnectionEvent, 
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_bus_stop_list);
+        setContentView(R.layout.stub_bus_stop_list);
 
         wearableConnectivity = new WearableConnectivity(this, this, this);
 

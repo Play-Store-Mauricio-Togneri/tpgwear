@@ -1,6 +1,8 @@
 package com.mauriciotogneri.tpgwear.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.support.wearable.view.WearableListView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +38,11 @@ public class BusStopDepartureAdapter extends WearableListView.Adapter
         viewHolder.itemView.setTag(busStopDeparture);
 
         BusStopDepartureViewHolder busStopDepartureViewHolder = (BusStopDepartureViewHolder) viewHolder;
+
         busStopDepartureViewHolder.busLine.setText(busStopDeparture.getBusLine().getName());
+        GradientDrawable background = (GradientDrawable) busStopDepartureViewHolder.busLine.getBackground();
+        background.setStroke(5, Color.parseColor(busStopDeparture.getBusLine().getColor()));
+
         busStopDepartureViewHolder.destination.setText(busStopDeparture.getDestination());
         busStopDepartureViewHolder.waitingTime.setText(busStopDeparture.getWaitingTime());
     }
