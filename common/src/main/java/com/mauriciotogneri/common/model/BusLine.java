@@ -2,18 +2,32 @@ package com.mauriciotogneri.common.model;
 
 public class BusLine
 {
-    private String name = "";
+    private String code = "";
+    private String destinationName = "";
+    private String destinationCode = "";
     private String color = "";
 
-    public BusLine(String name, String color)
+    public BusLine(String code, String destinationName, String destinationCode, String color)
     {
-        this.name = name;
+        this.code = code;
+        this.destinationName = destinationName;
+        this.destinationCode = destinationCode;
         this.color = color;
     }
 
-    public String getName()
+    public String getCode()
     {
-        return name;
+        return code;
+    }
+
+    public String getDestinationName()
+    {
+        return destinationName;
+    }
+
+    public String getDestinationCode()
+    {
+        return destinationCode;
     }
 
     public String getColor()

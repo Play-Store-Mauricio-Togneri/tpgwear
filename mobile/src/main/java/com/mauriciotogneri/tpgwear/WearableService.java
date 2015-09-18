@@ -10,17 +10,13 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.mauriciotogneri.common.api.tpg.TpgApi;
-import com.mauriciotogneri.common.api.tpg.TpgApi.OnRequestResult;
 import com.mauriciotogneri.common.api.wearable.WearableApi.Calls;
 import com.mauriciotogneri.common.api.wearable.WearableApi.Paths;
 import com.mauriciotogneri.common.api.wearable.WearableConnectivity;
 import com.mauriciotogneri.common.api.wearable.WearableConnectivity.OnConnectionEvent;
 import com.mauriciotogneri.common.api.wearable.WearableConnectivity.OnMessageReceived;
 import com.mauriciotogneri.common.model.BusLine;
-import com.mauriciotogneri.common.model.BusLineList;
 import com.mauriciotogneri.common.model.BusStop;
-import com.mauriciotogneri.common.model.BusStopDepartureList;
 import com.mauriciotogneri.common.model.BusStopList;
 import com.mauriciotogneri.common.model.Message;
 import com.mauriciotogneri.common.utils.Preferences;
@@ -28,7 +24,6 @@ import com.mauriciotogneri.common.utils.Preferences;
 public class WearableService extends Service implements OnConnectionEvent, OnMessageReceived
 {
     private WearableConnectivity wearableConnectivity;
-    private final TpgApi tpgApi = new TpgApi();
     private Preferences preferences;
 
     @Override
@@ -87,44 +82,44 @@ public class WearableService extends Service implements OnConnectionEvent, OnMes
 
     private void getBusStopDepartures(final String nodeId, final String busStopCode)
     {
-        tpgApi.getBusLines(new OnRequestResult<BusLineList>()
-        {
-            @Override
-            public void onSuccess(BusLineList busLineList)
-            {
-                tpgApi.getBusStopDepartures(busStopCode, busLineList, new OnRequestResult<BusStopDepartureList>()
-                {
-                    @Override
-                    public void onSuccess(BusStopDepartureList busStopDepartureList)
-                    {
-                        wearableConnectivity.sendMessage(Calls.resultBusStopDepartures(nodeId, busStopDepartureList));
-                    }
-
-                    @Override
-                    public void onFailure()
-                    {
-                        toast("HTTP CALL FAIL");
-                    }
-                });
-            }
-
-            @Override
-            public void onFailure()
-            {
-                toast("HTTP CALL FAIL");
-            }
-        });
+        //        tpgApi.getBusLines(new OnRequestResult<BusLineList>()
+        //        {
+        //            @Override
+        //            public void onSuccess(BusLineList busLineList)
+        //            {
+        //                tpgApi.getBusStopDepartures(busStopCode, busLineList, new OnRequestResult<BusStopDepartureList>()
+        //                {
+        //                    @Override
+        //                    public void onSuccess(BusStopDepartureList busStopDepartureList)
+        //                    {
+        //                        wearableConnectivity.sendMessage(Calls.resultBusStopDepartures(nodeId, busStopDepartureList));
+        //                    }
+        //
+        //                    @Override
+        //                    public void onFailure()
+        //                    {
+        //                        toast("HTTP CALL FAIL");
+        //                    }
+        //                });
+        //            }
+        //
+        //            @Override
+        //            public void onFailure()
+        //            {
+        //                toast("HTTP CALL FAIL");
+        //            }
+        //        });
     }
 
     private BusStopList getDefaultBusStopList()
     {
-        BusLine busLine2 = new BusLine("2", "#CCCC33");
-        BusLine busLine7 = new BusLine("7", "#009933");
-        BusLine busLine9 = new BusLine("9", "#CC0033");
-        BusLine busLine11 = new BusLine("11", "#993399");
-        BusLine busLine19 = new BusLine("19", "#FFCC00");
-        BusLine busLine22 = new BusLine("22", "#5A1E82");
-        BusLine busLine23 = new BusLine("23", "#CC3399");
+        BusLine busLine2 = new BusLine("2", "", "", "#CCCC33");
+        BusLine busLine7 = new BusLine("7", "", "", "#009933");
+        BusLine busLine9 = new BusLine("9", "", "", "#CC0033");
+        BusLine busLine11 = new BusLine("11", "", "", "#993399");
+        BusLine busLine19 = new BusLine("19", "", "", "#FFCC00");
+        BusLine busLine22 = new BusLine("22", "", "", "#5A1E82");
+        BusLine busLine23 = new BusLine("23", "", "", "#CC3399");
 
         BusStop busStopCamilleMartin = new BusStop("Camille-Martin", "CMAR");
         busStopCamilleMartin.addLine(busLine7);

@@ -39,7 +39,7 @@ public class BusStopDepartureAdapter extends WearableListView.Adapter
 
         BusStopDepartureViewHolder busStopDepartureViewHolder = (BusStopDepartureViewHolder) viewHolder;
 
-        busStopDepartureViewHolder.busLine.setText(busStopDeparture.getBusLine().getName());
+        busStopDepartureViewHolder.busLine.setText(busStopDeparture.getBusLine().getDestinationName());
         GradientDrawable background = (GradientDrawable) busStopDepartureViewHolder.busLine.getBackground();
         background.setStroke(5, Color.parseColor(busStopDeparture.getBusLine().getColor()));
 

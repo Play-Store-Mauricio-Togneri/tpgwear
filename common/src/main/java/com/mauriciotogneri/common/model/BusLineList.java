@@ -17,7 +17,7 @@ public class BusLineList extends ArrayList<BusLine>
     {
         for (BusLine busLine : this)
         {
-            if (TextUtils.equals(busLine.getName(), name))
+            if (TextUtils.equals(busLine.getDestinationName(), name))
             {
                 return busLine;
             }
