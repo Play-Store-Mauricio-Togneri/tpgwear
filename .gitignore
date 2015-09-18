@@ -8,3 +8,4 @@
 gradle.properties
 .idea
 *.iml
+/mobile/src/main/res/xml/app_key.xml
