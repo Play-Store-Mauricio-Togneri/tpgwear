@@ -9,3 +9,4 @@ gradle.properties
 .idea
 *.iml
 /common/src/main/res/xml/keys.xml
+forward.sh
