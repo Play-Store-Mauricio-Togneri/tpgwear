@@ -41,6 +41,7 @@ public class DeparturesView extends BaseView<UiContainer> implements DeparturesV
     private void onLoad(final DeparturesViewObserver observer)
     {
         ui.progressBar.setVisibility(View.VISIBLE);
+        ui.content.setVisibility(View.GONE);
 
         adapter = new DepartureAdapter(getContext());
 
@@ -93,7 +94,7 @@ public class DeparturesView extends BaseView<UiContainer> implements DeparturesV
     public void displayData(List<Departure> departures)
     {
         ui.progressBar.setVisibility(View.GONE);
-        ui.list.setVisibility(View.VISIBLE);
+        ui.content.setVisibility(View.VISIBLE);
 
         adapter.setData(departures);
     }
@@ -113,6 +114,7 @@ public class DeparturesView extends BaseView<UiContainer> implements DeparturesV
     public static class UiContainer extends BaseUiContainer
     {
         private WatchViewStub stub;
+        private View content;
         private ProgressBar progressBar;
         private WearableListView list;
         private View header;
@@ -126,6 +128,7 @@ public class DeparturesView extends BaseView<UiContainer> implements DeparturesV
 
         public void load()
         {
+            this.content = findViewById(R.id.content);
             this.progressBar = (ProgressBar) findViewById(R.id.progress_bar);
             this.list = (WearableListView) findViewById(R.id.list);
             this.header = findViewById(R.id.header);

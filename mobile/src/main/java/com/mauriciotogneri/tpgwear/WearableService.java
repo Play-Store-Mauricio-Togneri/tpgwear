@@ -63,6 +63,15 @@ public class WearableService extends Service implements WearableEvents
     @Override
     public void onMessageReceived(Message message)
     {
+        try
+        {
+            Thread.sleep(2000);
+        }
+        catch (InterruptedException e)
+        {
+            e.printStackTrace();
+        }
+
         String nodeId = message.getNodeId();
         String path = message.getPath();
         String payload = message.getPayloadAsString();

@@ -41,6 +41,7 @@ public class TripView extends BaseView<UiContainer> implements TripViewInterface
     private void onLoad(final TripViewObserver observer)
     {
         ui.progressBar.setVisibility(View.VISIBLE);
+        ui.content.setVisibility(View.GONE);
 
         adapter = new StepAdapter(getContext());
 
@@ -93,7 +94,7 @@ public class TripView extends BaseView<UiContainer> implements TripViewInterface
     public void displayData(List<Step> steps, int position)
     {
         ui.progressBar.setVisibility(View.GONE);
-        ui.list.setVisibility(View.VISIBLE);
+        ui.content.setVisibility(View.VISIBLE);
 
         adapter.setData(steps);
 
@@ -118,6 +119,7 @@ public class TripView extends BaseView<UiContainer> implements TripViewInterface
     public static class UiContainer extends BaseUiContainer
     {
         private WatchViewStub stub;
+        private View content;
         private ProgressBar progressBar;
         private WearableListView list;
         private View header;
@@ -131,6 +133,7 @@ public class TripView extends BaseView<UiContainer> implements TripViewInterface
 
         public void load()
         {
+            this.content = findViewById(R.id.content);
             this.progressBar = (ProgressBar) findViewById(R.id.progress_bar);
             this.list = (WearableListView) findViewById(R.id.list);
             this.header = findViewById(R.id.header);

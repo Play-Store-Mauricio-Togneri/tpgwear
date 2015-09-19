@@ -41,6 +41,7 @@ public class StopsView extends BaseView<UiContainer> implements StopsViewInterfa
     private void onLoad(final StopsViewObserver observer)
     {
         ui.progressBar.setVisibility(View.VISIBLE);
+        ui.content.setVisibility(View.GONE);
 
         adapter = new StopAdapter(getContext());
 
@@ -93,7 +94,7 @@ public class StopsView extends BaseView<UiContainer> implements StopsViewInterfa
     public void displayData(List<Stop> stops)
     {
         ui.progressBar.setVisibility(View.GONE);
-        ui.list.setVisibility(View.VISIBLE);
+        ui.content.setVisibility(View.VISIBLE);
 
         adapter.setData(stops);
     }
@@ -113,6 +114,7 @@ public class StopsView extends BaseView<UiContainer> implements StopsViewInterfa
     public static class UiContainer extends BaseUiContainer
     {
         private WatchViewStub stub;
+        private View content;
         private ProgressBar progressBar;
         private WearableListView list;
         private View header;
@@ -126,6 +128,7 @@ public class StopsView extends BaseView<UiContainer> implements StopsViewInterfa
 
         public void load()
         {
+            this.content = findViewById(R.id.content);
             this.progressBar = (ProgressBar) findViewById(R.id.progress_bar);
             this.list = (WearableListView) findViewById(R.id.list);
             this.header = findViewById(R.id.header);
