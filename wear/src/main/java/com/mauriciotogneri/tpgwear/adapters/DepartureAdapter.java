@@ -24,7 +24,7 @@ public class DepartureAdapter extends BaseAdapter<Departure, DepartureViewHolder
         viewHolder.line.setText(departure.line.lineCode);
         GradientDrawable background = (GradientDrawable) viewHolder.line.getBackground();
         background.setStroke(5, Color.RED);
-        //background.setStroke(5, Color.parseColor(COLOR));
+        background.setStroke(5, Color.parseColor("#" + departure.color));
 
         viewHolder.destination.setText(departure.line.destinationName);
         viewHolder.waitingTime.setText(departure.getFormattedWaitingTime());

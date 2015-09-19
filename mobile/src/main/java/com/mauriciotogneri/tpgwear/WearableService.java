@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.mauriciotogneri.common.api.tpg.TpgApi;
 import com.mauriciotogneri.common.api.tpg.TpgApi.OnRequestResult;
+import com.mauriciotogneri.common.api.tpg.json.GetLinesColors;
 import com.mauriciotogneri.common.api.tpg.json.GetNextDepartures;
 import com.mauriciotogneri.common.api.tpg.json.Stop;
 import com.mauriciotogneri.common.api.wearable.Message;
@@ -123,15 +124,30 @@ public class WearableService extends Service implements WearableEvents
 
     private void getDepartures(final String nodeId, final String stopCode)
     {
-        TpgApi tpgApi = TpgApi.getInstance(this);
-        tpgApi.getNextDepartures(stopCode, new OnRequestResult<GetNextDepartures>()
+        final TpgApi tpgApi = TpgApi.getInstance(this);
+
+        tpgApi.getLinesColors(new OnRequestResult<GetLinesColors>()
         {
             @Override
-            public void onSuccess(GetNextDepartures result)
+            public void onSuccess(final GetLinesColors linesColors)
             {
-                result.removeInvalidDepartures();
+                tpgApi.getNextDepartures(stopCode, new OnRequestResult<GetNextDepartures>()
+                {
+                    @Override
+                    public void onSuccess(GetNextDepartures nextDepartures)
+                    {
+                        nextDepartures.setColors(linesColors);
+                        nextDepartures.removeInvalidDepartures();
 
-                connectivity.sendMessage(Messages.resultDepartures(nodeId, result.departures));
+                        connectivity.sendMessage(Messages.resultDepartures(nodeId, nextDepartures.departures));
+                    }
+
+                    @Override
+                    public void onFailure()
+                    {
+                        toast("HTTP CALL FAIL");
+                    }
+                });
             }
 
             @Override

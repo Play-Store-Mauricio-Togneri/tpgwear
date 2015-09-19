@@ -13,6 +13,12 @@ public class Departure
     public String characteristics = "";
     public String vehiculeType = "";
     public int vehiculeNo = 0;
+    public String color = "";
+
+    public void setColor(String color)
+    {
+        this.color = color;
+    }
 
     public boolean isInvalid()
     {

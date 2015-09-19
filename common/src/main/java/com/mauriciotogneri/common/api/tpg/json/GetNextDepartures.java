@@ -10,6 +10,14 @@ public class GetNextDepartures
     public Stop stop = null;
     public List<Departure> departures = new ArrayList<>();
 
+    public void setColors(GetLinesColors linesColors)
+    {
+        for (Departure departure : departures)
+        {
+            departure.setColor(linesColors.getColor(departure.line.lineCode));
+        }
+    }
+
     public void removeInvalidDepartures()
     {
         for (Iterator<Departure> iterator = departures.iterator(); iterator.hasNext(); )
