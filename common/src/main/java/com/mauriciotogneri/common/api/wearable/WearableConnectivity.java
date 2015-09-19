@@ -12,14 +12,12 @@ import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListe
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
-import com.google.android.gms.wearable.MessageApi;
 import com.google.android.gms.wearable.MessageApi.MessageListener;
 import com.google.android.gms.wearable.MessageApi.SendMessageResult;
 import com.google.android.gms.wearable.MessageEvent;
 import com.google.android.gms.wearable.Node;
 import com.google.android.gms.wearable.NodeApi;
 import com.google.android.gms.wearable.Wearable;
-import com.mauriciotogneri.common.model.Message;
 
 import java.util.concurrent.TimeUnit;
 
@@ -28,29 +26,29 @@ public class WearableConnectivity
     private boolean isConnected = false;
     private final GoogleApiClient apiClient;
 
-    private static final int TIMEOUT = 1000 * 10;
+    private static final int TIMEOUT = 1000 * 10; // in milliseconds
 
-    public WearableConnectivity(Context context, final OnConnectionEvent onConnectionEvent, final OnMessageReceived onMessageReceived)
+    public WearableConnectivity(Context context, final WearableEvents wearableEvents)
     {
         this.apiClient = new GoogleApiClient.Builder(context).addConnectionCallbacks(new ConnectionCallbacks()
         {
             @Override
             public void onConnected(Bundle connectionHint)
             {
-                onClientConnected(onConnectionEvent, onMessageReceived);
+                onClientConnected(wearableEvents);
             }
 
             @Override
             public void onConnectionSuspended(int cause)
             {
-                onConnectionEvent.onConnectedFail();
+                wearableEvents.onConnectedFail();
             }
         }).addOnConnectionFailedListener(new OnConnectionFailedListener()
         {
             @Override
             public void onConnectionFailed(ConnectionResult result)
             {
-                onConnectionEvent.onConnectedFail();
+                wearableEvents.onConnectedFail();
             }
         }).addApi(Wearable.API).build();
     }
@@ -65,7 +63,7 @@ public class WearableConnectivity
         apiClient.disconnect();
     }
 
-    private synchronized void onClientConnected(final OnConnectionEvent onConnectionEvent, final OnMessageReceived onMessageReceived)
+    private synchronized void onClientConnected(final WearableEvents wearableEvents)
     {
         if (!isConnected)
         {
@@ -95,7 +93,7 @@ public class WearableConnectivity
                                     @Override
                                     public void run()
                                     {
-                                        onMessageReceived.onMessageReceived(message);
+                                        wearableEvents.onMessageReceived(message);
                                     }
                                 });
                             }
@@ -107,19 +105,20 @@ public class WearableConnectivity
                             {
                                 if (status.isSuccess())
                                 {
-                                    onConnectionEvent.onConnectedSuccess();
+                                    wearableEvents.onConnectedSuccess();
                                 }
                                 else
                                 {
-                                    onConnectionEvent.onConnectedFail();
+                                    wearableEvents.onConnectedFail();
                                 }
                             }
                         });
+
                         //pendingResult.await();
                     }
                     catch (Exception e)
                     {
-                        onConnectionEvent.onConnectedFail();
+                        wearableEvents.onConnectedFail();
                     }
                 }
             }).start();
@@ -137,14 +136,14 @@ public class WearableConnectivity
 
                 try
                 {
-                    PendingResult<MessageApi.SendMessageResult> pendingResult = Wearable.MessageApi.sendMessage(apiClient, message.getNodeId(), message.getPath(), message.getPayloadAsBytes());
+                    PendingResult<SendMessageResult> pendingResult = Wearable.MessageApi.sendMessage(apiClient, message.getNodeId(), message.getPath(), message.getPayloadAsBytes());
 
                     if (callback != null)
                     {
                         pendingResult.setResultCallback(callback);
                     }
 
-                    pendingResult.await();
+                    //pendingResult.await();
                 }
                 catch (Exception e)
                 {
@@ -189,16 +188,13 @@ public class WearableConnectivity
         }).start();
     }
 
-    public interface OnMessageReceived
-    {
-        void onMessageReceived(Message message);
-    }
-
-    public interface OnConnectionEvent
+    public interface WearableEvents
     {
         void onConnectedSuccess();
 
         void onConnectedFail();
+
+        void onMessageReceived(Message message);
     }
 
     public interface OnDeviceNodeDetected

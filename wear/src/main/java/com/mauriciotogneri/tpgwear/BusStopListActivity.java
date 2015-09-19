@@ -1,60 +1,54 @@
 package com.mauriciotogneri.tpgwear;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.support.wearable.view.WatchViewStub;
-import android.support.wearable.view.WearableListView;
-import android.support.wearable.view.WearableListView.ClickListener;
-import android.support.wearable.view.WearableListView.ViewHolder;
 import android.text.TextUtils;
-import android.view.View;
-import android.widget.ProgressBar;
-import android.widget.Toast;
 
-import com.mauriciotogneri.common.api.wearable.WearableConnectivity;
-import com.mauriciotogneri.common.api.wearable.WearableConnectivity.OnConnectionEvent;
-import com.mauriciotogneri.common.api.wearable.WearableConnectivity.OnDeviceNodeDetected;
-import com.mauriciotogneri.common.api.wearable.WearableConnectivity.OnMessageReceived;
-import com.mauriciotogneri.common.api.wearable.WearableApi.Calls;
+import com.mauriciotogneri.common.api.wearable.Message;
+import com.mauriciotogneri.common.api.wearable.WearableApi.Messages;
 import com.mauriciotogneri.common.api.wearable.WearableApi.Paths;
+import com.mauriciotogneri.common.api.wearable.WearableConnectivity;
+import com.mauriciotogneri.common.api.wearable.WearableConnectivity.OnDeviceNodeDetected;
+import com.mauriciotogneri.common.api.wearable.WearableConnectivity.WearableEvents;
+import com.mauriciotogneri.common.base.BaseActivity;
 import com.mauriciotogneri.common.model.BusStop;
-import com.mauriciotogneri.common.model.BusStopList;
 import com.mauriciotogneri.common.model.BusStopDepartureList;
-import com.mauriciotogneri.common.model.Message;
+import com.mauriciotogneri.common.model.BusStopList;
 import com.mauriciotogneri.common.utils.JsonUtils;
-import com.mauriciotogneri.tpgwear.adapters.BusStopAdapter;
-import com.mauriciotogneri.tpgwear.adapters.BusStopAdapter.BusStopViewHolder;
+import com.mauriciotogneri.tpgwear.ui.busstoplist.BusStopListInterface;
+import com.mauriciotogneri.tpgwear.ui.busstoplist.BusStopListObserver;
+import com.mauriciotogneri.tpgwear.ui.busstoplist.BusStopListView;
 
-public class BusStopListActivity extends Activity implements OnConnectionEvent, OnMessageReceived
+public class BusStopListActivity extends BaseActivity<BusStopListInterface> implements WearableEvents, BusStopListObserver
 {
     private String nodeId = "";
-    private WearableConnectivity wearableConnectivity;
+    private WearableConnectivity connectivity;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
+    protected void initialize()
     {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.stub_bus_stop_list);
-
-        wearableConnectivity = new WearableConnectivity(this, this, this);
-
-        WatchViewStub stub = (WatchViewStub) findViewById(R.id.watch_view_stub);
-        stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener()
-        {
-            @Override
-            public void onLayoutInflated(WatchViewStub stub)
-            {
-                wearableConnectivity.connect();
-            }
-        });
+        view.initialize(this);
     }
 
-    private void requestFavoriteStops()
+    @Override
+    public void onStubReady()
     {
-        wearableConnectivity.sendMessage(Calls.getFavoriteBusStops(nodeId));
+        connectivity = new WearableConnectivity(this, this);
+        connectivity.connect();
+    }
+
+    @Override
+    public void onConnectedSuccess()
+    {
+        connectivity.getDefaultDeviceNode(new OnDeviceNodeDetected()
+        {
+            @Override
+            public void onDefaultDeviceNode(String deviceNodeId)
+            {
+                nodeId = deviceNodeId;
+
+                connectivity.sendMessage(Messages.getFavoriteBusStops(nodeId));
+            }
+        });
     }
 
     @Override
@@ -63,7 +57,7 @@ public class BusStopListActivity extends Activity implements OnConnectionEvent, 
         if (TextUtils.equals(message.getPath(), Paths.RESULT_FAVORITE_BUS_STOPS))
         {
             BusStopList busStopList = JsonUtils.fromJson(message.getPayloadAsString(), BusStopList.class);
-            processResultFavoriteStops(busStopList);
+            view.displayData(busStopList);
         }
         else if (TextUtils.equals(message.getPath(), Paths.RESULT_BUS_STOP_DEPARTURES))
         {
@@ -74,53 +68,10 @@ public class BusStopListActivity extends Activity implements OnConnectionEvent, 
         }
     }
 
-    private void processResultFavoriteStops(BusStopList busStopList)
-    {
-        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress_bar);
-        progressBar.setVisibility(View.GONE);
-
-        WearableListView wearableListView = (WearableListView) findViewById(R.id.bus_stop_list);
-        wearableListView.setAdapter(new BusStopAdapter(this, busStopList));
-        wearableListView.setVisibility(View.VISIBLE);
-        wearableListView.setClickListener(new ClickListener()
-        {
-            @Override
-            public void onClick(ViewHolder viewHolder)
-            {
-                BusStopViewHolder busStopViewHolder = (BusStopViewHolder) viewHolder;
-                onBusStopSelected(busStopViewHolder.getBusStop());
-            }
-
-            @Override
-            public void onTopEmptyRegionClick()
-            {
-            }
-        });
-    }
-
-    private void onBusStopSelected(BusStop busStop)
-    {
-        wearableConnectivity.sendMessage(Calls.getBusStopDepartures(nodeId, busStop.getCode()));
-    }
-
     @Override
-    public void onConnectedSuccess()
+    public void onBusStopSelected(BusStop busStop)
     {
-        wearableConnectivity.getDefaultDeviceNode(new OnDeviceNodeDetected()
-        {
-            @Override
-            public void onDefaultDeviceNode(String nodeId)
-            {
-                BusStopListActivity.this.onDefaultDeviceNode(nodeId);
-            }
-        });
-    }
-
-    private void onDefaultDeviceNode(String nodeId)
-    {
-        this.nodeId = nodeId;
-
-        requestFavoriteStops();
+        connectivity.sendMessage(Messages.getBusStopDepartures(nodeId, busStop.getCode()));
     }
 
     @Override
@@ -129,16 +80,20 @@ public class BusStopListActivity extends Activity implements OnConnectionEvent, 
         toast("CLIENT DISCONNECTED");
     }
 
-    private void toast(final String message)
+    @Override
+    protected void onDestroy()
     {
-        Handler handler = new Handler(Looper.getMainLooper());
-        handler.post(new Runnable()
+        super.onDestroy();
+
+        if (connectivity != null)
         {
-            @Override
-            public void run()
-            {
-                Toast.makeText(BusStopListActivity.this, message, Toast.LENGTH_SHORT).show();
-            }
-        });
+            connectivity.disconnect();
+        }
+    }
+
+    @Override
+    protected BusStopListInterface getViewInstance()
+    {
+        return new BusStopListView();
     }
 }

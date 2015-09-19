@@ -4,27 +4,7 @@ import android.text.TextUtils;
 
 public class EncodingHelper
 {
-    private static final String ISO_8859_1 = "ISO-8859-1";
     private static final String UTF_8 = "UTF-8";
-
-    public static String decodeFromIso(String input)
-    {
-        return getString(input, ISO_8859_1, UTF_8);
-    }
-
-    public static String getString(String input, String charsetInput, String charsetOutput)
-    {
-        try
-        {
-            byte[] isoBytes = input.getBytes(charsetInput);
-
-            return new String(isoBytes, charsetOutput);
-        }
-        catch (Exception e)
-        {
-            return input;
-        }
-    }
 
     public static byte[] getStringAsBytes(String input)
     {

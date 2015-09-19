@@ -2,7 +2,6 @@ package com.mauriciotogneri.common.api.wearable;
 
 import com.mauriciotogneri.common.model.BusStopDepartureList;
 import com.mauriciotogneri.common.model.BusStopList;
-import com.mauriciotogneri.common.model.Message;
 
 public class WearableApi
 {
@@ -15,7 +14,7 @@ public class WearableApi
         public static final String RESULT_BUS_STOP_DEPARTURES = "/result_bus_stop_departures";
     }
 
-    public static final class Calls
+    public static final class Messages
     {
         public static Message getFavoriteBusStops(String nodeId)
         {

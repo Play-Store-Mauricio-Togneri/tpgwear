@@ -10,18 +10,16 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.mauriciotogneri.common.api.wearable.WearableApi.Calls;
+import com.mauriciotogneri.common.api.wearable.Message;
+import com.mauriciotogneri.common.api.wearable.WearableApi.Messages;
 import com.mauriciotogneri.common.api.wearable.WearableApi.Paths;
 import com.mauriciotogneri.common.api.wearable.WearableConnectivity;
-import com.mauriciotogneri.common.api.wearable.WearableConnectivity.OnConnectionEvent;
-import com.mauriciotogneri.common.api.wearable.WearableConnectivity.OnMessageReceived;
-import com.mauriciotogneri.common.model.BusLine;
+import com.mauriciotogneri.common.api.wearable.WearableConnectivity.WearableEvents;
 import com.mauriciotogneri.common.model.BusStop;
 import com.mauriciotogneri.common.model.BusStopList;
-import com.mauriciotogneri.common.model.Message;
 import com.mauriciotogneri.common.utils.Preferences;
 
-public class WearableService extends Service implements OnConnectionEvent, OnMessageReceived
+public class WearableService extends Service implements WearableEvents
 {
     private WearableConnectivity wearableConnectivity;
     private Preferences preferences;
@@ -33,7 +31,7 @@ public class WearableService extends Service implements OnConnectionEvent, OnMes
 
         this.preferences = new Preferences(this);
 
-        this.wearableConnectivity = new WearableConnectivity(this, this, this);
+        this.wearableConnectivity = new WearableConnectivity(this, this);
         this.wearableConnectivity.connect();
     }
 
@@ -77,7 +75,28 @@ public class WearableService extends Service implements OnConnectionEvent, OnMes
         //BusStopList busStopList = preferences.getFavoriteBusStops();
         BusStopList busStopList = getDefaultBusStopList();
 
-        wearableConnectivity.sendMessage(Calls.resultFavoriteBusStops(nodeId, busStopList));
+        wearableConnectivity.sendMessage(Messages.resultFavoriteBusStops(nodeId, busStopList));
+    }
+
+    // TODO: remove
+    private BusStopList getDefaultBusStopList()
+    {
+        BusStop busStopCamilleMartin = new BusStop("Camille-Martin", "CMAR");
+        BusStop busStopEpinettes = new BusStop("Epinettes", "EPIN");
+        BusStop busStopMileant = new BusStop("Miléant", "MILE");
+        BusStop busStopBelAir = new BusStop("Bel-Air", "BAIR");
+        BusStop busStopBains = new BusStop("Bains", "BANS");
+        BusStop busStopPalettes = new BusStop("Palettes", "PALE");
+
+        BusStopList busStopList = new BusStopList();
+        busStopList.add(busStopCamilleMartin);
+        busStopList.add(busStopEpinettes);
+        busStopList.add(busStopMileant);
+        busStopList.add(busStopBelAir);
+        busStopList.add(busStopBains);
+        busStopList.add(busStopPalettes);
+
+        return busStopList;
     }
 
     private void getBusStopDepartures(final String nodeId, final String busStopCode)
@@ -109,42 +128,6 @@ public class WearableService extends Service implements OnConnectionEvent, OnMes
         //                toast("HTTP CALL FAIL");
         //            }
         //        });
-    }
-
-    private BusStopList getDefaultBusStopList()
-    {
-        BusLine busLine2 = new BusLine("2", "", "", "#CCCC33");
-        BusLine busLine7 = new BusLine("7", "", "", "#009933");
-        BusLine busLine9 = new BusLine("9", "", "", "#CC0033");
-        BusLine busLine11 = new BusLine("11", "", "", "#993399");
-        BusLine busLine19 = new BusLine("19", "", "", "#FFCC00");
-        BusLine busLine22 = new BusLine("22", "", "", "#5A1E82");
-        BusLine busLine23 = new BusLine("23", "", "", "#CC3399");
-
-        BusStop busStopCamilleMartin = new BusStop("Camille-Martin", "CMAR");
-        busStopCamilleMartin.addLine(busLine7);
-        busStopCamilleMartin.addLine(busLine9);
-
-        BusStop busStopMileant = new BusStop("Miléant", "MILE");
-        busStopMileant.addLine(busLine7);
-        busStopMileant.addLine(busLine9);
-        busStopMileant.addLine(busLine11);
-
-        BusStop busStopBains = new BusStop("Bains", "BANS");
-        busStopBains.addLine(busLine2);
-        busStopBains.addLine(busLine19);
-
-        BusStop busStopPalettes = new BusStop("Palettes", "PALE");
-        busStopPalettes.addLine(busLine22);
-        busStopPalettes.addLine(busLine23);
-
-        BusStopList busStopList = new BusStopList();
-        busStopList.add(busStopCamilleMartin);
-        busStopList.add(busStopMileant);
-        busStopList.add(busStopBains);
-        busStopList.add(busStopPalettes);
-
-        return busStopList;
     }
 
     private void toast(final String message)

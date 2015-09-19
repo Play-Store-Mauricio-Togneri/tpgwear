@@ -1,4 +1,4 @@
-package com.mauriciotogneri.common.model;
+package com.mauriciotogneri.common.api.wearable;
 
 import com.mauriciotogneri.common.utils.EncodingHelper;
 

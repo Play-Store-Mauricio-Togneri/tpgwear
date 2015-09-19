@@ -1,5 +1,6 @@
 package com.mauriciotogneri.common.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -19,6 +20,7 @@ public class Preferences
 
     // =============================================================================================
 
+    @SuppressLint("CommitPrefEdits")
     public void clear()
     {
         sharedPreferences.edit().clear().commit();
@@ -29,11 +31,13 @@ public class Preferences
         return sharedPreferences.contains(key);
     }
 
+    @SuppressLint("CommitPrefEdits")
     private void remove(String key)
     {
         sharedPreferences.edit().remove(key).commit();
     }
 
+    @SuppressLint("CommitPrefEdits")
     private void save(String key, String value)
     {
         sharedPreferences.edit().putString(key, value).commit();
