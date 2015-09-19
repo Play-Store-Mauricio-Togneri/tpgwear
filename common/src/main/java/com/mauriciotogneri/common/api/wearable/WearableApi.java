@@ -1,7 +1,10 @@
 package com.mauriciotogneri.common.api.wearable;
 
-import com.mauriciotogneri.common.model.BusStopDepartureList;
+import com.mauriciotogneri.common.api.tpg.json.Departure;
 import com.mauriciotogneri.common.model.BusStopList;
+import com.mauriciotogneri.common.utils.JsonUtils;
+
+import java.util.List;
 
 public class WearableApi
 {
@@ -31,9 +34,9 @@ public class WearableApi
             return new Message(nodeId, Paths.GET_BUS_STOP_DEPARTURES, busStopCode);
         }
 
-        public static Message resultBusStopDepartures(String nodeId, BusStopDepartureList busStopDepartureList)
+        public static Message resultBusStopDepartures(String nodeId, List<Departure> departures)
         {
-            return new Message(nodeId, Paths.RESULT_BUS_STOP_DEPARTURES, busStopDepartureList.toString());
+            return new Message(nodeId, Paths.RESULT_BUS_STOP_DEPARTURES, JsonUtils.toJson(departures));
         }
     }
 }

@@ -10,6 +10,9 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.mauriciotogneri.common.api.tpg.TpgApi;
+import com.mauriciotogneri.common.api.tpg.TpgApi.OnRequestResult;
+import com.mauriciotogneri.common.api.tpg.json.GetNextDepartures;
 import com.mauriciotogneri.common.api.wearable.Message;
 import com.mauriciotogneri.common.api.wearable.WearableApi.Messages;
 import com.mauriciotogneri.common.api.wearable.WearableApi.Paths;
@@ -21,7 +24,7 @@ import com.mauriciotogneri.common.utils.Preferences;
 
 public class WearableService extends Service implements WearableEvents
 {
-    private WearableConnectivity wearableConnectivity;
+    private WearableConnectivity connectivity;
     private Preferences preferences;
 
     @Override
@@ -31,8 +34,8 @@ public class WearableService extends Service implements WearableEvents
 
         this.preferences = new Preferences(this);
 
-        this.wearableConnectivity = new WearableConnectivity(this, this);
-        this.wearableConnectivity.connect();
+        this.connectivity = new WearableConnectivity(this, this);
+        this.connectivity.connect();
     }
 
     @Nullable
@@ -75,7 +78,7 @@ public class WearableService extends Service implements WearableEvents
         //BusStopList busStopList = preferences.getFavoriteBusStops();
         BusStopList busStopList = getDefaultBusStopList();
 
-        wearableConnectivity.sendMessage(Messages.resultFavoriteBusStops(nodeId, busStopList));
+        connectivity.sendMessage(Messages.resultFavoriteBusStops(nodeId, busStopList));
     }
 
     // TODO: remove
@@ -101,33 +104,21 @@ public class WearableService extends Service implements WearableEvents
 
     private void getBusStopDepartures(final String nodeId, final String busStopCode)
     {
-        //        tpgApi.getBusLines(new OnRequestResult<BusLineList>()
-        //        {
-        //            @Override
-        //            public void onSuccess(BusLineList busLineList)
-        //            {
-        //                tpgApi.getBusStopDepartures(busStopCode, busLineList, new OnRequestResult<BusStopDepartureList>()
-        //                {
-        //                    @Override
-        //                    public void onSuccess(BusStopDepartureList busStopDepartureList)
-        //                    {
-        //                        wearableConnectivity.sendMessage(Calls.resultBusStopDepartures(nodeId, busStopDepartureList));
-        //                    }
-        //
-        //                    @Override
-        //                    public void onFailure()
-        //                    {
-        //                        toast("HTTP CALL FAIL");
-        //                    }
-        //                });
-        //            }
-        //
-        //            @Override
-        //            public void onFailure()
-        //            {
-        //                toast("HTTP CALL FAIL");
-        //            }
-        //        });
+        TpgApi tpgApi = TpgApi.getInstance(this);
+        tpgApi.getNextDepartures(busStopCode, new OnRequestResult<GetNextDepartures>()
+        {
+            @Override
+            public void onSuccess(GetNextDepartures result)
+            {
+                connectivity.sendMessage(Messages.resultBusStopDepartures(nodeId, result.departures));
+            }
+
+            @Override
+            public void onFailure()
+            {
+                toast("HTTP CALL FAIL");
+            }
+        });
     }
 
     private void toast(final String message)

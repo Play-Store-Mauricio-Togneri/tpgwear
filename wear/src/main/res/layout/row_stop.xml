@@ -13,16 +13,12 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:gravity="center"
-        android:paddingTop="10dp"
         android:paddingBottom="10dp"
+        android:paddingTop="10dp"
         android:textColor="@color/font_color"
-        android:textSize="@dimen/font_size"/>
+        android:textSize="@dimen/font_size_normal"/>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="@color/horizontal_line"/>
+    <include
+        layout="@layout/view_horizontal_line"/>
 
 </LinearLayout>

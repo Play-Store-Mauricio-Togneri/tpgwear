@@ -1,4 +1,4 @@
-package com.mauriciotogneri.tpgwear;
+package com.mauriciotogneri.tpgwear.activities;
 
 import android.content.Intent;
 import android.text.TextUtils;
@@ -11,14 +11,13 @@ import com.mauriciotogneri.common.api.wearable.WearableConnectivity.OnDeviceNode
 import com.mauriciotogneri.common.api.wearable.WearableConnectivity.WearableEvents;
 import com.mauriciotogneri.common.base.BaseActivity;
 import com.mauriciotogneri.common.model.BusStop;
-import com.mauriciotogneri.common.model.BusStopDepartureList;
 import com.mauriciotogneri.common.model.BusStopList;
 import com.mauriciotogneri.common.utils.JsonUtils;
 import com.mauriciotogneri.tpgwear.ui.busstoplist.BusStopListInterface;
 import com.mauriciotogneri.tpgwear.ui.busstoplist.BusStopListObserver;
 import com.mauriciotogneri.tpgwear.ui.busstoplist.BusStopListView;
 
-public class BusStopListActivity extends BaseActivity<BusStopListInterface> implements WearableEvents, BusStopListObserver
+public class StopListActivity extends BaseActivity<BusStopListInterface> implements WearableEvents, BusStopListObserver
 {
     private String nodeId = "";
     private WearableConnectivity connectivity;
@@ -59,19 +58,13 @@ public class BusStopListActivity extends BaseActivity<BusStopListInterface> impl
             BusStopList busStopList = JsonUtils.fromJson(message.getPayloadAsString(), BusStopList.class);
             view.displayData(busStopList);
         }
-        else if (TextUtils.equals(message.getPath(), Paths.RESULT_BUS_STOP_DEPARTURES))
-        {
-            BusStopDepartureList busStopDepartureList = JsonUtils.fromJson(message.getPayloadAsString(), BusStopDepartureList.class);
-
-            Intent intent = BusStopDepartureListActivity.getInstance(this, busStopDepartureList);
-            startActivity(intent);
-        }
     }
 
     @Override
     public void onBusStopSelected(BusStop busStop)
     {
-        connectivity.sendMessage(Messages.getBusStopDepartures(nodeId, busStop.getCode()));
+        Intent intent = StopDepartureListActivity.getInstance(this, nodeId, busStop.getCode());
+        startActivity(intent);
     }
 
     @Override
