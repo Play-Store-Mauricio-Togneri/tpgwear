@@ -36,7 +36,7 @@ public class StopAdapter extends BaseAdapter<Stop, StopViewHolder>
 
     public static class StopViewHolder extends WearableListView.ViewHolder
     {
-        private TextView stopName;
+        private final TextView stopName;
 
         public StopViewHolder(View itemView)
         {

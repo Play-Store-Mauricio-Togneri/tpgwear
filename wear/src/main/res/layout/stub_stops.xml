@@ -8,4 +8,4 @@
     android:layout_height="match_parent"
     app:rectLayout="@layout/screen_stops"
     app:roundLayout="@layout/screen_stops"
-    tools:deviceIds="wear" />
+    tools:deviceIds="wear"/>

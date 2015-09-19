@@ -27,7 +27,7 @@ public class DepartureAdapter extends BaseAdapter<Departure, DepartureViewHolder
         //background.setStroke(5, Color.parseColor(COLOR));
 
         viewHolder.destination.setText(departure.line.destinationName);
-        viewHolder.waitingTime.setText(departure.waitingTime);
+        viewHolder.waitingTime.setText(departure.getFormattedWaitingTime());
     }
 
     @Override
@@ -44,9 +44,9 @@ public class DepartureAdapter extends BaseAdapter<Departure, DepartureViewHolder
 
     public static class DepartureViewHolder extends WearableListView.ViewHolder
     {
-        private TextView line;
-        private TextView destination;
-        private TextView waitingTime;
+        private final TextView line;
+        private final TextView destination;
+        private final TextView waitingTime;
 
         public DepartureViewHolder(View itemView)
         {

@@ -9,22 +9,24 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp">
 
         <TextView
             android:id="@+id/line_code"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
+            android:layout_weight="0.2"
             android:background="@drawable/line_border"
-            android:ellipsize="end"
-            android:gravity="center_vertical"
-            android:paddingBottom="2dp"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp"
-            android:paddingTop="2dp"
-            android:singleLine="true"
+            android:gravity="center_vertical|center_horizontal"
+            android:paddingBottom="3dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="3dp"
             android:textColor="@color/font_color"
             android:textSize="@dimen/font_size_small"/>
 
@@ -32,23 +34,21 @@
             android:id="@+id/destination"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0.65"
             android:ellipsize="end"
             android:gravity="center_vertical"
-            android:padding="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:singleLine="true"
             android:textColor="@color/font_color"
             android:textSize="@dimen/font_size_small"/>
 
         <TextView
             android:id="@+id/waiting_time"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:ellipsize="end"
-            android:gravity="center_vertical"
-            android:padding="10dp"
-            android:singleLine="true"
+            android:layout_weight="0.15"
+            android:gravity="center_vertical|left"
             android:textColor="@color/font_color"
             android:textSize="@dimen/font_size_small"/>
 

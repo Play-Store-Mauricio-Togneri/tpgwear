@@ -5,7 +5,7 @@ import android.view.View;
 
 public class BaseUiContainer
 {
-    private BaseView<?> baseView;
+    private final BaseView<?> baseView;
 
     public BaseUiContainer(BaseView baseView)
     {

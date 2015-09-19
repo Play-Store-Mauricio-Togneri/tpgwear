@@ -129,6 +129,8 @@ public class WearableService extends Service implements WearableEvents
             @Override
             public void onSuccess(GetNextDepartures result)
             {
+                result.removeInvalidDepartures();
+
                 connectivity.sendMessage(Messages.resultDepartures(nodeId, result.departures));
             }
 

@@ -147,7 +147,7 @@ public class TpgApi
 
     private String getUrl(String method, String... params)
     {
-        StringBuffer url = new StringBuffer(BASE_URL + method + ".json?key=" + appKey);
+        StringBuilder url = new StringBuilder(BASE_URL + method + ".json?key=" + appKey);
 
         for (int i = 0; i < params.length; i += 2)
         {
