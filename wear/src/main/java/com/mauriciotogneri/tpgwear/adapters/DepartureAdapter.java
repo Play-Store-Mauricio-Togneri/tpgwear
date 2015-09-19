@@ -3,7 +3,6 @@ package com.mauriciotogneri.tpgwear.adapters;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
-import android.support.wearable.view.WearableListView;
 import android.view.View;
 import android.widget.TextView;
 
@@ -42,7 +41,7 @@ public class DepartureAdapter extends BaseAdapter<Departure, DepartureViewHolder
         return R.layout.row_departure;
     }
 
-    public static class DepartureViewHolder extends WearableListView.ViewHolder
+    public static class DepartureViewHolder extends BaseViewHolder<Departure>
     {
         private final TextView line;
         private final TextView destination;
@@ -55,11 +54,6 @@ public class DepartureAdapter extends BaseAdapter<Departure, DepartureViewHolder
             this.line = (TextView) itemView.findViewById(R.id.line_code);
             this.destination = (TextView) itemView.findViewById(R.id.destination);
             this.waitingTime = (TextView) itemView.findViewById(R.id.waiting_time);
-        }
-
-        public Departure getDeparture()
-        {
-            return (Departure) itemView.getTag();
         }
     }
 }

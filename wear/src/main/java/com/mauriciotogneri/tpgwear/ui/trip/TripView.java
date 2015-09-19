@@ -1,4 +1,4 @@
-package com.mauriciotogneri.tpgwear.ui.departures;
+package com.mauriciotogneri.tpgwear.ui.trip;
 
 import android.support.wearable.view.WatchViewStub;
 import android.support.wearable.view.WatchViewStub.OnLayoutInflatedListener;
@@ -9,22 +9,22 @@ import android.support.wearable.view.WearableListView.ViewHolder;
 import android.view.View;
 import android.widget.ProgressBar;
 
-import com.mauriciotogneri.common.api.tpg.json.Departure;
+import com.mauriciotogneri.common.api.tpg.json.Step;
 import com.mauriciotogneri.common.base.BaseUiContainer;
 import com.mauriciotogneri.common.base.BaseView;
 import com.mauriciotogneri.tpgwear.R;
-import com.mauriciotogneri.tpgwear.adapters.DepartureAdapter;
-import com.mauriciotogneri.tpgwear.adapters.DepartureAdapter.DepartureViewHolder;
-import com.mauriciotogneri.tpgwear.ui.departures.DeparturesView.UiContainer;
+import com.mauriciotogneri.tpgwear.adapters.StepAdapter;
+import com.mauriciotogneri.tpgwear.adapters.StepAdapter.StepViewHolder;
+import com.mauriciotogneri.tpgwear.ui.trip.TripView.UiContainer;
 
 import java.util.List;
 
-public class DeparturesView extends BaseView<UiContainer> implements DeparturesViewInterface<UiContainer>
+public class TripView extends BaseView<UiContainer> implements TripViewInterface<UiContainer>
 {
-    private DepartureAdapter adapter;
+    private StepAdapter adapter;
 
     @Override
-    public void initialize(final DeparturesViewObserver observer)
+    public void initialize(final TripViewObserver observer)
     {
         ui.stub.setOnLayoutInflatedListener(new OnLayoutInflatedListener()
         {
@@ -38,11 +38,11 @@ public class DeparturesView extends BaseView<UiContainer> implements DeparturesV
         });
     }
 
-    private void onLoad(final DeparturesViewObserver observer)
+    private void onLoad(final TripViewObserver observer)
     {
         ui.progressBar.setVisibility(View.VISIBLE);
 
-        adapter = new DepartureAdapter(getContext());
+        adapter = new StepAdapter(getContext());
 
         ui.list.setAdapter(adapter);
         ui.list.addOnScrollListener(new OnScrollListener()
@@ -76,8 +76,8 @@ public class DeparturesView extends BaseView<UiContainer> implements DeparturesV
             @Override
             public void onClick(ViewHolder viewHolder)
             {
-                DepartureViewHolder departureViewHolder = (DepartureViewHolder) viewHolder;
-                observer.onDepartureSelected(departureViewHolder.get());
+                StepViewHolder stepViewHolder = (StepViewHolder) viewHolder;
+                observer.onStepSelected(stepViewHolder.get());
             }
 
             @Override
@@ -90,18 +90,23 @@ public class DeparturesView extends BaseView<UiContainer> implements DeparturesV
     }
 
     @Override
-    public void displayData(List<Departure> departures)
+    public void displayData(List<Step> steps, int position)
     {
         ui.progressBar.setVisibility(View.GONE);
         ui.list.setVisibility(View.VISIBLE);
 
-        adapter.setData(departures);
+        adapter.setData(steps);
+
+        if (position > -1)
+        {
+            ui.list.scrollToPosition(position);
+        }
     }
 
     @Override
     public int getViewId()
     {
-        return R.layout.stub_departure;
+        return R.layout.stub_trip;
     }
 
     @Override

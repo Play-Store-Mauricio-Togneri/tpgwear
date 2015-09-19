@@ -6,9 +6,9 @@ import com.mauriciotogneri.common.base.BaseViewInterface;
 
 import java.util.List;
 
-public interface DeparturesInterface<UI extends BaseUiContainer> extends BaseViewInterface<UI>
+public interface DeparturesViewInterface<UI extends BaseUiContainer> extends BaseViewInterface<UI>
 {
-    void initialize(DeparturesObserver observer);
+    void initialize(DeparturesViewObserver observer);
 
     void displayData(List<Departure> departures);
 }

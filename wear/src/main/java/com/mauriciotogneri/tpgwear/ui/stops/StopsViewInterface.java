@@ -6,9 +6,9 @@ import com.mauriciotogneri.common.base.BaseViewInterface;
 
 import java.util.List;
 
-public interface StopsInterface<UI extends BaseUiContainer> extends BaseViewInterface<UI>
+public interface StopsViewInterface<UI extends BaseUiContainer> extends BaseViewInterface<UI>
 {
-    void initialize(StopsObserver observer);
+    void initialize(StopsViewObserver observer);
 
     void displayData(List<Stop> stops);
 }

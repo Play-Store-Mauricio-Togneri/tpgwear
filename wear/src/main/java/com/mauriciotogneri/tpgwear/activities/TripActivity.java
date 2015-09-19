@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 
 import com.google.gson.reflect.TypeToken;
-import com.mauriciotogneri.common.api.tpg.json.Departure;
+import com.mauriciotogneri.common.api.tpg.json.Step;
 import com.mauriciotogneri.common.api.wearable.Message;
 import com.mauriciotogneri.common.api.wearable.WearableApi.Messages;
 import com.mauriciotogneri.common.api.wearable.WearableApi.Paths;
@@ -14,27 +14,27 @@ import com.mauriciotogneri.common.api.wearable.WearableConnectivity;
 import com.mauriciotogneri.common.api.wearable.WearableConnectivity.WearableEvents;
 import com.mauriciotogneri.common.base.BaseActivity;
 import com.mauriciotogneri.common.utils.JsonUtils;
-import com.mauriciotogneri.tpgwear.ui.departures.DeparturesViewInterface;
-import com.mauriciotogneri.tpgwear.ui.departures.DeparturesViewObserver;
-import com.mauriciotogneri.tpgwear.ui.departures.DeparturesView;
+import com.mauriciotogneri.tpgwear.ui.trip.TripView;
+import com.mauriciotogneri.tpgwear.ui.trip.TripViewInterface;
+import com.mauriciotogneri.tpgwear.ui.trip.TripViewObserver;
 
 import java.lang.reflect.Type;
 import java.util.List;
 
-public class DeparturesActivity extends BaseActivity<DeparturesViewInterface> implements WearableEvents, DeparturesViewObserver
+public class TripActivity extends BaseActivity<TripViewInterface> implements WearableEvents, TripViewObserver
 {
     private WearableConnectivity connectivity;
 
     private static final String EXTRA_NODE_ID = "EXTRA_NODE_ID";
-    private static final String EXTRA_STOP_CODE = "EXTRA_STOP_CODE";
+    private static final String EXTRA_DEPARTURE_CODE = "EXTRA_DEPARTURE_CODE";
 
-    public static Intent getInstance(Context context, String nodeId, String stopCode)
+    public static Intent getInstance(Context context, String nodeId, String departureCode)
     {
-        Intent intent = new Intent(context, DeparturesActivity.class);
+        Intent intent = new Intent(context, TripActivity.class);
 
         Bundle bundle = new Bundle();
         bundle.putString(EXTRA_NODE_ID, nodeId);
-        bundle.putString(EXTRA_STOP_CODE, stopCode);
+        bundle.putString(EXTRA_DEPARTURE_CODE, departureCode);
 
         intent.putExtras(bundle);
 
@@ -58,31 +58,49 @@ public class DeparturesActivity extends BaseActivity<DeparturesViewInterface> im
     public void onConnectedSuccess()
     {
         String nodeId = getIntent().getStringExtra(EXTRA_NODE_ID);
-        String stopCode = getIntent().getStringExtra(EXTRA_STOP_CODE);
+        String departureCode = getIntent().getStringExtra(EXTRA_DEPARTURE_CODE);
 
-        connectivity.sendMessage(Messages.getDepartures(nodeId, stopCode));
+        connectivity.sendMessage(Messages.getTrip(nodeId, departureCode));
     }
 
     @Override
     public void onMessageReceived(Message message)
     {
-        if (TextUtils.equals(message.getPath(), Paths.RESULT_DEPARTURES))
+        if (TextUtils.equals(message.getPath(), Paths.RESULT_TRIP))
         {
-            Type type = new TypeToken<List<Departure>>()
+            Type type = new TypeToken<List<Step>>()
             {
             }.getType();
 
-            List<Departure> departures = JsonUtils.fromJson(message.getPayloadAsString(), type);
-            view.displayData(departures);
+            String departureCode = getIntent().getStringExtra(EXTRA_DEPARTURE_CODE);
+            List<Step> steps = JsonUtils.fromJson(message.getPayloadAsString(), type);
+
+            int position = getPositionInList(steps, Integer.parseInt(departureCode));
+            view.displayData(steps, position);
         }
     }
 
+    private int getPositionInList(List<Step> steps, int departureCode)
+    {
+        for (int i = 0; i < steps.size(); i++)
+        {
+            Step step = steps.get(i);
+
+            if (step.departureCode == departureCode)
+            {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
     @Override
-    public void onDepartureSelected(Departure departure)
+    public void onStepSelected(Step step)
     {
         String nodeId = getIntent().getStringExtra(EXTRA_NODE_ID);
 
-        Intent intent = TripActivity.getInstance(this, nodeId, String.valueOf(departure.departureCode));
+        Intent intent = DeparturesActivity.getInstance(this, nodeId, step.stop.stopCode);
         startActivity(intent);
     }
 
@@ -104,8 +122,8 @@ public class DeparturesActivity extends BaseActivity<DeparturesViewInterface> im
     }
 
     @Override
-    protected DeparturesViewInterface getViewInstance()
+    protected TripViewInterface getViewInstance()
     {
-        return new DeparturesView();
+        return new TripView();
     }
 }

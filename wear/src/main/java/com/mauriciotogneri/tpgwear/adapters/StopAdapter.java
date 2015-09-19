@@ -1,7 +1,6 @@
 package com.mauriciotogneri.tpgwear.adapters;
 
 import android.content.Context;
-import android.support.wearable.view.WearableListView;
 import android.view.View;
 import android.widget.TextView;
 
@@ -34,7 +33,7 @@ public class StopAdapter extends BaseAdapter<Stop, StopViewHolder>
         return R.layout.row_stop;
     }
 
-    public static class StopViewHolder extends WearableListView.ViewHolder
+    public static class StopViewHolder extends BaseViewHolder<Stop>
     {
         private final TextView stopName;
 
@@ -43,11 +42,6 @@ public class StopAdapter extends BaseAdapter<Stop, StopViewHolder>
             super(itemView);
 
             this.stopName = (TextView) itemView.findViewById(R.id.stop_name);
-        }
-
-        public Stop getStop()
-        {
-            return (Stop) itemView.getTag();
         }
     }
 }

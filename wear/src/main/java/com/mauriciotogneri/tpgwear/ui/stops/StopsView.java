@@ -19,12 +19,12 @@ import com.mauriciotogneri.tpgwear.ui.stops.StopsView.UiContainer;
 
 import java.util.List;
 
-public class StopsView extends BaseView<UiContainer> implements StopsInterface<UiContainer>
+public class StopsView extends BaseView<UiContainer> implements StopsViewInterface<UiContainer>
 {
     private StopAdapter adapter;
 
     @Override
-    public void initialize(final StopsObserver observer)
+    public void initialize(final StopsViewObserver observer)
     {
         ui.stub.setOnLayoutInflatedListener(new OnLayoutInflatedListener()
         {
@@ -38,7 +38,7 @@ public class StopsView extends BaseView<UiContainer> implements StopsInterface<U
         });
     }
 
-    private void onLoad(final StopsObserver observer)
+    private void onLoad(final StopsViewObserver observer)
     {
         ui.progressBar.setVisibility(View.VISIBLE);
 
@@ -77,7 +77,7 @@ public class StopsView extends BaseView<UiContainer> implements StopsInterface<U
             public void onClick(ViewHolder viewHolder)
             {
                 StopViewHolder stopViewHolder = (StopViewHolder) viewHolder;
-                observer.onStopSelected(stopViewHolder.getStop());
+                observer.onStopSelected(stopViewHolder.get());
             }
 
             @Override

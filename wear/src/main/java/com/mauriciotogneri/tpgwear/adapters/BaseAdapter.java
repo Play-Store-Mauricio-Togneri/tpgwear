@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BaseAdapter<T, H extends WearableListView.ViewHolder> extends WearableListView.Adapter
+public abstract class BaseAdapter<T, H extends BaseViewHolder<T>> extends WearableListView.Adapter
 {
     private final List<T> items;
     private final LayoutInflater inflater;

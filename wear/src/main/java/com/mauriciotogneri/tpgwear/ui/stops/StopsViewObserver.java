@@ -2,7 +2,7 @@ package com.mauriciotogneri.tpgwear.ui.stops;
 
 import com.mauriciotogneri.common.api.tpg.json.Stop;
 
-public interface StopsObserver
+public interface StopsViewObserver
 {
     void onStubReady();
 

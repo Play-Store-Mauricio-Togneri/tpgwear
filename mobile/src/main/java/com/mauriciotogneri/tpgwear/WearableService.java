@@ -14,6 +14,7 @@ import com.mauriciotogneri.common.api.tpg.TpgApi;
 import com.mauriciotogneri.common.api.tpg.TpgApi.OnRequestResult;
 import com.mauriciotogneri.common.api.tpg.json.GetLinesColors;
 import com.mauriciotogneri.common.api.tpg.json.GetNextDepartures;
+import com.mauriciotogneri.common.api.tpg.json.GetThermometer;
 import com.mauriciotogneri.common.api.tpg.json.Stop;
 import com.mauriciotogneri.common.api.wearable.Message;
 import com.mauriciotogneri.common.api.wearable.WearableApi.Messages;
@@ -73,6 +74,10 @@ public class WearableService extends Service implements WearableEvents
         else if (TextUtils.equals(path, Paths.GET_DEPARTURES))
         {
             getDepartures(nodeId, payload);
+        }
+        else if (TextUtils.equals(path, Paths.GET_TRIP))
+        {
+            getTrip(nodeId, payload);
         }
     }
 
@@ -148,6 +153,26 @@ public class WearableService extends Service implements WearableEvents
                         toast("HTTP CALL FAIL");
                     }
                 });
+            }
+
+            @Override
+            public void onFailure()
+            {
+                toast("HTTP CALL FAIL");
+            }
+        });
+    }
+
+    private void getTrip(final String nodeId, final String departureCode)
+    {
+        final TpgApi tpgApi = TpgApi.getInstance(this);
+
+        tpgApi.getThermometer(Integer.parseInt(departureCode), new OnRequestResult<GetThermometer>()
+        {
+            @Override
+            public void onSuccess(GetThermometer trip)
+            {
+                connectivity.sendMessage(Messages.resultTrip(nodeId, trip.steps));
             }
 
             @Override

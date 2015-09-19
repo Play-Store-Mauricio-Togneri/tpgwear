@@ -13,14 +13,14 @@ import com.mauriciotogneri.common.api.wearable.WearableConnectivity.OnDeviceNode
 import com.mauriciotogneri.common.api.wearable.WearableConnectivity.WearableEvents;
 import com.mauriciotogneri.common.base.BaseActivity;
 import com.mauriciotogneri.common.utils.JsonUtils;
-import com.mauriciotogneri.tpgwear.ui.stops.StopsInterface;
-import com.mauriciotogneri.tpgwear.ui.stops.StopsObserver;
+import com.mauriciotogneri.tpgwear.ui.stops.StopsViewInterface;
+import com.mauriciotogneri.tpgwear.ui.stops.StopsViewObserver;
 import com.mauriciotogneri.tpgwear.ui.stops.StopsView;
 
 import java.lang.reflect.Type;
 import java.util.List;
 
-public class StopsActivity extends BaseActivity<StopsInterface> implements WearableEvents, StopsObserver
+public class StopsActivity extends BaseActivity<StopsViewInterface> implements WearableEvents, StopsViewObserver
 {
     private String nodeId = "";
     private WearableConnectivity connectivity;
@@ -92,7 +92,7 @@ public class StopsActivity extends BaseActivity<StopsInterface> implements Weara
     }
 
     @Override
-    protected StopsInterface getViewInstance()
+    protected StopsViewInterface getViewInstance()
     {
         return new StopsView();
     }
