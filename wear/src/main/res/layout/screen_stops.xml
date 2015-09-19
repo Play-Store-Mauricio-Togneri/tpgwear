@@ -19,12 +19,42 @@
             android:layout_gravity="center"
             android:visibility="gone"/>
 
-        <android.support.wearable.view.WearableListView
-            android:id="@+id/list"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="none"
-            android:visibility="visible"/>
+            android:layout_height="match_parent">
+
+            <android.support.wearable.view.WearableListView
+                android:id="@+id/list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none"
+                android:visibility="visible"/>
+
+            <LinearLayout
+                android:id="@+id/header"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/header_favorite_stops"
+                    android:textColor="@color/logo"
+                    android:textSize="@dimen/font_size_normal"
+                    android:textStyle="bold"/>
+
+                <View
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/horizontal_line"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
 
     </FrameLayout>
 

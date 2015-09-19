@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="font_color">#555555</color>
+    <color name="font_color">#777777</color>
     <color name="horizontal_line">#E0E0E0</color>
     <color name="item_selected">#D7D7D7</color>
+    <color name="logo">#E65A1E</color>
 
 </resources>

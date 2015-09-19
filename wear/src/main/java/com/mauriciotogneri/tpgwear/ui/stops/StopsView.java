@@ -4,6 +4,7 @@ import android.support.wearable.view.WatchViewStub;
 import android.support.wearable.view.WatchViewStub.OnLayoutInflatedListener;
 import android.support.wearable.view.WearableListView;
 import android.support.wearable.view.WearableListView.ClickListener;
+import android.support.wearable.view.WearableListView.OnScrollListener;
 import android.support.wearable.view.WearableListView.ViewHolder;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -44,6 +45,32 @@ public class StopsView extends BaseView<UiContainer> implements StopsInterface<U
         adapter = new StopAdapter(getContext());
 
         ui.list.setAdapter(adapter);
+        ui.list.addOnScrollListener(new OnScrollListener()
+        {
+            @Override
+            public void onAbsoluteScrollChange(int i)
+            {
+                if (i > 0)
+                {
+                    ui.header.setY(-i);
+                }
+            }
+
+            @Override
+            public void onScroll(int i)
+            {
+            }
+
+            @Override
+            public void onScrollStateChanged(int i)
+            {
+            }
+
+            @Override
+            public void onCentralPositionChanged(int i)
+            {
+            }
+        });
         ui.list.setClickListener(new ClickListener()
         {
             @Override
@@ -88,6 +115,7 @@ public class StopsView extends BaseView<UiContainer> implements StopsInterface<U
         private WatchViewStub stub;
         private ProgressBar progressBar;
         private WearableListView list;
+        private View header;
 
         public UiContainer(BaseView baseView)
         {
@@ -100,6 +128,7 @@ public class StopsView extends BaseView<UiContainer> implements StopsInterface<U
         {
             this.progressBar = (ProgressBar) findViewById(R.id.progress_bar);
             this.list = (WearableListView) findViewById(R.id.list);
+            this.header = findViewById(R.id.header);
         }
     }
 }
