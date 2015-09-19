@@ -46,7 +46,15 @@ public class WearableService extends Service implements WearableEvents
     @Override
     public IBinder onBind(Intent intent)
     {
-        return null; // TODO
+        return null;
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId)
+    {
+        super.onStartCommand(intent, flags, startId);
+
+        return START_STICKY;
     }
 
     @Override
@@ -63,15 +71,6 @@ public class WearableService extends Service implements WearableEvents
     @Override
     public void onMessageReceived(Message message)
     {
-        try
-        {
-            Thread.sleep(2000);
-        }
-        catch (InterruptedException e)
-        {
-            e.printStackTrace();
-        }
-
         String nodeId = message.getNodeId();
         String path = message.getPath();
         String payload = message.getPayloadAsString();
