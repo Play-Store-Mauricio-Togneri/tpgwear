@@ -1,4 +1,4 @@
-package com.mauriciotogneri.tpgwear.ui.busstopdepartures;
+package com.mauriciotogneri.tpgwear.ui.stops;
 
 import android.support.wearable.view.WatchViewStub;
 import android.support.wearable.view.WatchViewStub.OnLayoutInflatedListener;
@@ -8,22 +8,22 @@ import android.support.wearable.view.WearableListView.ViewHolder;
 import android.view.View;
 import android.widget.ProgressBar;
 
-import com.mauriciotogneri.common.api.tpg.json.Departure;
+import com.mauriciotogneri.common.api.tpg.json.Stop;
 import com.mauriciotogneri.common.base.BaseUiContainer;
 import com.mauriciotogneri.common.base.BaseView;
 import com.mauriciotogneri.tpgwear.R;
-import com.mauriciotogneri.tpgwear.adapters.StopDepartureAdapter;
-import com.mauriciotogneri.tpgwear.adapters.StopDepartureAdapter.BusStopDepartureViewHolder;
-import com.mauriciotogneri.tpgwear.ui.busstopdepartures.BusStopDeparturesView.UiContainer;
+import com.mauriciotogneri.tpgwear.adapters.StopAdapter;
+import com.mauriciotogneri.tpgwear.adapters.StopAdapter.StopViewHolder;
+import com.mauriciotogneri.tpgwear.ui.stops.StopsView.UiContainer;
 
 import java.util.List;
 
-public class BusStopDeparturesView extends BaseView<UiContainer> implements BusStopDeparturesInterface<UiContainer>
+public class StopsView extends BaseView<UiContainer> implements StopsInterface<UiContainer>
 {
-    private StopDepartureAdapter adapter;
+    private StopAdapter adapter;
 
     @Override
-    public void initialize(final BusStopDeparturesObserver observer)
+    public void initialize(final StopsObserver observer)
     {
         ui.stub.setOnLayoutInflatedListener(new OnLayoutInflatedListener()
         {
@@ -37,11 +37,11 @@ public class BusStopDeparturesView extends BaseView<UiContainer> implements BusS
         });
     }
 
-    private void onLoad(final BusStopDeparturesObserver observer)
+    private void onLoad(final StopsObserver observer)
     {
         ui.progressBar.setVisibility(View.VISIBLE);
 
-        adapter = new StopDepartureAdapter(getContext());
+        adapter = new StopAdapter(getContext());
 
         ui.list.setAdapter(adapter);
         ui.list.setClickListener(new ClickListener()
@@ -49,8 +49,8 @@ public class BusStopDeparturesView extends BaseView<UiContainer> implements BusS
             @Override
             public void onClick(ViewHolder viewHolder)
             {
-                BusStopDepartureViewHolder busStopViewHolder = (BusStopDepartureViewHolder) viewHolder;
-                observer.onBusStopDepartureSelected(busStopViewHolder.getBusStopDeparture());
+                StopViewHolder stopViewHolder = (StopViewHolder) viewHolder;
+                observer.onStopSelected(stopViewHolder.getStop());
             }
 
             @Override
@@ -63,18 +63,18 @@ public class BusStopDeparturesView extends BaseView<UiContainer> implements BusS
     }
 
     @Override
-    public void displayData(List<Departure> departures)
+    public void displayData(List<Stop> stops)
     {
         ui.progressBar.setVisibility(View.GONE);
         ui.list.setVisibility(View.VISIBLE);
 
-        adapter.setData(departures);
+        adapter.setData(stops);
     }
 
     @Override
     public int getViewId()
     {
-        return R.layout.stub_bus_stop_departure;
+        return R.layout.stub_stops;
     }
 
     @Override
@@ -99,7 +99,7 @@ public class BusStopDeparturesView extends BaseView<UiContainer> implements BusS
         public void load()
         {
             this.progressBar = (ProgressBar) findViewById(R.id.progress_bar);
-            this.list = (WearableListView) findViewById(R.id.bus_stop_departures_list);
+            this.list = (WearableListView) findViewById(R.id.list);
         }
     }
 }

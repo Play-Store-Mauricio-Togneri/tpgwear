@@ -5,7 +5,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.mauriciotogneri.common.model.BusStopList;
+import com.google.gson.reflect.TypeToken;
+import com.mauriciotogneri.common.api.tpg.json.Stop;
+
+import java.lang.reflect.Type;
+import java.util.List;
 
 public class Preferences
 {
@@ -50,13 +54,19 @@ public class Preferences
 
     // =============================================================================================
 
-    public void saveFavoriteStops(BusStopList busStopList)
+    public void saveFavoriteStops(List<Stop> stops)
     {
-        save(KEY_FAVORITE_STOPS, busStopList.toString());
+        save(KEY_FAVORITE_STOPS, JsonUtils.toJson(stops));
     }
 
-    public BusStopList getFavoriteStops()
+    public List<Stop> getFavoriteStops()
     {
-        return BusStopList.fromString(get(KEY_FAVORITE_STOPS, "[]"));
+        String json = get(KEY_FAVORITE_STOPS, "[]");
+
+        Type type = new TypeToken<List<Stop>>()
+        {
+        }.getType();
+
+        return JsonUtils.fromJson(json, type);
     }
 }

@@ -5,11 +5,11 @@ import android.support.wearable.view.WearableListView;
 import android.view.View;
 import android.widget.TextView;
 
-import com.mauriciotogneri.common.model.BusStop;
+import com.mauriciotogneri.common.api.tpg.json.Stop;
 import com.mauriciotogneri.tpgwear.R;
-import com.mauriciotogneri.tpgwear.adapters.StopAdapter.BusStopViewHolder;
+import com.mauriciotogneri.tpgwear.adapters.StopAdapter.StopViewHolder;
 
-public class StopAdapter extends BaseAdapter<BusStop, BusStopViewHolder>
+public class StopAdapter extends BaseAdapter<Stop, StopViewHolder>
 {
     public StopAdapter(Context context)
     {
@@ -17,15 +17,15 @@ public class StopAdapter extends BaseAdapter<BusStop, BusStopViewHolder>
     }
 
     @Override
-    protected void fill(BusStop stop, BusStopViewHolder viewHolder)
+    protected void fill(Stop stop, StopViewHolder viewHolder)
     {
-        viewHolder.busStopName.setText(stop.getName());
+        viewHolder.stopName.setText(stop.stopName);
     }
 
     @Override
-    protected BusStopViewHolder getViewHolder(View view)
+    protected StopViewHolder getViewHolder(View view)
     {
-        return new BusStopViewHolder(view);
+        return new StopViewHolder(view);
     }
 
     @Override
@@ -34,20 +34,20 @@ public class StopAdapter extends BaseAdapter<BusStop, BusStopViewHolder>
         return R.layout.row_stop;
     }
 
-    public static class BusStopViewHolder extends WearableListView.ViewHolder
+    public static class StopViewHolder extends WearableListView.ViewHolder
     {
-        private TextView busStopName;
+        private TextView stopName;
 
-        public BusStopViewHolder(View itemView)
+        public StopViewHolder(View itemView)
         {
             super(itemView);
 
-            this.busStopName = (TextView) itemView.findViewById(R.id.bus_stop_name);
+            this.stopName = (TextView) itemView.findViewById(R.id.stop_name);
         }
 
-        public BusStop getBusStop()
+        public Stop getStop()
         {
-            return (BusStop) itemView.getTag();
+            return (Stop) itemView.getTag();
         }
     }
 }

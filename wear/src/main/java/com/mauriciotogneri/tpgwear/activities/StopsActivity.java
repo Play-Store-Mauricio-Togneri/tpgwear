@@ -3,6 +3,8 @@ package com.mauriciotogneri.tpgwear.activities;
 import android.content.Intent;
 import android.text.TextUtils;
 
+import com.google.gson.reflect.TypeToken;
+import com.mauriciotogneri.common.api.tpg.json.Stop;
 import com.mauriciotogneri.common.api.wearable.Message;
 import com.mauriciotogneri.common.api.wearable.WearableApi.Messages;
 import com.mauriciotogneri.common.api.wearable.WearableApi.Paths;
@@ -10,14 +12,15 @@ import com.mauriciotogneri.common.api.wearable.WearableConnectivity;
 import com.mauriciotogneri.common.api.wearable.WearableConnectivity.OnDeviceNodeDetected;
 import com.mauriciotogneri.common.api.wearable.WearableConnectivity.WearableEvents;
 import com.mauriciotogneri.common.base.BaseActivity;
-import com.mauriciotogneri.common.model.BusStop;
-import com.mauriciotogneri.common.model.BusStopList;
 import com.mauriciotogneri.common.utils.JsonUtils;
-import com.mauriciotogneri.tpgwear.ui.busstoplist.BusStopListInterface;
-import com.mauriciotogneri.tpgwear.ui.busstoplist.BusStopListObserver;
-import com.mauriciotogneri.tpgwear.ui.busstoplist.BusStopListView;
+import com.mauriciotogneri.tpgwear.ui.stops.StopsInterface;
+import com.mauriciotogneri.tpgwear.ui.stops.StopsObserver;
+import com.mauriciotogneri.tpgwear.ui.stops.StopsView;
 
-public class StopListActivity extends BaseActivity<BusStopListInterface> implements WearableEvents, BusStopListObserver
+import java.lang.reflect.Type;
+import java.util.List;
+
+public class StopsActivity extends BaseActivity<StopsInterface> implements WearableEvents, StopsObserver
 {
     private String nodeId = "";
     private WearableConnectivity connectivity;
@@ -45,7 +48,7 @@ public class StopListActivity extends BaseActivity<BusStopListInterface> impleme
             {
                 nodeId = deviceNodeId;
 
-                connectivity.sendMessage(Messages.getFavoriteBusStops(nodeId));
+                connectivity.sendMessage(Messages.getFavoriteStops(nodeId));
             }
         });
     }
@@ -53,17 +56,21 @@ public class StopListActivity extends BaseActivity<BusStopListInterface> impleme
     @Override
     public void onMessageReceived(Message message)
     {
-        if (TextUtils.equals(message.getPath(), Paths.RESULT_FAVORITE_BUS_STOPS))
+        if (TextUtils.equals(message.getPath(), Paths.RESULT_FAVORITE_STOPS))
         {
-            BusStopList busStopList = JsonUtils.fromJson(message.getPayloadAsString(), BusStopList.class);
-            view.displayData(busStopList);
+            Type type = new TypeToken<List<Stop>>()
+            {
+            }.getType();
+
+            List<Stop> stops = JsonUtils.fromJson(message.getPayloadAsString(), type);
+            view.displayData(stops);
         }
     }
 
     @Override
-    public void onBusStopSelected(BusStop busStop)
+    public void onStopSelected(Stop stop)
     {
-        Intent intent = StopDepartureListActivity.getInstance(this, nodeId, busStop.getCode());
+        Intent intent = DeparturesActivity.getInstance(this, nodeId, stop.stopCode);
         startActivity(intent);
     }
 
@@ -85,8 +92,8 @@ public class StopListActivity extends BaseActivity<BusStopListInterface> impleme
     }
 
     @Override
-    protected BusStopListInterface getViewInstance()
+    protected StopsInterface getViewInstance()
     {
-        return new BusStopListView();
+        return new StopsView();
     }
 }

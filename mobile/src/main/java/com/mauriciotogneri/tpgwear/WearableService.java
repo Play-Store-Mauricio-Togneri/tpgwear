@@ -13,14 +13,16 @@ import android.widget.Toast;
 import com.mauriciotogneri.common.api.tpg.TpgApi;
 import com.mauriciotogneri.common.api.tpg.TpgApi.OnRequestResult;
 import com.mauriciotogneri.common.api.tpg.json.GetNextDepartures;
+import com.mauriciotogneri.common.api.tpg.json.Stop;
 import com.mauriciotogneri.common.api.wearable.Message;
 import com.mauriciotogneri.common.api.wearable.WearableApi.Messages;
 import com.mauriciotogneri.common.api.wearable.WearableApi.Paths;
 import com.mauriciotogneri.common.api.wearable.WearableConnectivity;
 import com.mauriciotogneri.common.api.wearable.WearableConnectivity.WearableEvents;
-import com.mauriciotogneri.common.model.BusStop;
-import com.mauriciotogneri.common.model.BusStopList;
 import com.mauriciotogneri.common.utils.Preferences;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class WearableService extends Service implements WearableEvents
 {
@@ -63,54 +65,71 @@ public class WearableService extends Service implements WearableEvents
         String path = message.getPath();
         String payload = message.getPayloadAsString();
 
-        if (TextUtils.equals(path, Paths.GET_FAVORITE_BUS_STOPS))
+        if (TextUtils.equals(path, Paths.GET_FAVORITE_STOPS))
         {
             getFavoriteStops(nodeId);
         }
-        else if (TextUtils.equals(path, Paths.GET_BUS_STOP_DEPARTURES))
+        else if (TextUtils.equals(path, Paths.GET_DEPARTURES))
         {
-            getBusStopDepartures(nodeId, payload);
+            getDepartures(nodeId, payload);
         }
     }
 
     private void getFavoriteStops(String nodeId)
     {
-        //BusStopList busStopList = preferences.getFavoriteBusStops();
-        BusStopList busStopList = getDefaultBusStopList();
+        //List<Stop> stops = preferences.getFavoriteStops();
+        List<Stop> stops = getDefaultStopList();
 
-        connectivity.sendMessage(Messages.resultFavoriteBusStops(nodeId, busStopList));
+        connectivity.sendMessage(Messages.resultFavoriteStops(nodeId, stops));
     }
 
     // TODO: remove
-    private BusStopList getDefaultBusStopList()
+    private List<Stop> getDefaultStopList()
     {
-        BusStop busStopCamilleMartin = new BusStop("Camille-Martin", "CMAR");
-        BusStop busStopEpinettes = new BusStop("Epinettes", "EPIN");
-        BusStop busStopMileant = new BusStop("Miléant", "MILE");
-        BusStop busStopBelAir = new BusStop("Bel-Air", "BAIR");
-        BusStop busStopBains = new BusStop("Bains", "BANS");
-        BusStop busStopPalettes = new BusStop("Palettes", "PALE");
+        Stop stopCamilleMartin = new Stop();
+        stopCamilleMartin.stopCode = "CMAR";
+        stopCamilleMartin.stopName = "Camille-Martin";
 
-        BusStopList busStopList = new BusStopList();
-        busStopList.add(busStopCamilleMartin);
-        busStopList.add(busStopEpinettes);
-        busStopList.add(busStopMileant);
-        busStopList.add(busStopBelAir);
-        busStopList.add(busStopBains);
-        busStopList.add(busStopPalettes);
+        Stop stopEpinettes = new Stop();
+        stopEpinettes.stopCode = "EPIN";
+        stopEpinettes.stopName = "Epinettes";
 
-        return busStopList;
+        Stop stopMileant = new Stop();
+        stopMileant.stopCode = "MILE";
+        stopMileant.stopName = "Miléant";
+
+        Stop stopBelAir = new Stop();
+        stopBelAir.stopCode = "BAIR";
+        stopBelAir.stopName = "Bel-Air";
+
+        Stop stopBains = new Stop();
+        stopBains.stopCode = "BANS";
+        stopBains.stopName = "Bains";
+
+        Stop stopPalettes = new Stop();
+        stopPalettes.stopCode = "PALE";
+        stopPalettes.stopName = "Palettes";
+
+        List<Stop> stops = new ArrayList<>();
+        stops.add(stopCamilleMartin);
+        stops.add(stopEpinettes);
+        stops.add(stopMileant);
+        stops.add(stopBelAir);
+        stops.add(stopBains);
+        stops.add(stopPalettes);
+
+        return stops;
     }
 
-    private void getBusStopDepartures(final String nodeId, final String busStopCode)
+    private void getDepartures(final String nodeId, final String stopCode)
     {
         TpgApi tpgApi = TpgApi.getInstance(this);
-        tpgApi.getNextDepartures(busStopCode, new OnRequestResult<GetNextDepartures>()
+        tpgApi.getNextDepartures(stopCode, new OnRequestResult<GetNextDepartures>()
         {
             @Override
             public void onSuccess(GetNextDepartures result)
             {
-                connectivity.sendMessage(Messages.resultBusStopDepartures(nodeId, result.departures));
+                connectivity.sendMessage(Messages.resultDepartures(nodeId, result.departures));
             }
 
             @Override

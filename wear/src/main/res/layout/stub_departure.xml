@@ -6,6 +6,6 @@
     android:id="@+id/watch_view_stub"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:rectLayout="@layout/screen_bus_stop_list"
-    app:roundLayout="@layout/screen_bus_stop_list"
+    app:rectLayout="@layout/screen_departures"
+    app:roundLayout="@layout/screen_departures"
     tools:deviceIds="wear" />

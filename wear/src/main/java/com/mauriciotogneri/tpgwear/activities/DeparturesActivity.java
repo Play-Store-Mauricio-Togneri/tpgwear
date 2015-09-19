@@ -13,29 +13,28 @@ import com.mauriciotogneri.common.api.wearable.WearableApi.Paths;
 import com.mauriciotogneri.common.api.wearable.WearableConnectivity;
 import com.mauriciotogneri.common.api.wearable.WearableConnectivity.WearableEvents;
 import com.mauriciotogneri.common.base.BaseActivity;
-import com.mauriciotogneri.common.model.BusStopDeparture;
 import com.mauriciotogneri.common.utils.JsonUtils;
-import com.mauriciotogneri.tpgwear.ui.busstopdepartures.BusStopDeparturesInterface;
-import com.mauriciotogneri.tpgwear.ui.busstopdepartures.BusStopDeparturesObserver;
-import com.mauriciotogneri.tpgwear.ui.busstopdepartures.BusStopDeparturesView;
+import com.mauriciotogneri.tpgwear.ui.departures.DeparturesInterface;
+import com.mauriciotogneri.tpgwear.ui.departures.DeparturesObserver;
+import com.mauriciotogneri.tpgwear.ui.departures.DeparturesView;
 
 import java.lang.reflect.Type;
 import java.util.List;
 
-public class StopDepartureListActivity extends BaseActivity<BusStopDeparturesInterface> implements WearableEvents, BusStopDeparturesObserver
+public class DeparturesActivity extends BaseActivity<DeparturesInterface> implements WearableEvents, DeparturesObserver
 {
     private WearableConnectivity connectivity;
 
     private static final String EXTRA_NODE_ID = "EXTRA_NODE_ID";
-    private static final String EXTRA_BUS_STOP_CODE = "EXTRA_BUS_STOP_CODE";
+    private static final String EXTRA_STOP_CODE = "EXTRA_STOP_CODE";
 
-    public static Intent getInstance(Context context, String nodeId, String busStopCode)
+    public static Intent getInstance(Context context, String nodeId, String stopCode)
     {
-        Intent intent = new Intent(context, StopDepartureListActivity.class);
+        Intent intent = new Intent(context, DeparturesActivity.class);
 
         Bundle bundle = new Bundle();
         bundle.putString(EXTRA_NODE_ID, nodeId);
-        bundle.putString(EXTRA_BUS_STOP_CODE, busStopCode);
+        bundle.putString(EXTRA_STOP_CODE, stopCode);
 
         intent.putExtras(bundle);
 
@@ -59,27 +58,27 @@ public class StopDepartureListActivity extends BaseActivity<BusStopDeparturesInt
     public void onConnectedSuccess()
     {
         String nodeId = getIntent().getStringExtra(EXTRA_NODE_ID);
-        String busStopCode = getIntent().getStringExtra(EXTRA_BUS_STOP_CODE);
+        String stopCode = getIntent().getStringExtra(EXTRA_STOP_CODE);
 
-        connectivity.sendMessage(Messages.getBusStopDepartures(nodeId, busStopCode));
+        connectivity.sendMessage(Messages.getDepartures(nodeId, stopCode));
     }
 
     @Override
     public void onMessageReceived(Message message)
     {
-        if (TextUtils.equals(message.getPath(), Paths.RESULT_BUS_STOP_DEPARTURES))
+        if (TextUtils.equals(message.getPath(), Paths.RESULT_DEPARTURES))
         {
-            Type listType = new TypeToken<List<Departure>>()
+            Type type = new TypeToken<List<Departure>>()
             {
             }.getType();
 
-            List<Departure> departures = JsonUtils.fromJson(message.getPayloadAsString(), listType);
+            List<Departure> departures = JsonUtils.fromJson(message.getPayloadAsString(), type);
             view.displayData(departures);
         }
     }
 
     @Override
-    public void onBusStopDepartureSelected(BusStopDeparture busStopDeparture)
+    public void onDepartureSelected(Departure departure)
     {
         toast("SELECTED!");
     }
@@ -102,8 +101,8 @@ public class StopDepartureListActivity extends BaseActivity<BusStopDeparturesInt
     }
 
     @Override
-    protected BusStopDeparturesInterface getViewInstance()
+    protected DeparturesInterface getViewInstance()
     {
-        return new BusStopDeparturesView();
+        return new DeparturesView();
     }
 }

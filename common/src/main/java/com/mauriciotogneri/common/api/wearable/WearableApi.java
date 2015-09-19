@@ -1,7 +1,7 @@
 package com.mauriciotogneri.common.api.wearable;
 
 import com.mauriciotogneri.common.api.tpg.json.Departure;
-import com.mauriciotogneri.common.model.BusStopList;
+import com.mauriciotogneri.common.api.tpg.json.Stop;
 import com.mauriciotogneri.common.utils.JsonUtils;
 
 import java.util.List;
@@ -10,33 +10,33 @@ public class WearableApi
 {
     public static final class Paths
     {
-        public static final String GET_FAVORITE_BUS_STOPS = "/get_favorite_bus_stops";
-        public static final String RESULT_FAVORITE_BUS_STOPS = "/result_favorite_bus_stops";
+        public static final String GET_FAVORITE_STOPS = "/get_favorite_stops";
+        public static final String RESULT_FAVORITE_STOPS = "/result_favorite_stops";
 
-        public static final String GET_BUS_STOP_DEPARTURES = "/get_bus_stop_departures";
-        public static final String RESULT_BUS_STOP_DEPARTURES = "/result_bus_stop_departures";
+        public static final String GET_DEPARTURES = "/get_departures";
+        public static final String RESULT_DEPARTURES = "/result_departures";
     }
 
     public static final class Messages
     {
-        public static Message getFavoriteBusStops(String nodeId)
+        public static Message getFavoriteStops(String nodeId)
         {
-            return new Message(nodeId, Paths.GET_FAVORITE_BUS_STOPS);
+            return new Message(nodeId, Paths.GET_FAVORITE_STOPS);
         }
 
-        public static Message resultFavoriteBusStops(String nodeId, BusStopList busStopList)
+        public static Message resultFavoriteStops(String nodeId, List<Stop> stops)
         {
-            return new Message(nodeId, Paths.RESULT_FAVORITE_BUS_STOPS, busStopList.toString());
+            return new Message(nodeId, Paths.RESULT_FAVORITE_STOPS, JsonUtils.toJson(stops));
         }
 
-        public static Message getBusStopDepartures(String nodeId, String busStopCode)
+        public static Message getDepartures(String nodeId, String stopCode)
         {
-            return new Message(nodeId, Paths.GET_BUS_STOP_DEPARTURES, busStopCode);
+            return new Message(nodeId, Paths.GET_DEPARTURES, stopCode);
         }
 
-        public static Message resultBusStopDepartures(String nodeId, List<Departure> departures)
+        public static Message resultDepartures(String nodeId, List<Departure> departures)
         {
-            return new Message(nodeId, Paths.RESULT_BUS_STOP_DEPARTURES, JsonUtils.toJson(departures));
+            return new Message(nodeId, Paths.RESULT_DEPARTURES, JsonUtils.toJson(departures));
         }
     }
 }
