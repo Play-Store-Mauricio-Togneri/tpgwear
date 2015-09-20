@@ -21,7 +21,7 @@ public abstract class BaseAdapter<T, V> extends ArrayAdapter<T>
         this.resourceId = resourceId;
     }
 
-    protected abstract void fillView(V viewHolder, T item, int position, View rowView);
+    protected abstract void fillView(V viewHolder, T item);
 
     protected abstract V getViewHolder(View view);
 
@@ -52,7 +52,7 @@ public abstract class BaseAdapter<T, V> extends ArrayAdapter<T>
 
         T item = getItem(position);
 
-        fillView(viewHolder, item, position, rowView);
+        fillView(viewHolder, item);
 
         return rowView;
     }

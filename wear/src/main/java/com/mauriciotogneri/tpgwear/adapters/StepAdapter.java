@@ -15,7 +15,7 @@ import java.util.Locale;
 
 public class StepAdapter extends BaseAdapter<Step, StepViewHolder>
 {
-    private long currentTimestamp = System.currentTimeMillis();
+    private final long currentTimestamp = System.currentTimeMillis();
 
     private static final SimpleDateFormat timestampFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.getDefault());
     private static final SimpleDateFormat stepFormatter = new SimpleDateFormat("HH:mm", Locale.getDefault());

@@ -21,7 +21,7 @@ public class FavoriteStopAdapter extends BaseAdapter<Stop, ViewHolder>
     }
 
     @Override
-    protected void fillView(ViewHolder viewHolder, Stop stop, int position, View rowView)
+    protected void fillView(ViewHolder viewHolder, Stop stop)
     {
         viewHolder.stopName.setText(stop.stopName);
 

@@ -14,7 +14,7 @@ public abstract class BaseView<UI extends BaseUiContainer> implements BaseViewIn
 {
     private View view;
     protected UI ui;
-    private Handler handler = new Handler(Looper.getMainLooper());
+    private final Handler handler = new Handler(Looper.getMainLooper());
 
     @Override
     public final View init(LayoutInflater inflater, ViewGroup container)
