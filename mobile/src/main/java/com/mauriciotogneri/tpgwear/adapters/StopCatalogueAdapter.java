@@ -36,11 +36,11 @@ public class StopCatalogueAdapter extends BaseAdapter<Stop, ViewHolder> implemen
 
         if (stop.favorite)
         {
-            viewHolder.isFavorite.setImageResource(android.R.drawable.star_on);
+            viewHolder.isFavorite.setImageResource(R.drawable.ic_star_on);
         }
         else
         {
-            viewHolder.isFavorite.setImageResource(android.R.drawable.star_off);
+            viewHolder.isFavorite.setImageResource(R.drawable.ic_star_off);
         }
     }
 
