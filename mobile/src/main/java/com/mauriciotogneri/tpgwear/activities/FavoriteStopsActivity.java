@@ -43,7 +43,16 @@ public class FavoriteStopsActivity extends BaseActivity<FavoriteStopsViewInterfa
     @Override
     public void onEditFavorites()
     {
-        toast("EDIT FAVORITES!");
+        view.toggleEdit();
+    }
+
+    @Override
+    public void onStopSelected(Stop stop)
+    {
+        Preferences preferences = Preferences.getInstance(this);
+        List<Stop> stops = preferences.removeFavoriteStop(stop);
+
+        view.displayData(stops);
     }
 
     @Override
@@ -51,6 +60,7 @@ public class FavoriteStopsActivity extends BaseActivity<FavoriteStopsViewInterfa
     {
         super.onResume();
 
+        view.disableEdit();
         displayStops();
     }
 

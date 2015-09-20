@@ -1,10 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView
-    android:id="@+id/stop_name"
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/row_clickable"
-    android:textColor="@color/font_color"
-    android:padding="15dp"
-    android:textSize="@dimen/font_size_row_stop"/>
+    android:gravity="center_vertical"
+    android:padding="15dp">
+
+    <ImageView
+        android:id="@+id/button_remove"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="15dp"
+        android:src="@drawable/ic_remove"/>
+
+    <TextView
+        android:id="@+id/stop_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/row_clickable"
+        android:textColor="@color/font_color"
+        android:textSize="@dimen/font_size_row_stop"/>
+
+</LinearLayout>

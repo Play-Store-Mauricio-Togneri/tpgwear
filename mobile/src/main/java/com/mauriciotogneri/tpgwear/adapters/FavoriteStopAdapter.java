@@ -2,6 +2,7 @@ package com.mauriciotogneri.tpgwear.adapters;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mauriciotogneri.common.api.tpg.json.Stop;
@@ -12,6 +13,8 @@ import java.util.ArrayList;
 
 public class FavoriteStopAdapter extends BaseAdapter<Stop, ViewHolder>
 {
+    private boolean editEnabled = false;
+
     public FavoriteStopAdapter(Context context)
     {
         super(context, R.layout.row_favorite_stop, new ArrayList<Stop>());
@@ -21,6 +24,16 @@ public class FavoriteStopAdapter extends BaseAdapter<Stop, ViewHolder>
     protected void fillView(ViewHolder viewHolder, Stop stop, int position, View rowView)
     {
         viewHolder.stopName.setText(stop.stopName);
+
+        if (editEnabled)
+        {
+            viewHolder.buttonRemove.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            viewHolder.buttonRemove.setVisibility(View.GONE);
+        }
+
     }
 
     @Override
@@ -28,12 +41,33 @@ public class FavoriteStopAdapter extends BaseAdapter<Stop, ViewHolder>
     {
         ViewHolder viewHolder = new ViewHolder();
         viewHolder.stopName = (TextView) view.findViewById(R.id.stop_name);
+        viewHolder.buttonRemove = (ImageView) view.findViewById(R.id.button_remove);
 
         return viewHolder;
+    }
+
+    public void toggleEdit()
+    {
+        editEnabled = !editEnabled;
+
+        notifyDataSetChanged();
+    }
+
+    public void disableEdit()
+    {
+        editEnabled = false;
+
+        notifyDataSetChanged();
+    }
+
+    public boolean isEditEnabled()
+    {
+        return editEnabled;
     }
 
     public static class ViewHolder
     {
         TextView stopName;
+        ImageView buttonRemove;
     }
 }

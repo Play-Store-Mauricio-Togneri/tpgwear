@@ -48,7 +48,7 @@ public class Preferences
         return sharedPreferences.getString(key, defaultValue);
     }
 
-    public synchronized void addFavoriteStop(Stop stop)
+    public synchronized List<Stop> addFavoriteStop(Stop stop)
     {
         List<Stop> stops = getFavoriteStops();
 
@@ -57,9 +57,11 @@ public class Preferences
             stops.add(stop);
             saveFavoriteStops(stops);
         }
+
+        return stops;
     }
 
-    public synchronized void removeFavoriteStop(Stop stop)
+    public synchronized List<Stop> removeFavoriteStop(Stop stop)
     {
         List<Stop> stops = getFavoriteStops();
 
@@ -68,6 +70,8 @@ public class Preferences
             stops.remove(stop);
             saveFavoriteStops(stops);
         }
+
+        return stops;
     }
 
     private synchronized void saveFavoriteStops(List<Stop> stops)

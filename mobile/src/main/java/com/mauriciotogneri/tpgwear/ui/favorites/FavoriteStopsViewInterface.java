@@ -10,5 +10,9 @@ public interface FavoriteStopsViewInterface<UI extends BaseUiContainer> extends 
 {
     void initialize(FavoriteStopsViewObserver observer);
 
+    void toggleEdit();
+
+    void disableEdit();
+
     void displayData(List<Stop> stops);
 }
