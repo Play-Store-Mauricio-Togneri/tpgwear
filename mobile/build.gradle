@@ -38,4 +38,6 @@ dependencies
 {
     compile project(':common')
     wearApp project(':wear')
+
+    compile 'com.android.support:design:23.0.1'
 }

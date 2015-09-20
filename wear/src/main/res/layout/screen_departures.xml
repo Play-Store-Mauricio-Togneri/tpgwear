@@ -43,7 +43,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/header_departures"
-                    android:textColor="@color/logo"
+                    android:textColor="@color/primary"
                     android:textSize="@dimen/font_size_normal"
                     android:textStyle="bold"/>
 

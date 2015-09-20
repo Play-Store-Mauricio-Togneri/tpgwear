@@ -1,4 +1,4 @@
-package com.mauriciotogneri.tpgwear;
+package com.mauriciotogneri.tpgwear.services;
 
 import android.app.Service;
 import android.content.Intent;
