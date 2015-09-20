@@ -50,6 +50,12 @@ public class FavoriteStopsActivity extends BaseActivity<FavoriteStopsViewInterfa
     }
 
     @Override
+    public void onEditFavorites()
+    {
+        toast("EDIT FAVORITES!");
+    }
+
+    @Override
     protected void onResume()
     {
         super.onResume();

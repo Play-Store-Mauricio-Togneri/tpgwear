@@ -80,6 +80,17 @@ public class Preferences
         }
     }
 
+    public synchronized void removeFavoriteStop(Stop stop)
+    {
+        List<Stop> stops = getFavoriteStops();
+
+        if (stops.contains(stop))
+        {
+            stops.remove(stop);
+            saveFavoriteStops(stops);
+        }
+    }
+
     private synchronized void saveFavoriteStops(List<Stop> stops)
     {
         save(KEY_FAVORITE_STOPS, JsonUtils.toJson(stops));

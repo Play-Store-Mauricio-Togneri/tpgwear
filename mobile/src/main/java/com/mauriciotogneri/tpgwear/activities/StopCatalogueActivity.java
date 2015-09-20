@@ -33,6 +33,7 @@ public class StopCatalogueActivity extends BaseActivity<StopCatalogueViewInterfa
             @Override
             public void onFailure()
             {
+                view.hideLoading();
                 view.toast("CONNECTION ERROR");
             }
         });
@@ -65,7 +66,24 @@ public class StopCatalogueActivity extends BaseActivity<StopCatalogueViewInterfa
     {
         stop.favorite = !stop.favorite;
 
+        Preferences preferences = Preferences.getInstance(this);
+
+        if (stop.favorite)
+        {
+            preferences.addFavoriteStop(stop);
+        }
+        else
+        {
+            preferences.removeFavoriteStop(stop);
+        }
+
         view.refreshData();
+    }
+
+    @Override
+    public void onSearchStop()
+    {
+        toast("SEARCH STOP!");
     }
 
     @Override

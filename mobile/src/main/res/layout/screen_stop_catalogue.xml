@@ -51,6 +51,13 @@
             android:divider="@color/horizontal_line"
             android:dividerHeight="0.5dp"/>
 
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"/>
+
     </RelativeLayout>
 
 </LinearLayout>

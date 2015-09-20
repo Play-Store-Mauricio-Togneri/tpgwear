@@ -1,9 +1,12 @@
 package com.mauriciotogneri.tpgwear.ui.catalogue;
 
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.mauriciotogneri.common.api.tpg.json.Stop;
 import com.mauriciotogneri.common.base.BaseUiContainer;
@@ -21,6 +24,18 @@ public class StopCatalogueView extends BaseView<UiContainer> implements StopCata
     @Override
     public void initialize(final StopCatalogueViewObserver observer)
     {
+        ui.list.setVisibility(View.GONE);
+        ui.progressBar.setVisibility(View.VISIBLE);
+
+        ui.buttonSearch.setOnClickListener(new OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                observer.onSearchStop();
+            }
+        });
+
         adapter = new StopCatalogueAdapter(getContext());
 
         ui.list.setAdapter(adapter);
@@ -38,6 +53,9 @@ public class StopCatalogueView extends BaseView<UiContainer> implements StopCata
     @Override
     public void displayData(List<Stop> stops)
     {
+        ui.list.setVisibility(View.VISIBLE);
+        ui.progressBar.setVisibility(View.GONE);
+
         adapter.setData(stops);
     }
 
@@ -45,6 +63,12 @@ public class StopCatalogueView extends BaseView<UiContainer> implements StopCata
     public void refreshData()
     {
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void hideLoading()
+    {
+        ui.progressBar.setVisibility(View.GONE);
     }
 
     @Override
@@ -62,12 +86,16 @@ public class StopCatalogueView extends BaseView<UiContainer> implements StopCata
     public static class UiContainer extends BaseUiContainer
     {
         private final ListView list;
+        private final TextView buttonSearch;
+        private final ProgressBar progressBar;
 
         public UiContainer(BaseView baseView)
         {
             super(baseView);
 
             this.list = (ListView) findViewById(R.id.list);
+            this.buttonSearch = (TextView) findViewById(R.id.button_search);
+            this.progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         }
     }
 }

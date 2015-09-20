@@ -7,4 +7,6 @@ public interface FavoriteStopsViewObserver
     void onStopSelected(Stop stop);
 
     void onAddFavorites();
+
+    void onEditFavorites();
 }

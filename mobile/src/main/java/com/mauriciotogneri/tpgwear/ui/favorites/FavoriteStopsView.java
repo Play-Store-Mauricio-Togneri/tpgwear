@@ -6,6 +6,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.mauriciotogneri.common.api.tpg.json.Stop;
 import com.mauriciotogneri.common.base.BaseUiContainer;
@@ -31,6 +32,15 @@ public class FavoriteStopsView extends BaseView<UiContainer> implements Favorite
             public void onClick(View view)
             {
                 observer.onAddFavorites();
+            }
+        });
+
+        ui.buttonEdit.setOnClickListener(new OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                observer.onEditFavorites();
             }
         });
 
@@ -68,6 +78,7 @@ public class FavoriteStopsView extends BaseView<UiContainer> implements Favorite
     {
         private final ListView list;
         private final FloatingActionButton buttonAdd;
+        private final TextView buttonEdit;
 
         public UiContainer(BaseView baseView)
         {
@@ -75,6 +86,7 @@ public class FavoriteStopsView extends BaseView<UiContainer> implements Favorite
 
             this.list = (ListView) findViewById(R.id.list);
             this.buttonAdd = (FloatingActionButton) findViewById(R.id.add_favorites);
+            this.buttonEdit = (TextView) findViewById(R.id.edit_favorites);
         }
     }
 }
