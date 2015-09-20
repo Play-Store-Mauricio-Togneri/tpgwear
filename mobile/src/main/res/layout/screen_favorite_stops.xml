@@ -32,7 +32,7 @@
             android:layout_height="match_parent"
             android:background="@drawable/toolbar_button"
             android:clickable="true"
-            android:drawableLeft="@android:drawable/ic_menu_edit"
+            android:drawableLeft="@drawable/ic_edit"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:textColor="@android:color/white"

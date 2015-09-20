@@ -9,6 +9,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -84,6 +85,8 @@ public class StopCatalogueView extends BaseView<UiContainer> implements StopCata
 
             if (searchEnabled)
             {
+                ui.buttonSearch.setImageResource(R.drawable.ic_cancel);
+
                 ui.toolbarSearch.setVisibility(View.VISIBLE);
                 ui.toolbarSearch.setText("");
                 ui.toolbarSearch.requestFocus();
@@ -95,6 +98,8 @@ public class StopCatalogueView extends BaseView<UiContainer> implements StopCata
             }
             else
             {
+                ui.buttonSearch.setImageResource(R.drawable.ic_search);
+
                 ui.toolbarSearch.setVisibility(View.GONE);
                 ui.toolbarSearch.setText("");
 
@@ -142,7 +147,7 @@ public class StopCatalogueView extends BaseView<UiContainer> implements StopCata
     public static class UiContainer extends BaseUiContainer
     {
         private final ListView list;
-        private final TextView buttonSearch;
+        private final ImageView buttonSearch;
         private final ProgressBar progressBar;
         private final TextView toolbarTitle;
         private final EditText toolbarSearch;
@@ -152,7 +157,7 @@ public class StopCatalogueView extends BaseView<UiContainer> implements StopCata
             super(baseView);
 
             this.list = (ListView) findViewById(R.id.list);
-            this.buttonSearch = (TextView) findViewById(R.id.button_search);
+            this.buttonSearch = (ImageView) findViewById(R.id.button_search);
             this.progressBar = (ProgressBar) findViewById(R.id.progress_bar);
             this.toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
             this.toolbarSearch = (EditText) findViewById(R.id.toolbar_search);
