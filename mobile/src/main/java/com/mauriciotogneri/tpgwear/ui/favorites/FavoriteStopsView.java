@@ -3,8 +3,6 @@ package com.mauriciotogneri.tpgwear.ui.favorites;
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -25,6 +23,7 @@ public class FavoriteStopsView extends BaseView<UiContainer> implements Favorite
     public void initialize(final FavoriteStopsViewObserver observer)
     {
         adapter = new FavoriteStopAdapter(getContext());
+        ui.list.setAdapter(adapter);
 
         ui.buttonAdd.setOnClickListener(new OnClickListener()
         {
@@ -41,17 +40,6 @@ public class FavoriteStopsView extends BaseView<UiContainer> implements Favorite
             public void onClick(View view)
             {
                 observer.onEditFavorites();
-            }
-        });
-
-        ui.list.setAdapter(adapter);
-        ui.list.setOnItemClickListener(new OnItemClickListener()
-        {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-            {
-                Stop stop = (Stop) parent.getItemAtPosition(position);
-                observer.onStopSelected(stop);
             }
         });
     }

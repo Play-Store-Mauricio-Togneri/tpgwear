@@ -83,7 +83,7 @@ public class StopCatalogueActivity extends BaseActivity<StopCatalogueViewInterfa
     @Override
     public void onSearchStop()
     {
-        toast("SEARCH STOP!");
+        view.toggleSearch();
     }
 
     @Override

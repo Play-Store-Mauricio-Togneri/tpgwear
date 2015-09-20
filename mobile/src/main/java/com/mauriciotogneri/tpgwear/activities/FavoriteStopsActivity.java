@@ -34,15 +34,6 @@ public class FavoriteStopsActivity extends BaseActivity<FavoriteStopsViewInterfa
     }
 
     @Override
-    public void onStopSelected(Stop stop)
-    {
-        view.toast("SELECTED!");
-
-        Preferences preferences = Preferences.getInstance(this);
-        preferences.increaseHitCount(stop.stopCode);
-    }
-
-    @Override
     public void onAddFavorites()
     {
         Intent intent = new Intent(this, StopCatalogueActivity.class);

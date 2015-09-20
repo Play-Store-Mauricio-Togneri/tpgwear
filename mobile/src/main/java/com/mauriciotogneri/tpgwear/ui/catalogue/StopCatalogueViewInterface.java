@@ -10,6 +10,8 @@ public interface StopCatalogueViewInterface<UI extends BaseUiContainer> extends 
 {
     void initialize(StopCatalogueViewObserver observer);
 
+    void toggleSearch();
+
     void displayData(List<Stop> stops);
 
     void refreshData();

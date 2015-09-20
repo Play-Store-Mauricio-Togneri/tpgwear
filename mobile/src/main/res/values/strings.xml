@@ -2,5 +2,6 @@
 <resources>
 
     <string name="toolbar_title_favorites">Favorite stops</string>
+    <string name="toolbar_title_catalogue">Search stops</string>
 
 </resources>

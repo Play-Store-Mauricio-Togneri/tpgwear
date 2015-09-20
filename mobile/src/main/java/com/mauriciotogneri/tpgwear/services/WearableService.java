@@ -86,6 +86,10 @@ public class WearableService extends Service implements WearableEvents
         {
             getTrip(nodeId, payload);
         }
+        else if (TextUtils.equals(path, Paths.INCREASE_STOP_HIT_COUNT))
+        {
+            increaseStopHitCount(payload);
+        }
     }
 
     private void getFavoriteStops(String nodeId)
@@ -149,6 +153,11 @@ public class WearableService extends Service implements WearableEvents
                 toast("HTTP CALL FAIL");
             }
         });
+    }
+
+    private void increaseStopHitCount(String stopCode)
+    {
+        preferences.increaseHitCount(stopCode);
     }
 
     private void toast(final String message)

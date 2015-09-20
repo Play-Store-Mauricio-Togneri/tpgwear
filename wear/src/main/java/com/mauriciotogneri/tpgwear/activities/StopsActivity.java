@@ -13,9 +13,9 @@ import com.mauriciotogneri.common.api.wearable.WearableConnectivity.OnDeviceNode
 import com.mauriciotogneri.common.api.wearable.WearableConnectivity.WearableEvents;
 import com.mauriciotogneri.common.base.BaseActivity;
 import com.mauriciotogneri.common.utils.JsonUtils;
+import com.mauriciotogneri.tpgwear.ui.stops.StopsView;
 import com.mauriciotogneri.tpgwear.ui.stops.StopsViewInterface;
 import com.mauriciotogneri.tpgwear.ui.stops.StopsViewObserver;
-import com.mauriciotogneri.tpgwear.ui.stops.StopsView;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -70,6 +70,8 @@ public class StopsActivity extends BaseActivity<StopsViewInterface> implements W
     @Override
     public void onStopSelected(Stop stop)
     {
+        connectivity.sendMessage(Messages.increaseStopHitCount(nodeId, stop.stopCode));
+
         Intent intent = DeparturesActivity.getInstance(this, nodeId, stop.stopCode);
         startActivity(intent);
     }

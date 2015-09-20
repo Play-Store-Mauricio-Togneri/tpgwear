@@ -19,6 +19,8 @@ public class WearableApi
 
         public static final String GET_TRIP = "/get_trip";
         public static final String RESULT_TRIP = "/result_trip";
+
+        public static final String INCREASE_STOP_HIT_COUNT = "/increase_stop_hint_count";
     }
 
     public static final class Messages
@@ -51,6 +53,11 @@ public class WearableApi
         public static Message resultTrip(String nodeId, List<Step> steps)
         {
             return new Message(nodeId, Paths.RESULT_TRIP, JsonUtils.toJson(steps));
+        }
+
+        public static Message increaseStopHitCount(String nodeId, String stopCode)
+        {
+            return new Message(nodeId, Paths.INCREASE_STOP_HIT_COUNT, stopCode);
         }
     }
 }

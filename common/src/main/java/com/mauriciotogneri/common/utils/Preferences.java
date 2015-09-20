@@ -37,25 +37,6 @@ public class Preferences
         return instance;
     }
 
-    // =============================================================================================
-
-    @SuppressLint("CommitPrefEdits")
-    public void clear()
-    {
-        sharedPreferences.edit().clear().commit();
-    }
-
-    private boolean contains(String key)
-    {
-        return sharedPreferences.contains(key);
-    }
-
-    @SuppressLint("CommitPrefEdits")
-    private void remove(String key)
-    {
-        sharedPreferences.edit().remove(key).commit();
-    }
-
     @SuppressLint("CommitPrefEdits")
     private void save(String key, String value)
     {
@@ -66,8 +47,6 @@ public class Preferences
     {
         return sharedPreferences.getString(key, defaultValue);
     }
-
-    // =============================================================================================
 
     public synchronized void addFavoriteStop(Stop stop)
     {

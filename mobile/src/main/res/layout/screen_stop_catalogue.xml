@@ -13,18 +13,34 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:text="@string/toolbar_title_favorites"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/font_size_toolbar_title"/>
-
-        <View
+        <FrameLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:layout_marginLeft="15dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/toolbar_title_catalogue"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/font_size_toolbar_title"/>
+
+            <EditText
+                android:id="@+id/toolbar_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@android:color/transparent"
+                android:inputType="text"
+                android:singleLine="true"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/font_size_toolbar_search"
+                android:visibility="gone"/>
+
+        </FrameLayout>
 
         <TextView
             android:id="@+id/button_search"
