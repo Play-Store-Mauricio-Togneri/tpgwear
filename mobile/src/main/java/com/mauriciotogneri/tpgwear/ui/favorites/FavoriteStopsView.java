@@ -1,4 +1,4 @@
-package com.mauriciotogneri.tpgwear.ui;
+package com.mauriciotogneri.tpgwear.ui.favorites;
 
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
@@ -11,19 +11,19 @@ import com.mauriciotogneri.common.api.tpg.json.Stop;
 import com.mauriciotogneri.common.base.BaseUiContainer;
 import com.mauriciotogneri.common.base.BaseView;
 import com.mauriciotogneri.tpgwear.R;
-import com.mauriciotogneri.tpgwear.adapters.StopAdapter;
-import com.mauriciotogneri.tpgwear.ui.FavoriteStopsView.UiContainer;
+import com.mauriciotogneri.tpgwear.adapters.FavoriteStopAdapter;
+import com.mauriciotogneri.tpgwear.ui.favorites.FavoriteStopsView.UiContainer;
 
 import java.util.List;
 
 public class FavoriteStopsView extends BaseView<UiContainer> implements FavoriteStopsViewInterface<UiContainer>
 {
-    private StopAdapter adapter;
+    private FavoriteStopAdapter adapter;
 
     @Override
     public void initialize(final FavoriteStopsViewObserver observer)
     {
-        adapter = new StopAdapter(getContext());
+        adapter = new FavoriteStopAdapter(getContext());
 
         ui.buttonAdd.setOnClickListener(new OnClickListener()
         {

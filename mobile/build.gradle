@@ -25,6 +25,12 @@ android
         }
     }
 
+    compileOptions
+    {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
     buildTypes
     {
         release
@@ -40,4 +46,5 @@ dependencies
     wearApp project(':wear')
 
     compile 'com.android.support:design:23.0.1'
+    compile 'ch.acra:acra:4.6.2'
 }

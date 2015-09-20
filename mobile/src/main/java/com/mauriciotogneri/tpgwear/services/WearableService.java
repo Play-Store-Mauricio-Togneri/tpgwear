@@ -23,7 +23,6 @@ import com.mauriciotogneri.common.api.wearable.WearableConnectivity;
 import com.mauriciotogneri.common.api.wearable.WearableConnectivity.WearableEvents;
 import com.mauriciotogneri.common.utils.Preferences;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class WearableService extends Service implements WearableEvents
@@ -36,7 +35,7 @@ public class WearableService extends Service implements WearableEvents
     {
         super.onCreate();
 
-        this.preferences = new Preferences(this);
+        this.preferences = Preferences.getInstance(this);
 
         this.connectivity = new WearableConnectivity(this, this);
         this.connectivity.connect();
@@ -91,48 +90,9 @@ public class WearableService extends Service implements WearableEvents
 
     private void getFavoriteStops(String nodeId)
     {
-        //List<Stop> stops = preferences.getFavoriteStops();
-        List<Stop> stops = getDefaultStopList();
+        List<Stop> stops = preferences.getFavoriteStops();
 
         connectivity.sendMessage(Messages.resultFavoriteStops(nodeId, stops));
-    }
-
-    // TODO: remove
-    private List<Stop> getDefaultStopList()
-    {
-        Stop stopCamilleMartin = new Stop();
-        stopCamilleMartin.stopCode = "CMAR";
-        stopCamilleMartin.stopName = "Camille-Martin";
-
-        Stop stopEpinettes = new Stop();
-        stopEpinettes.stopCode = "EPIN";
-        stopEpinettes.stopName = "Epinettes";
-
-        Stop stopMileant = new Stop();
-        stopMileant.stopCode = "MILE";
-        stopMileant.stopName = "Miléant";
-
-        Stop stopBelAir = new Stop();
-        stopBelAir.stopCode = "BAIR";
-        stopBelAir.stopName = "Bel-Air";
-
-        Stop stopBains = new Stop();
-        stopBains.stopCode = "BANS";
-        stopBains.stopName = "Bains";
-
-        Stop stopPalettes = new Stop();
-        stopPalettes.stopCode = "PALE";
-        stopPalettes.stopName = "Palettes";
-
-        List<Stop> stops = new ArrayList<>();
-        stops.add(stopCamilleMartin);
-        stops.add(stopEpinettes);
-        stops.add(stopMileant);
-        stops.add(stopBelAir);
-        stops.add(stopBains);
-        stops.add(stopPalettes);
-
-        return stops;
     }
 
     private void getDepartures(final String nodeId, final String stopCode)

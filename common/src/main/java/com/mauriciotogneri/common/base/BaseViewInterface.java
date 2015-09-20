@@ -18,6 +18,8 @@ public interface BaseViewInterface<UI extends BaseUiContainer>
 
     Context getContext();
 
+    void onMainThread(Runnable runnable);
+
     void toast(int messageId);
 
     void toast(String message);

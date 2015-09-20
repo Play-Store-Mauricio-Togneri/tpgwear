@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/row_clickable"
-    android:text="@string/toolbar_title_favorites"
     android:textColor="@color/font_color"
     android:padding="15dp"
     android:textSize="@dimen/font_size_row_stop"/>

@@ -1,4 +1,4 @@
-package com.mauriciotogneri.tpgwear.ui;
+package com.mauriciotogneri.tpgwear.ui.favorites;
 
 import com.mauriciotogneri.common.api.tpg.json.Stop;
 

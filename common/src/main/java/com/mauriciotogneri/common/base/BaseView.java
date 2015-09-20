@@ -1,7 +1,10 @@
 package com.mauriciotogneri.common.base;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.IdRes;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +14,7 @@ public abstract class BaseView<UI extends BaseUiContainer> implements BaseViewIn
 {
     private View view;
     protected UI ui;
+    private Handler handler = new Handler(Looper.getMainLooper());
 
     @Override
     public final View init(LayoutInflater inflater, ViewGroup container)
@@ -34,14 +38,29 @@ public abstract class BaseView<UI extends BaseUiContainer> implements BaseViewIn
     }
 
     @Override
+    public void onMainThread(Runnable runnable)
+    {
+        handler.post(runnable);
+    }
+
+    @Override
     public void toast(int messageId)
     {
         toast(getContext().getString(messageId));
     }
 
     @Override
-    public void toast(String message)
+    public void toast(final String message)
     {
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+        Log.e("ERROR", message);
+
+        onMainThread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

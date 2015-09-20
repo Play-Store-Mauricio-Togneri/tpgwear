@@ -5,6 +5,7 @@
     <color name="horizontal_line">#E0E0E0</color>
     <color name="item_selected">#F0F0F0</color>
     <color name="primary">#F0AA32</color>
-    <color name="primary_dark">#D18904</color>
+    <color name="primary_light">#F7BC57</color>
+    <color name="primary_dark">#E8970C</color>
 
 </resources>

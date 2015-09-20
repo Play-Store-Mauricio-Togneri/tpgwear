@@ -3,6 +3,8 @@ package com.mauriciotogneri.common.api.tpg;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
+import android.os.Handler;
+import android.os.Looper;
 
 import com.mauriciotogneri.common.R;
 import com.mauriciotogneri.common.api.tpg.json.GetDisruptions;
@@ -90,22 +92,49 @@ public class TpgApi
             {
                 try
                 {
-                    T getNextDepartures = JsonUtils.fromJson(result, clazz);
+                    final T getNextDepartures = JsonUtils.fromJson(result, clazz);
 
-                    onRequestResult.onSuccess(getNextDepartures);
+                    runOnMainThread(new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            onRequestResult.onSuccess(getNextDepartures);
+                        }
+                    });
                 }
                 catch (Exception e)
                 {
-                    onRequestResult.onFailure();
+                    runOnMainThread(new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            onRequestResult.onFailure();
+                        }
+                    });
                 }
             }
 
             @Override
             public void onFailure()
             {
-                onRequestResult.onFailure();
+                runOnMainThread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        onRequestResult.onFailure();
+                    }
+                });
             }
         });
+    }
+
+    private void runOnMainThread(Runnable runnable)
+    {
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(runnable);
     }
 
     private void getHttpResponse(String url, final OnHttpResult onHttpResult)

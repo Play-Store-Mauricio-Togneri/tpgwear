@@ -27,11 +27,12 @@
             android:layout_weight="1"/>
 
         <TextView
+            android:id="@+id/button_search"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:background="@drawable/toolbar_button"
             android:clickable="true"
-            android:drawableLeft="@android:drawable/ic_menu_edit"
+            android:drawableLeft="@android:drawable/ic_menu_search"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:textColor="@android:color/white"
@@ -49,14 +50,6 @@
             android:layout_height="match_parent"
             android:divider="@color/horizontal_line"
             android:dividerHeight="0.5dp"/>
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/add_favorites"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/plus"/>
 
     </RelativeLayout>
 
