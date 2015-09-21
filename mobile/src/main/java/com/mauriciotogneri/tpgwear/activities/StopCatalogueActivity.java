@@ -6,6 +6,7 @@ import com.mauriciotogneri.common.api.tpg.json.GetStops;
 import com.mauriciotogneri.common.api.tpg.json.Stop;
 import com.mauriciotogneri.common.base.BaseActivity;
 import com.mauriciotogneri.common.utils.Preferences;
+import com.mauriciotogneri.tpgwear.R;
 import com.mauriciotogneri.tpgwear.ui.catalogue.StopCatalogueView;
 import com.mauriciotogneri.tpgwear.ui.catalogue.StopCatalogueViewInterface;
 import com.mauriciotogneri.tpgwear.ui.catalogue.StopCatalogueViewObserver;
@@ -34,7 +35,7 @@ public class StopCatalogueActivity extends BaseActivity<StopCatalogueViewInterfa
             public void onFailure()
             {
                 view.hideLoading();
-                view.toast("CONNECTION ERROR");
+                view.toast(R.string.error_connection);
             }
         });
     }

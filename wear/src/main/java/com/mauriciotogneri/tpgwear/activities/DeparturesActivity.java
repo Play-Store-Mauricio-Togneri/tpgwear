@@ -14,6 +14,7 @@ import com.mauriciotogneri.common.api.wearable.WearableConnectivity;
 import com.mauriciotogneri.common.api.wearable.WearableConnectivity.WearableEvents;
 import com.mauriciotogneri.common.base.BaseActivity;
 import com.mauriciotogneri.common.utils.JsonUtils;
+import com.mauriciotogneri.tpgwear.R;
 import com.mauriciotogneri.tpgwear.ui.departures.DeparturesView;
 import com.mauriciotogneri.tpgwear.ui.departures.DeparturesViewInterface;
 import com.mauriciotogneri.tpgwear.ui.departures.DeparturesViewObserver;
@@ -89,7 +90,7 @@ public class DeparturesActivity extends BaseActivity<DeparturesViewInterface> im
     @Override
     public void onConnectedFail()
     {
-        toast("CLIENT DISCONNECTED");
+        view.toast(R.string.error_connection);
     }
 
     @Override

@@ -14,6 +14,7 @@ import com.mauriciotogneri.common.api.wearable.WearableConnectivity;
 import com.mauriciotogneri.common.api.wearable.WearableConnectivity.WearableEvents;
 import com.mauriciotogneri.common.base.BaseActivity;
 import com.mauriciotogneri.common.utils.JsonUtils;
+import com.mauriciotogneri.tpgwear.R;
 import com.mauriciotogneri.tpgwear.ui.trip.TripView;
 import com.mauriciotogneri.tpgwear.ui.trip.TripViewInterface;
 import com.mauriciotogneri.tpgwear.ui.trip.TripViewObserver;
@@ -107,7 +108,7 @@ public class TripActivity extends BaseActivity<TripViewInterface> implements Wea
     @Override
     public void onConnectedFail()
     {
-        toast("CLIENT DISCONNECTED");
+        view.toast(R.string.error_connection);
     }
 
     @Override

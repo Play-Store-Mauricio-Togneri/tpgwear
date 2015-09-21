@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.IdRes;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,28 +37,14 @@ public abstract class BaseView<UI extends BaseUiContainer> implements BaseViewIn
     }
 
     @Override
-    public void onMainThread(Runnable runnable)
+    public void toast(final int messageId)
     {
-        handler.post(runnable);
-    }
-
-    @Override
-    public void toast(int messageId)
-    {
-        toast(getContext().getString(messageId));
-    }
-
-    @Override
-    public void toast(final String message)
-    {
-        Log.e("ERROR", message);
-
-        onMainThread(new Runnable()
+        handler.post(new Runnable()
         {
             @Override
             public void run()
             {
-                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), messageId, Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -27,7 +27,6 @@ public class WearableConnectivity
 {
     private boolean isConnected = false;
     private final GoogleApiClient apiClient;
-
     private final ExecutorService threadPool = Executors.newFixedThreadPool(5);
 
     private static final int TIMEOUT = 1000 * 10; // in milliseconds

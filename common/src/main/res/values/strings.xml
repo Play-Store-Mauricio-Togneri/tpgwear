@@ -3,4 +3,6 @@
 
     <string name="app_name">TPG Wear</string>
 
+    <string name="error_connection">Connection error</string>
+
 </resources>

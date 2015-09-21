@@ -2,13 +2,9 @@ package com.mauriciotogneri.tpgwear.services;
 
 import android.app.Service;
 import android.content.Intent;
-import android.os.Handler;
 import android.os.IBinder;
-import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.mauriciotogneri.common.api.tpg.TpgApi;
 import com.mauriciotogneri.common.api.tpg.TpgApi.OnRequestResult;
@@ -64,7 +60,6 @@ public class WearableService extends Service implements WearableEvents
     @Override
     public void onConnectedFail()
     {
-        toast("CLIENT DISCONNECTED");
     }
 
     @Override
@@ -122,7 +117,6 @@ public class WearableService extends Service implements WearableEvents
                     @Override
                     public void onFailure()
                     {
-                        toast("HTTP CALL FAIL");
                     }
                 });
             }
@@ -130,7 +124,6 @@ public class WearableService extends Service implements WearableEvents
             @Override
             public void onFailure()
             {
-                toast("HTTP CALL FAIL");
             }
         });
     }
@@ -150,7 +143,6 @@ public class WearableService extends Service implements WearableEvents
             @Override
             public void onFailure()
             {
-                toast("HTTP CALL FAIL");
             }
         });
     }
@@ -158,20 +150,5 @@ public class WearableService extends Service implements WearableEvents
     private void increaseStopHitCount(String stopCode)
     {
         preferences.increaseHitCount(stopCode);
-    }
-
-    private void toast(final String message)
-    {
-        Log.e("ERROR", message);
-
-        Handler handler = new Handler(Looper.getMainLooper());
-        handler.post(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                Toast.makeText(WearableService.this, message, Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 }

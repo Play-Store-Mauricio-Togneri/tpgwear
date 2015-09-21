@@ -13,6 +13,7 @@ import com.mauriciotogneri.common.api.wearable.WearableConnectivity.OnDeviceNode
 import com.mauriciotogneri.common.api.wearable.WearableConnectivity.WearableEvents;
 import com.mauriciotogneri.common.base.BaseActivity;
 import com.mauriciotogneri.common.utils.JsonUtils;
+import com.mauriciotogneri.tpgwear.R;
 import com.mauriciotogneri.tpgwear.ui.stops.StopsView;
 import com.mauriciotogneri.tpgwear.ui.stops.StopsViewInterface;
 import com.mauriciotogneri.tpgwear.ui.stops.StopsViewObserver;
@@ -79,7 +80,7 @@ public class StopsActivity extends BaseActivity<StopsViewInterface> implements W
     @Override
     public void onConnectedFail()
     {
-        toast("CLIENT DISCONNECTED");
+        view.toast(R.string.error_connection);
     }
 
     @Override
