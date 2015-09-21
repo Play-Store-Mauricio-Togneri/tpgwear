@@ -19,12 +19,16 @@ import com.google.android.gms.wearable.Node;
 import com.google.android.gms.wearable.NodeApi;
 import com.google.android.gms.wearable.Wearable;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public class WearableConnectivity
 {
     private boolean isConnected = false;
     private final GoogleApiClient apiClient;
+
+    private final ExecutorService threadPool = Executors.newFixedThreadPool(5);
 
     private static final int TIMEOUT = 1000 * 10; // in milliseconds
 
@@ -69,7 +73,7 @@ public class WearableConnectivity
         {
             isConnected = true;
 
-            new Thread(new Runnable()
+            threadPool.execute(new Runnable()
             {
                 @Override
                 public void run()
@@ -113,21 +117,19 @@ public class WearableConnectivity
                                 }
                             }
                         });
-
-                        //pendingResult.await();
                     }
                     catch (Exception e)
                     {
                         wearableEvents.onConnectedFail();
                     }
                 }
-            }).start();
+            });
         }
     }
 
     public synchronized void sendMessage(final Message message, final ResultCallback<SendMessageResult> callback)
     {
-        new Thread(new Runnable()
+        threadPool.execute(new Runnable()
         {
             @Override
             public void run()
@@ -142,15 +144,13 @@ public class WearableConnectivity
                     {
                         pendingResult.setResultCallback(callback);
                     }
-
-                    //pendingResult.await();
                 }
                 catch (Exception e)
                 {
                     e.printStackTrace();
                 }
             }
-        }).start();
+        });
     }
 
     public synchronized void sendMessage(Message message)
@@ -160,7 +160,7 @@ public class WearableConnectivity
 
     public synchronized void getDefaultDeviceNode(final OnDeviceNodeDetected onDeviceNodeDetected)
     {
-        new Thread(new Runnable()
+        threadPool.execute(new Runnable()
         {
             @Override
             public void run()
@@ -185,7 +185,7 @@ public class WearableConnectivity
                     onDeviceNodeDetected.onDefaultDeviceNode(null);
                 }
             }
-        }).start();
+        });
     }
 
     public interface WearableEvents
