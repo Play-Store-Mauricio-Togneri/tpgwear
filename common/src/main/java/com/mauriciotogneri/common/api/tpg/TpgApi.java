@@ -29,7 +29,7 @@ public class TpgApi
 
     private static TpgApi instance = null;
 
-    private static final String BASE_URL = "http://rtpi.data.tpg.ch/v1/";
+    private static final String BASE_URL = "http://prod.ivtr-od.tpg.ch/v1/";
 
     private TpgApi(String appKey)
     {

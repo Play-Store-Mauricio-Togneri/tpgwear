@@ -53,11 +53,22 @@
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/add_favorites"
+            style="@style/floating_action_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:src="@drawable/plus"/>
+
+        <TextView
+            android:id="@+id/label_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/label_empty_list"
+            android:textColor="@color/font_color"
+            android:textSize="@dimen/font_size_toolbar_title"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 

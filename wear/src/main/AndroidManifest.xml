@@ -14,8 +14,7 @@
 
         <activity
             android:name=".activities.StopsActivity"
-            android:label="@string/app_name"
-            android:launchMode="singleInstance">
+            android:label="@string/app_name">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -26,13 +25,11 @@
 
         <activity
             android:name=".activities.DeparturesActivity"
-            android:label="@string/app_name"
-            android:launchMode="singleInstance"/>
+            android:label="@string/app_name"/>
 
         <activity
             android:name=".activities.TripActivity"
-            android:label="@string/app_name"
-            android:launchMode="singleInstance"/>
+            android:label="@string/app_name"/>
 
     </application>
 

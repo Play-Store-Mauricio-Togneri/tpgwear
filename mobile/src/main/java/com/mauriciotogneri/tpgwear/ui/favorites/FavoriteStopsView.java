@@ -74,7 +74,20 @@ public class FavoriteStopsView extends BaseView<UiContainer> implements Favorite
     @Override
     public void displayData(List<Stop> stops)
     {
-        adapter.setData(stops);
+        if (stops.isEmpty())
+        {
+            ui.labelEmpty.setVisibility(View.VISIBLE);
+            ui.list.setVisibility(View.GONE);
+
+            disableEdit();
+        }
+        else
+        {
+            ui.labelEmpty.setVisibility(View.GONE);
+            ui.list.setVisibility(View.VISIBLE);
+
+            adapter.setData(stops);
+        }
     }
 
     @Override
@@ -94,6 +107,7 @@ public class FavoriteStopsView extends BaseView<UiContainer> implements Favorite
         private final ListView list;
         private final FloatingActionButton buttonAdd;
         private final TextView buttonEdit;
+        private final TextView labelEmpty;
 
         public UiContainer(BaseView baseView)
         {
@@ -102,6 +116,7 @@ public class FavoriteStopsView extends BaseView<UiContainer> implements Favorite
             this.list = (ListView) findViewById(R.id.list);
             this.buttonAdd = (FloatingActionButton) findViewById(R.id.add_favorites);
             this.buttonEdit = (TextView) findViewById(R.id.edit_favorites);
+            this.labelEmpty = (TextView) findViewById(R.id.label_empty);
         }
     }
 }
