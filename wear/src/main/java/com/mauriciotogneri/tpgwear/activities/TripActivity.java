@@ -25,6 +25,7 @@ import java.util.List;
 public class TripActivity extends BaseActivity<TripViewInterface> implements WearableEvents, TripViewObserver
 {
     private WearableConnectivity connectivity;
+    private boolean listCreated = false;
 
     private static final String EXTRA_NODE_ID = "EXTRA_NODE_ID";
     private static final String EXTRA_DEPARTURE_CODE = "EXTRA_DEPARTURE_CODE";
@@ -67,8 +68,10 @@ public class TripActivity extends BaseActivity<TripViewInterface> implements Wea
     @Override
     public void onMessageReceived(Message message)
     {
-        if (TextUtils.equals(message.getPath(), Paths.RESULT_TRIP))
+        if ((TextUtils.equals(message.getPath(), Paths.RESULT_TRIP)) && (!listCreated))
         {
+            listCreated = true;
+
             Type type = new TypeToken<List<Step>>()
             {
             }.getType();

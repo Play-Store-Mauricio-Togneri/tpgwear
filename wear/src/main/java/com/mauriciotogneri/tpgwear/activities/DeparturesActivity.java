@@ -25,6 +25,7 @@ import java.util.List;
 public class DeparturesActivity extends BaseActivity<DeparturesViewInterface> implements WearableEvents, DeparturesViewObserver
 {
     private WearableConnectivity connectivity;
+    private boolean listCreated = false;
 
     private static final String EXTRA_NODE_ID = "EXTRA_NODE_ID";
     private static final String EXTRA_STOP_CODE = "EXTRA_STOP_CODE";
@@ -67,8 +68,10 @@ public class DeparturesActivity extends BaseActivity<DeparturesViewInterface> im
     @Override
     public void onMessageReceived(Message message)
     {
-        if (TextUtils.equals(message.getPath(), Paths.RESULT_DEPARTURES))
+        if ((TextUtils.equals(message.getPath(), Paths.RESULT_DEPARTURES)) && (!listCreated))
         {
+            listCreated = true;
+
             Type type = new TypeToken<List<Departure>>()
             {
             }.getType();
