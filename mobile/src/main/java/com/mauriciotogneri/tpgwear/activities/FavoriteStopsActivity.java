@@ -6,9 +6,9 @@ import com.mauriciotogneri.common.api.tpg.json.Stop;
 import com.mauriciotogneri.common.base.BaseActivity;
 import com.mauriciotogneri.common.utils.Preferences;
 import com.mauriciotogneri.tpgwear.services.WearableService;
-import com.mauriciotogneri.tpgwear.ui.favorites.FavoriteStopsView;
-import com.mauriciotogneri.tpgwear.ui.favorites.FavoriteStopsViewInterface;
-import com.mauriciotogneri.tpgwear.ui.favorites.FavoriteStopsViewObserver;
+import com.mauriciotogneri.tpgwear.views.favorites.FavoriteStopsView;
+import com.mauriciotogneri.tpgwear.views.favorites.FavoriteStopsViewInterface;
+import com.mauriciotogneri.tpgwear.views.favorites.FavoriteStopsViewObserver;
 
 import java.util.List;
 

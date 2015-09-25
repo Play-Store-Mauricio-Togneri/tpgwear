@@ -1,4 +1,4 @@
-package com.mauriciotogneri.tpgwear.ui.catalogue;
+package com.mauriciotogneri.tpgwear.views.catalogue;
 
 import com.mauriciotogneri.common.api.tpg.json.Stop;
 

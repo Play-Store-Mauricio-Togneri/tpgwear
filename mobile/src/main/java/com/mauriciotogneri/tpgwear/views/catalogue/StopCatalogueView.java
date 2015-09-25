@@ -1,4 +1,4 @@
-package com.mauriciotogneri.tpgwear.ui.catalogue;
+package com.mauriciotogneri.tpgwear.views.catalogue;
 
 import android.content.Context;
 import android.text.Editable;
@@ -19,7 +19,7 @@ import com.mauriciotogneri.common.base.BaseUiContainer;
 import com.mauriciotogneri.common.base.BaseView;
 import com.mauriciotogneri.tpgwear.R;
 import com.mauriciotogneri.tpgwear.adapters.StopCatalogueAdapter;
-import com.mauriciotogneri.tpgwear.ui.catalogue.StopCatalogueView.UiContainer;
+import com.mauriciotogneri.tpgwear.views.catalogue.StopCatalogueView.UiContainer;
 
 import java.util.List;
 

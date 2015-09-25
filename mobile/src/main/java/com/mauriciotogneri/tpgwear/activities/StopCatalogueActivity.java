@@ -7,9 +7,9 @@ import com.mauriciotogneri.common.api.tpg.json.Stop;
 import com.mauriciotogneri.common.base.BaseActivity;
 import com.mauriciotogneri.common.utils.Preferences;
 import com.mauriciotogneri.tpgwear.R;
-import com.mauriciotogneri.tpgwear.ui.catalogue.StopCatalogueView;
-import com.mauriciotogneri.tpgwear.ui.catalogue.StopCatalogueViewInterface;
-import com.mauriciotogneri.tpgwear.ui.catalogue.StopCatalogueViewObserver;
+import com.mauriciotogneri.tpgwear.views.catalogue.StopCatalogueView;
+import com.mauriciotogneri.tpgwear.views.catalogue.StopCatalogueViewInterface;
+import com.mauriciotogneri.tpgwear.views.catalogue.StopCatalogueViewObserver;
 
 import java.util.Collections;
 import java.util.Comparator;

@@ -14,9 +14,9 @@ import com.mauriciotogneri.common.api.wearable.WearableConnectivity.WearableEven
 import com.mauriciotogneri.common.base.BaseActivity;
 import com.mauriciotogneri.common.utils.JsonUtils;
 import com.mauriciotogneri.tpgwear.R;
-import com.mauriciotogneri.tpgwear.ui.stops.StopsView;
-import com.mauriciotogneri.tpgwear.ui.stops.StopsViewInterface;
-import com.mauriciotogneri.tpgwear.ui.stops.StopsViewObserver;
+import com.mauriciotogneri.tpgwear.views.stops.StopsView;
+import com.mauriciotogneri.tpgwear.views.stops.StopsViewInterface;
+import com.mauriciotogneri.tpgwear.views.stops.StopsViewObserver;
 
 import java.lang.reflect.Type;
 import java.util.List;

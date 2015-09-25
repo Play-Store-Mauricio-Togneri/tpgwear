@@ -46,5 +46,6 @@ dependencies
     wearApp project(':wear')
 
     compile 'com.android.support:design:23.0.1'
+
     compile 'ch.acra:acra:4.6.2'
 }

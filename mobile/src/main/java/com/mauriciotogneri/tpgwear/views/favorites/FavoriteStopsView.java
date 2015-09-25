@@ -1,4 +1,4 @@
-package com.mauriciotogneri.tpgwear.ui.favorites;
+package com.mauriciotogneri.tpgwear.views.favorites;
 
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
@@ -13,7 +13,7 @@ import com.mauriciotogneri.common.base.BaseUiContainer;
 import com.mauriciotogneri.common.base.BaseView;
 import com.mauriciotogneri.tpgwear.R;
 import com.mauriciotogneri.tpgwear.adapters.FavoriteStopAdapter;
-import com.mauriciotogneri.tpgwear.ui.favorites.FavoriteStopsView.UiContainer;
+import com.mauriciotogneri.tpgwear.views.favorites.FavoriteStopsView.UiContainer;
 
 import java.util.List;
 

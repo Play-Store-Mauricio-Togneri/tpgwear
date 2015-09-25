@@ -15,9 +15,9 @@ import com.mauriciotogneri.common.api.wearable.WearableConnectivity.WearableEven
 import com.mauriciotogneri.common.base.BaseActivity;
 import com.mauriciotogneri.common.utils.JsonUtils;
 import com.mauriciotogneri.tpgwear.R;
-import com.mauriciotogneri.tpgwear.ui.departures.DeparturesView;
-import com.mauriciotogneri.tpgwear.ui.departures.DeparturesViewInterface;
-import com.mauriciotogneri.tpgwear.ui.departures.DeparturesViewObserver;
+import com.mauriciotogneri.tpgwear.views.departures.DeparturesView;
+import com.mauriciotogneri.tpgwear.views.departures.DeparturesViewInterface;
+import com.mauriciotogneri.tpgwear.views.departures.DeparturesViewObserver;
 
 import java.lang.reflect.Type;
 import java.util.List;

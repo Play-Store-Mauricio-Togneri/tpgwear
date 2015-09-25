@@ -1,4 +1,4 @@
-package com.mauriciotogneri.tpgwear.ui.departures;
+package com.mauriciotogneri.tpgwear.views.stops;
 
 import android.support.wearable.view.WatchViewStub;
 import android.support.wearable.view.WatchViewStub.OnLayoutInflatedListener;
@@ -9,22 +9,22 @@ import android.support.wearable.view.WearableListView.ViewHolder;
 import android.view.View;
 import android.widget.ProgressBar;
 
-import com.mauriciotogneri.common.api.tpg.json.Departure;
+import com.mauriciotogneri.common.api.tpg.json.Stop;
 import com.mauriciotogneri.common.base.BaseUiContainer;
 import com.mauriciotogneri.common.base.BaseView;
 import com.mauriciotogneri.tpgwear.R;
-import com.mauriciotogneri.tpgwear.adapters.DepartureAdapter;
-import com.mauriciotogneri.tpgwear.adapters.DepartureAdapter.DepartureViewHolder;
-import com.mauriciotogneri.tpgwear.ui.departures.DeparturesView.UiContainer;
+import com.mauriciotogneri.tpgwear.adapters.StopAdapter;
+import com.mauriciotogneri.tpgwear.adapters.StopAdapter.StopViewHolder;
+import com.mauriciotogneri.tpgwear.views.stops.StopsView.UiContainer;
 
 import java.util.List;
 
-public class DeparturesView extends BaseView<UiContainer> implements DeparturesViewInterface<UiContainer>
+public class StopsView extends BaseView<UiContainer> implements StopsViewInterface<UiContainer>
 {
-    private DepartureAdapter adapter;
+    private StopAdapter adapter;
 
     @Override
-    public void initialize(final DeparturesViewObserver observer)
+    public void initialize(final StopsViewObserver observer)
     {
         ui.stub.setOnLayoutInflatedListener(new OnLayoutInflatedListener()
         {
@@ -38,12 +38,12 @@ public class DeparturesView extends BaseView<UiContainer> implements DeparturesV
         });
     }
 
-    private void onLoad(final DeparturesViewObserver observer)
+    private void onLoad(final StopsViewObserver observer)
     {
         ui.progressBar.setVisibility(View.VISIBLE);
         ui.content.setVisibility(View.GONE);
 
-        adapter = new DepartureAdapter(getContext());
+        adapter = new StopAdapter(getContext());
 
         ui.list.setAdapter(adapter);
         ui.list.addOnScrollListener(new OnScrollListener()
@@ -77,8 +77,8 @@ public class DeparturesView extends BaseView<UiContainer> implements DeparturesV
             @Override
             public void onClick(ViewHolder viewHolder)
             {
-                DepartureViewHolder departureViewHolder = (DepartureViewHolder) viewHolder;
-                observer.onDepartureSelected(departureViewHolder.get());
+                StopViewHolder stopViewHolder = (StopViewHolder) viewHolder;
+                observer.onStopSelected(stopViewHolder.get());
             }
 
             @Override
@@ -91,18 +91,18 @@ public class DeparturesView extends BaseView<UiContainer> implements DeparturesV
     }
 
     @Override
-    public void displayData(List<Departure> departures)
+    public void displayData(List<Stop> stops)
     {
         ui.progressBar.setVisibility(View.GONE);
         ui.content.setVisibility(View.VISIBLE);
 
-        adapter.setData(departures);
+        adapter.setData(stops);
     }
 
     @Override
     public int getViewId()
     {
-        return R.layout.stub_departure;
+        return R.layout.stub_stops;
     }
 
     @Override

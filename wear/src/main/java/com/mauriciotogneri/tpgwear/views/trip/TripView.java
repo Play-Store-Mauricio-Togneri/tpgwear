@@ -1,4 +1,4 @@
-package com.mauriciotogneri.tpgwear.ui.trip;
+package com.mauriciotogneri.tpgwear.views.trip;
 
 import android.support.wearable.view.WatchViewStub;
 import android.support.wearable.view.WatchViewStub.OnLayoutInflatedListener;
@@ -15,7 +15,7 @@ import com.mauriciotogneri.common.base.BaseView;
 import com.mauriciotogneri.tpgwear.R;
 import com.mauriciotogneri.tpgwear.adapters.StepAdapter;
 import com.mauriciotogneri.tpgwear.adapters.StepAdapter.StepViewHolder;
-import com.mauriciotogneri.tpgwear.ui.trip.TripView.UiContainer;
+import com.mauriciotogneri.tpgwear.views.trip.TripView.UiContainer;
 
 import java.util.List;
 
