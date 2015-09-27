@@ -1,7 +1,7 @@
 package com.mauriciotogneri.tpgwear.activities;
 
-import com.mauriciotogneri.common.api.tpg.TpgApi;
-import com.mauriciotogneri.common.api.tpg.TpgApi.OnRequestResult;
+import com.mauriciotogneri.tpgwear.api.TpgApi;
+import com.mauriciotogneri.tpgwear.api.TpgApi.OnRequestResult;
 import com.mauriciotogneri.common.api.tpg.json.GetStops;
 import com.mauriciotogneri.common.api.tpg.json.Stop;
 import com.mauriciotogneri.common.base.BaseActivity;

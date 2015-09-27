@@ -6,8 +6,8 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import com.mauriciotogneri.common.api.tpg.TpgApi;
-import com.mauriciotogneri.common.api.tpg.TpgApi.OnRequestResult;
+import com.mauriciotogneri.tpgwear.api.TpgApi;
+import com.mauriciotogneri.tpgwear.api.TpgApi.OnRequestResult;
 import com.mauriciotogneri.common.api.tpg.json.GetLinesColors;
 import com.mauriciotogneri.common.api.tpg.json.GetNextDepartures;
 import com.mauriciotogneri.common.api.tpg.json.GetThermometer;

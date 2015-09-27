@@ -3,7 +3,8 @@
     package="com.mauriciotogneri.tpgwear"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-feature android:name="android.hardware.type.watch"/>
+    <uses-feature
+        android:name="android.hardware.type.watch"/>
 
     <application
         android:allowBackup="true"

@@ -1,4 +1,4 @@
-package com.mauriciotogneri.common.api.tpg;
+package com.mauriciotogneri.tpgwear.api;
 
 import android.content.Context;
 import android.content.res.Resources;

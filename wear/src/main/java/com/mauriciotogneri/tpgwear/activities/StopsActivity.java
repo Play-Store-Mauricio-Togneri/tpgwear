@@ -1,6 +1,8 @@
 package com.mauriciotogneri.tpgwear.activities;
 
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.TextUtils;
 
 import com.google.gson.reflect.TypeToken;
@@ -19,6 +21,7 @@ import com.mauriciotogneri.tpgwear.views.stops.StopsViewInterface;
 import com.mauriciotogneri.tpgwear.views.stops.StopsViewObserver;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 public class StopsActivity extends BaseActivity<StopsViewInterface> implements WearableEvents, StopsViewObserver
@@ -47,9 +50,25 @@ public class StopsActivity extends BaseActivity<StopsViewInterface> implements W
             @Override
             public void onDefaultDeviceNode(String deviceNodeId)
             {
-                nodeId = deviceNodeId;
+                if (!TextUtils.isEmpty(deviceNodeId))
+                {
+                    nodeId = deviceNodeId;
 
-                connectivity.sendMessage(Messages.getFavoriteStops(nodeId));
+                    connectivity.sendMessage(Messages.getFavoriteStops(nodeId));
+                }
+                else
+                {
+                    Handler handler = new Handler(Looper.getMainLooper());
+                    handler.post(new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            view.displayData(new ArrayList<Stop>());
+                            view.toast(R.string.error_connection);
+                        }
+                    });
+                }
             }
         });
     }
