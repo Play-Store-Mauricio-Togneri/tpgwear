@@ -9,6 +9,10 @@ import java.util.List;
 
 public class WearableApi
 {
+    private WearableApi()
+    {
+    }
+
     public static final class Paths
     {
         public static final String GET_FAVORITE_STOPS = "/get_favorite_stops";

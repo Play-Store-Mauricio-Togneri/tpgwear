@@ -71,6 +71,18 @@ public class FavoriteStopsView extends BaseView<UiContainer> implements Favorite
         adapter.disableEdit();
     }
 
+    private void displayEdit(boolean display)
+    {
+        if (display)
+        {
+            ui.buttonEdit.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            ui.buttonEdit.setVisibility(View.GONE);
+        }
+    }
+
     @Override
     public void displayData(List<Stop> stops)
     {
@@ -80,6 +92,7 @@ public class FavoriteStopsView extends BaseView<UiContainer> implements Favorite
             ui.list.setVisibility(View.GONE);
 
             disableEdit();
+            displayEdit(false);
         }
         else
         {
@@ -87,6 +100,8 @@ public class FavoriteStopsView extends BaseView<UiContainer> implements Favorite
             ui.list.setVisibility(View.VISIBLE);
 
             adapter.setData(stops);
+
+            displayEdit(true);
         }
     }
 

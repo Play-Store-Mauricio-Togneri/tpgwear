@@ -6,8 +6,6 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import com.mauriciotogneri.tpgwear.api.TpgApi;
-import com.mauriciotogneri.tpgwear.api.TpgApi.OnRequestResult;
 import com.mauriciotogneri.common.api.tpg.json.GetLinesColors;
 import com.mauriciotogneri.common.api.tpg.json.GetNextDepartures;
 import com.mauriciotogneri.common.api.tpg.json.GetThermometer;
@@ -18,6 +16,8 @@ import com.mauriciotogneri.common.api.wearable.WearableApi.Paths;
 import com.mauriciotogneri.common.api.wearable.WearableConnectivity;
 import com.mauriciotogneri.common.api.wearable.WearableConnectivity.WearableEvents;
 import com.mauriciotogneri.common.utils.Preferences;
+import com.mauriciotogneri.tpgwear.api.TpgApi;
+import com.mauriciotogneri.tpgwear.api.TpgApi.OnRequestResult;
 
 import java.util.List;
 

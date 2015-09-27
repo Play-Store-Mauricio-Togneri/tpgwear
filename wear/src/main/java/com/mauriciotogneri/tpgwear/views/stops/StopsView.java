@@ -8,6 +8,7 @@ import android.support.wearable.view.WearableListView.OnScrollListener;
 import android.support.wearable.view.WearableListView.ViewHolder;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.mauriciotogneri.common.api.tpg.json.Stop;
 import com.mauriciotogneri.common.base.BaseUiContainer;
@@ -42,6 +43,7 @@ public class StopsView extends BaseView<UiContainer> implements StopsViewInterfa
     {
         ui.progressBar.setVisibility(View.VISIBLE);
         ui.content.setVisibility(View.GONE);
+        ui.emptyLabel.setVisibility(View.GONE);
 
         adapter = new StopAdapter(getContext());
 
@@ -97,6 +99,22 @@ public class StopsView extends BaseView<UiContainer> implements StopsViewInterfa
         ui.content.setVisibility(View.VISIBLE);
 
         adapter.setData(stops);
+
+        checkEmptyList(stops.isEmpty());
+    }
+
+    private void checkEmptyList(boolean isEmpty)
+    {
+        if (isEmpty)
+        {
+            ui.content.setVisibility(View.GONE);
+            ui.emptyLabel.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            ui.content.setVisibility(View.VISIBLE);
+            ui.emptyLabel.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -118,6 +136,7 @@ public class StopsView extends BaseView<UiContainer> implements StopsViewInterfa
         private ProgressBar progressBar;
         private WearableListView list;
         private View header;
+        private TextView emptyLabel;
 
         public UiContainer(BaseView baseView)
         {
@@ -132,6 +151,7 @@ public class StopsView extends BaseView<UiContainer> implements StopsViewInterfa
             this.progressBar = (ProgressBar) findViewById(R.id.progress_bar);
             this.list = (WearableListView) findViewById(R.id.list);
             this.header = findViewById(R.id.header);
+            this.emptyLabel = (TextView) findViewById(R.id.empty_label);
         }
     }
 }

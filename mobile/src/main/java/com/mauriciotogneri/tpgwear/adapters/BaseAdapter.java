@@ -10,7 +10,7 @@ import java.util.List;
 
 public abstract class BaseAdapter<T, V> extends ArrayAdapter<T>
 {
-    protected final LayoutInflater inflater;
+    private final LayoutInflater inflater;
     private final int resourceId;
 
     public BaseAdapter(Context context, int resourceId, List<T> list)
