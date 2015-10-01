@@ -1,15 +1,15 @@
-package com.mauriciotogneri.common.api.wearable;
+package com.mauriciotogneri.common.api.message;
 
-import com.mauriciotogneri.common.api.tpg.json.Departure;
-import com.mauriciotogneri.common.api.tpg.json.Step;
-import com.mauriciotogneri.common.api.tpg.json.Stop;
+import com.mauriciotogneri.common.api.tpg.Departure;
+import com.mauriciotogneri.common.api.tpg.Step;
+import com.mauriciotogneri.common.api.tpg.Stop;
 import com.mauriciotogneri.common.utils.JsonUtils;
 
 import java.util.List;
 
-public class WearableApi
+public class MessageApi
 {
-    private WearableApi()
+    private MessageApi()
     {
     }
 

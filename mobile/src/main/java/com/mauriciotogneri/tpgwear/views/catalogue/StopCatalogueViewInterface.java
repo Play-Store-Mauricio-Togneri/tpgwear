@@ -1,6 +1,6 @@
 package com.mauriciotogneri.tpgwear.views.catalogue;
 
-import com.mauriciotogneri.common.api.tpg.json.Stop;
+import com.mauriciotogneri.common.api.tpg.Stop;
 import com.mauriciotogneri.common.base.BaseUiContainer;
 import com.mauriciotogneri.common.base.BaseViewInterface;
 

@@ -1,4 +1,4 @@
-package com.mauriciotogneri.common.utils;
+package com.mauriciotogneri.tpgwear.utils;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -7,7 +7,8 @@ import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
 import com.google.gson.reflect.TypeToken;
-import com.mauriciotogneri.common.api.tpg.json.Stop;
+import com.mauriciotogneri.common.api.tpg.Stop;
+import com.mauriciotogneri.common.utils.JsonUtils;
 
 import java.lang.reflect.Type;
 import java.util.Collections;

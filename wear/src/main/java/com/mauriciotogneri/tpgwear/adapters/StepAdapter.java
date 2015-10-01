@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
-import com.mauriciotogneri.common.api.tpg.json.Step;
+import com.mauriciotogneri.common.api.tpg.Step;
 import com.mauriciotogneri.tpgwear.R;
 import com.mauriciotogneri.tpgwear.adapters.StepAdapter.StepViewHolder;
 

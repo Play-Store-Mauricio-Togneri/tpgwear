@@ -1,6 +1,6 @@
 package com.mauriciotogneri.tpgwear.views.trip;
 
-import com.mauriciotogneri.common.api.tpg.json.Step;
+import com.mauriciotogneri.common.api.tpg.Step;
 import com.mauriciotogneri.common.base.BaseUiContainer;
 import com.mauriciotogneri.common.base.BaseViewInterface;
 

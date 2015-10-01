@@ -6,12 +6,12 @@ import android.os.Bundle;
 import android.text.TextUtils;
 
 import com.google.gson.reflect.TypeToken;
-import com.mauriciotogneri.common.api.tpg.json.Departure;
-import com.mauriciotogneri.common.api.wearable.Message;
-import com.mauriciotogneri.common.api.wearable.WearableApi.Messages;
-import com.mauriciotogneri.common.api.wearable.WearableApi.Paths;
-import com.mauriciotogneri.common.api.wearable.WearableConnectivity;
-import com.mauriciotogneri.common.api.wearable.WearableConnectivity.WearableEvents;
+import com.mauriciotogneri.common.api.tpg.Departure;
+import com.mauriciotogneri.common.api.message.Message;
+import com.mauriciotogneri.common.api.message.MessageApi.Messages;
+import com.mauriciotogneri.common.api.message.MessageApi.Paths;
+import com.mauriciotogneri.tpgwear.wearable.WearableConnectivity;
+import com.mauriciotogneri.tpgwear.wearable.WearableConnectivity.WearableEvents;
 import com.mauriciotogneri.common.base.BaseActivity;
 import com.mauriciotogneri.common.utils.JsonUtils;
 import com.mauriciotogneri.tpgwear.R;

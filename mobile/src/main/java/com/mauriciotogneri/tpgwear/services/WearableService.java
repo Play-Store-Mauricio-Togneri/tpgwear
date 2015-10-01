@@ -1,73 +1,37 @@
 package com.mauriciotogneri.tpgwear.services;
 
-import android.app.Service;
-import android.content.Intent;
-import android.os.IBinder;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import com.mauriciotogneri.common.api.tpg.json.GetLinesColors;
-import com.mauriciotogneri.common.api.tpg.json.GetNextDepartures;
-import com.mauriciotogneri.common.api.tpg.json.GetThermometer;
-import com.mauriciotogneri.common.api.tpg.json.Stop;
-import com.mauriciotogneri.common.api.wearable.Message;
-import com.mauriciotogneri.common.api.wearable.WearableApi.Messages;
-import com.mauriciotogneri.common.api.wearable.WearableApi.Paths;
-import com.mauriciotogneri.common.api.wearable.WearableConnectivity;
-import com.mauriciotogneri.common.api.wearable.WearableConnectivity.WearableEvents;
-import com.mauriciotogneri.common.utils.Preferences;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.wearable.MessageEvent;
+import com.google.android.gms.wearable.Wearable;
+import com.google.android.gms.wearable.WearableListenerService;
+import com.mauriciotogneri.common.api.tpg.GetLinesColors;
+import com.mauriciotogneri.common.api.tpg.GetNextDepartures;
+import com.mauriciotogneri.common.api.tpg.GetThermometer;
+import com.mauriciotogneri.common.api.tpg.Stop;
+import com.mauriciotogneri.common.api.message.Message;
+import com.mauriciotogneri.common.api.message.MessageApi.Messages;
+import com.mauriciotogneri.common.api.message.MessageApi.Paths;
+import com.mauriciotogneri.common.utils.EncodingHelper;
+import com.mauriciotogneri.tpgwear.utils.Preferences;
 import com.mauriciotogneri.tpgwear.api.TpgApi;
 import com.mauriciotogneri.tpgwear.api.TpgApi.OnRequestResult;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
-public class WearableService extends Service implements WearableEvents
+public class WearableService extends WearableListenerService
 {
-    private WearableConnectivity connectivity;
-    private Preferences preferences;
+    private static final int TIMEOUT = 1000 * 10; // in milliseconds
 
     @Override
-    public void onCreate()
+    public void onMessageReceived(MessageEvent messageEvent)
     {
-        super.onCreate();
-
-        this.preferences = Preferences.getInstance(this);
-
-        this.connectivity = new WearableConnectivity(this, this);
-        this.connectivity.connect();
-    }
-
-    @Nullable
-    @Override
-    public IBinder onBind(Intent intent)
-    {
-        return null;
-    }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId)
-    {
-        super.onStartCommand(intent, flags, startId);
-
-        return START_STICKY;
-    }
-
-    @Override
-    public void onConnectedSuccess()
-    {
-    }
-
-    @Override
-    public void onConnectedFail()
-    {
-    }
-
-    @Override
-    public void onMessageReceived(Message message)
-    {
-        String nodeId = message.getNodeId();
-        String path = message.getPath();
-        String payload = message.getPayloadAsString();
+        String nodeId = messageEvent.getSourceNodeId();
+        String path = messageEvent.getPath();
+        String payload = EncodingHelper.getBytesAsString(messageEvent.getData());
 
         if (TextUtils.equals(path, Paths.GET_FAVORITE_STOPS))
         {
@@ -89,9 +53,10 @@ public class WearableService extends Service implements WearableEvents
 
     private void getFavoriteStops(String nodeId)
     {
+        Preferences preferences = Preferences.getInstance(this);
         List<Stop> stops = preferences.getFavoriteStops();
 
-        connectivity.sendMessage(Messages.resultFavoriteStops(nodeId, stops));
+        reply(Messages.resultFavoriteStops(nodeId, stops));
     }
 
     private void getDepartures(final String nodeId, final String stopCode)
@@ -111,7 +76,7 @@ public class WearableService extends Service implements WearableEvents
                         nextDepartures.setColors(linesColors);
                         nextDepartures.removeInvalidDepartures();
 
-                        connectivity.sendMessage(Messages.resultDepartures(nodeId, nextDepartures.departures));
+                        reply(Messages.resultDepartures(nodeId, nextDepartures.departures));
                     }
 
                     @Override
@@ -137,7 +102,7 @@ public class WearableService extends Service implements WearableEvents
             @Override
             public void onSuccess(GetThermometer trip)
             {
-                connectivity.sendMessage(Messages.resultTrip(nodeId, trip.steps));
+                reply(Messages.resultTrip(nodeId, trip.steps));
             }
 
             @Override
@@ -149,6 +114,27 @@ public class WearableService extends Service implements WearableEvents
 
     private void increaseStopHitCount(String stopCode)
     {
+        Preferences preferences = Preferences.getInstance(this);
         preferences.increaseHitCount(stopCode);
+    }
+
+    private void reply(final Message message)
+    {
+        new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                GoogleApiClient client = new GoogleApiClient.Builder(WearableService.this).addApi(Wearable.API).build();
+                ConnectionResult connectionResult = client.blockingConnect(TIMEOUT, TimeUnit.MILLISECONDS);
+
+                if (connectionResult.isSuccess())
+                {
+                    Wearable.MessageApi.sendMessage(client, message.getNodeId(), message.getPath(), message.getPayloadAsBytes());
+                }
+
+                client.disconnect();
+            }
+        }).start();
     }
 }

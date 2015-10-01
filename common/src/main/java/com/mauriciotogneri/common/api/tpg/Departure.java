@@ -1,4 +1,4 @@
-package com.mauriciotogneri.common.api.tpg.json;
+package com.mauriciotogneri.common.api.tpg;
 
 import android.text.TextUtils;
 

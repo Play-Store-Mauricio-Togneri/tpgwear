@@ -1,4 +1,4 @@
-package com.mauriciotogneri.common.api.tpg.json;
+package com.mauriciotogneri.common.api.tpg;
 
 import java.util.ArrayList;
 import java.util.Iterator;

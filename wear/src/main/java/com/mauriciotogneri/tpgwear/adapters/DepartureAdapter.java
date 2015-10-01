@@ -6,7 +6,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.view.View;
 import android.widget.TextView;
 
-import com.mauriciotogneri.common.api.tpg.json.Departure;
+import com.mauriciotogneri.common.api.tpg.Departure;
 import com.mauriciotogneri.tpgwear.R;
 import com.mauriciotogneri.tpgwear.adapters.DepartureAdapter.DepartureViewHolder;
 

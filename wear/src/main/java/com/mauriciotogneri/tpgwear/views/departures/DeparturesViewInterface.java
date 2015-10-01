@@ -1,6 +1,6 @@
 package com.mauriciotogneri.tpgwear.views.departures;
 
-import com.mauriciotogneri.common.api.tpg.json.Departure;
+import com.mauriciotogneri.common.api.tpg.Departure;
 import com.mauriciotogneri.common.base.BaseUiContainer;
 import com.mauriciotogneri.common.base.BaseViewInterface;
 

@@ -2,9 +2,9 @@ package com.mauriciotogneri.tpgwear.activities;
 
 import android.content.Intent;
 
-import com.mauriciotogneri.common.api.tpg.json.Stop;
+import com.mauriciotogneri.common.api.tpg.Stop;
 import com.mauriciotogneri.common.base.BaseActivity;
-import com.mauriciotogneri.common.utils.Preferences;
+import com.mauriciotogneri.tpgwear.utils.Preferences;
 import com.mauriciotogneri.tpgwear.services.WearableService;
 import com.mauriciotogneri.tpgwear.views.favorites.FavoriteStopsView;
 import com.mauriciotogneri.tpgwear.views.favorites.FavoriteStopsViewInterface;

@@ -7,11 +7,11 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.mauriciotogneri.common.R;
-import com.mauriciotogneri.common.api.tpg.json.GetDisruptions;
-import com.mauriciotogneri.common.api.tpg.json.GetLinesColors;
-import com.mauriciotogneri.common.api.tpg.json.GetNextDepartures;
-import com.mauriciotogneri.common.api.tpg.json.GetStops;
-import com.mauriciotogneri.common.api.tpg.json.GetThermometer;
+import com.mauriciotogneri.common.api.tpg.GetDisruptions;
+import com.mauriciotogneri.common.api.tpg.GetLinesColors;
+import com.mauriciotogneri.common.api.tpg.GetNextDepartures;
+import com.mauriciotogneri.common.api.tpg.GetStops;
+import com.mauriciotogneri.common.api.tpg.GetThermometer;
 import com.mauriciotogneri.common.utils.JsonUtils;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;

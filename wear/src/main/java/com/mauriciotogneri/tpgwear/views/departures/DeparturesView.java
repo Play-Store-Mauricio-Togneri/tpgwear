@@ -9,7 +9,7 @@ import android.support.wearable.view.WearableListView.ViewHolder;
 import android.view.View;
 import android.widget.ProgressBar;
 
-import com.mauriciotogneri.common.api.tpg.json.Departure;
+import com.mauriciotogneri.common.api.tpg.Departure;
 import com.mauriciotogneri.common.base.BaseUiContainer;
 import com.mauriciotogneri.common.base.BaseView;
 import com.mauriciotogneri.tpgwear.R;
