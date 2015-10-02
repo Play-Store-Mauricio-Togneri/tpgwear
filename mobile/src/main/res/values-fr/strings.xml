@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="toolbar_title_favorites">Arrêts favoris</string>
+    <string name="toolbar_title_catalogue">Rechercher arrêt</string>
+
+</resources>

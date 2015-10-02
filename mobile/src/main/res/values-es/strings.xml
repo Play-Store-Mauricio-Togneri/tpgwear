@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="toolbar_title_favorites">Paradas favoritas</string>
+    <string name="toolbar_title_catalogue">Buscar paradas</string>
+
+</resources>

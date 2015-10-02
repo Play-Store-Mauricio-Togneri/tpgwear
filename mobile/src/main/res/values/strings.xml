@@ -4,6 +4,4 @@
     <string name="toolbar_title_favorites">Favorite stops</string>
     <string name="toolbar_title_catalogue">Search stops</string>
 
-    <string name="label_empty_list">Empty list</string>
-
 </resources>

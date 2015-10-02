@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">TPG Wear</string>
+    <string name="error_connection">Erreur de connexion</string>
+    <string name="label_empty_list">Liste vide</string>
+
+</resources>

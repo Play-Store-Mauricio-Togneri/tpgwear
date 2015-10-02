@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="header_favorite_stops">PARADAS FAVORITAS</string>
+    <string name="header_departures">SALIDAS</string>
+    <string name="header_stops">PARADAS</string>
+
+</resources>

@@ -3,7 +3,6 @@
 
     <string name="header_favorite_stops">FAVORITE STOPS</string>
     <string name="header_departures">DEPARTURES</string>
-    <string name="header_trip">TRIP</string>
-    <string name="label_empty_list">Empty list</string>
+    <string name="header_stops">STOPS</string>
 
 </resources>
