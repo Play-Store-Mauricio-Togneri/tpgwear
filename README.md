@@ -20,7 +20,7 @@ Create a file in `common/src/main/res/xml/keys.xml` with the following content:
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_key">ee222fc0-5cfc-11e5-bcb3-0002a5d5c51b</string>
+    <string name="app_key">APP_KEY</string>
 </resources>
 ```
 
