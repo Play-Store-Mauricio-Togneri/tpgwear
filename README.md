@@ -1,8 +1,8 @@
 # TPG Wear
 
-The TPG Wear app allows you to quickly get live information about the next departures of a given stop. It comes with a companion mobile app where you can store your favorite stops that will be displayed in the main menu of the smartwatch app.
+The **TPG Wear** app allows you to quickly get live information about the next departures of a given stop. It comes with a companion mobile app where you can store your favorite stops that will be displayed in the main menu of the smartwatch app.
 
-The application uses the official TPG (Geneva Public Transport) API as source of data.
+The application uses the official **TPG** (_Geneva Public Transport_) API as source of data.
 
 # Configuration
 
@@ -23,5 +23,6 @@ Create a file in `common/src/main/res/xml/keys.xml` with the following content:
     <string name="app_key">ee222fc0-5cfc-11e5-bcb3-0002a5d5c51b</string>
 </resources>
 ```
+
 
 [![Get it on Google Play](http://mauriciotogneri.com/images/badge.png)](https://play.google.com/store/apps/details?id=com.mauriciotogneri.tpgwear)
