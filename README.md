@@ -24,5 +24,4 @@ Create a file in `common/src/main/res/xml/keys.xml` with the following content:
 </resources>
 ```
 
-
-[![Get it on Google Play](http://mauriciotogneri.com/images/badge.png)](https://play.google.com/store/apps/details?id=com.mauriciotogneri.tpgwear)
+[![Get it on Google Play](https://developer.android.com/images/brand/en_generic_rgb_wo_60.png)](https://play.google.com/store/apps/details?id=com.mauriciotogneri.tpgwear)
