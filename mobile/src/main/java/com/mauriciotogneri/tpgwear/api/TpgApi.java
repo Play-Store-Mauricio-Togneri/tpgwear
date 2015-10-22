@@ -6,7 +6,6 @@ import android.content.res.XmlResourceParser;
 import android.os.Handler;
 import android.os.Looper;
 
-import com.mauriciotogneri.common.R;
 import com.mauriciotogneri.common.api.tpg.GetDisruptions;
 import com.mauriciotogneri.common.api.tpg.GetLinesColors;
 import com.mauriciotogneri.common.api.tpg.GetNextDepartures;
@@ -191,7 +190,7 @@ public class TpgApi
 
     private static String getAppKey(Resources resources)
     {
-        XmlResourceParser xrp = resources.getXml(R.xml.keys);
+        XmlResourceParser xrp = resources.getXml(com.mauriciotogneri.tpgwear.R.xml.keys);
 
         try
         {

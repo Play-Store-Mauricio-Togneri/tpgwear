@@ -15,13 +15,6 @@ RELEASE_STORE_PASSWORD = ???
 RELEASE_STORE_FILE     = ???
 ```
 
-Create a file in `common/src/main/res/xml/keys.xml` with the following content:
-
-```xml
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_key">APP_KEY</string>
-</resources>
-```
+Add your **Application Key** to the file `mobile/src/main/res/xml/keys.xml`.
 
 [![Get it on Google Play](https://developer.android.com/images/brand/en_generic_rgb_wo_60.png)](https://play.google.com/store/apps/details?id=com.mauriciotogneri.tpgwear)
