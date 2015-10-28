@@ -8,4 +8,5 @@
 gradle.properties
 .idea
 *.iml
+/mobile/src/main/res/xml/keys.xml
 forward.sh
