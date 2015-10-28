@@ -7,10 +7,11 @@
         android:color="@android:color/transparent"/>
 
     <corners
-        android:radius="10dp"/>
+        android:radius="9dp"/>
 
     <stroke
         android:width="3dp"
+        android:antialias="true"
         android:color="#000000"/>
 
 </shape>

@@ -1,12 +1,13 @@
 package com.mauriciotogneri.tpgwear.activities;
 
+import com.mauriciotogneri.common.api.tpg.GetLinesColors;
 import com.mauriciotogneri.common.api.tpg.GetStops;
 import com.mauriciotogneri.common.api.tpg.Stop;
 import com.mauriciotogneri.common.base.BaseActivity;
-import com.mauriciotogneri.tpgwear.utils.Preferences;
 import com.mauriciotogneri.tpgwear.R;
 import com.mauriciotogneri.tpgwear.api.TpgApi;
 import com.mauriciotogneri.tpgwear.api.TpgApi.OnRequestResult;
+import com.mauriciotogneri.tpgwear.utils.Preferences;
 import com.mauriciotogneri.tpgwear.views.catalogue.StopCatalogueView;
 import com.mauriciotogneri.tpgwear.views.catalogue.StopCatalogueViewInterface;
 import com.mauriciotogneri.tpgwear.views.catalogue.StopCatalogueViewObserver;
@@ -22,13 +23,30 @@ public class StopCatalogueActivity extends BaseActivity<StopCatalogueViewInterfa
     {
         view.initialize(this);
 
-        TpgApi tpgApi = TpgApi.getInstance(this);
-        tpgApi.getStops(new OnRequestResult<GetStops>()
+        final TpgApi tpgApi = TpgApi.getInstance(this);
+
+        tpgApi.getLinesColors(new OnRequestResult<GetLinesColors>()
         {
             @Override
-            public void onSuccess(GetStops stops)
+            public void onSuccess(final GetLinesColors linesColors)
             {
-                onStopLoaded(stops.stops);
+                tpgApi.getStops(new OnRequestResult<GetStops>()
+                {
+                    @Override
+                    public void onSuccess(GetStops stops)
+                    {
+                        stops.setColors(linesColors);
+
+                        onStopLoaded(stops.stops);
+                    }
+
+                    @Override
+                    public void onFailure()
+                    {
+                        view.hideLoading();
+                        view.toast(R.string.error_connection);
+                    }
+                });
             }
 
             @Override

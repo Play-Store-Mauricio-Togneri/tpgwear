@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <dimen name="font_size_row_stop">22sp</dimen>
+    <dimen name="font_size_row_stop">20sp</dimen>
     <dimen name="font_size_toolbar_title">22sp</dimen>
     <dimen name="font_size_toolbar_search">20sp</dimen>
 

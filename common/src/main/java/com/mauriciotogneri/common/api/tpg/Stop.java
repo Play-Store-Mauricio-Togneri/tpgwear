@@ -1,5 +1,7 @@
 package com.mauriciotogneri.common.api.tpg;
 
+import android.text.TextUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -28,6 +30,42 @@ public class Stop
         Stop stop = (Stop) o;
 
         return Objects.equals(stopCode, stop.stopCode);
+    }
+
+    public List<Line> getLines()
+    {
+        List<Line> result = new ArrayList<>();
+
+        for (Line line : connections)
+        {
+            if (!containsLine(result, line))
+            {
+                result.add(line);
+            }
+        }
+
+        return result;
+    }
+
+    private boolean containsLine(List<Line> lines, Line line)
+    {
+        for (Line current : lines)
+        {
+            if (TextUtils.equals(current.lineCode, line.lineCode))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public void setColors(GetLinesColors linesColors)
+    {
+        for (Line line : connections)
+        {
+            line.color = linesColors.getColor(line.lineCode);
+        }
     }
 
     @Override

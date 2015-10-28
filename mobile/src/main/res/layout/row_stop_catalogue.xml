@@ -1,26 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/row_clickable"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:padding="15dp">
-
-    <TextView
-        android:id="@+id/stop_name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="@string/toolbar_title_favorites"
-        android:textColor="@color/font_color"
-        android:textSize="@dimen/font_size_row_stop"/>
+    android:padding="3dp">
 
     <ImageView
         android:id="@+id/is_favorite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
         android:src="@android:drawable/star_on"/>
+
+    <TextView
+        android:id="@+id/stop_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textColor="@color/font_color"
+        android:textSize="@dimen/font_size_row_stop"
+        tools:text="@string/toolbar_title_favorites"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical|right"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/line_1"
+                style="@style/bubble_line"
+                tools:text="11"/>
+
+            <TextView
+                android:id="@+id/line_3"
+                style="@style/bubble_line"
+                android:layout_marginLeft="3dp"
+                tools:text="22"/>
+
+            <TextView
+                android:id="@+id/line_5"
+                style="@style/bubble_line"
+                android:layout_marginLeft="3dp"
+                tools:text="33"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/line_2"
+                style="@style/bubble_line"
+                tools:text="44"/>
+
+            <TextView
+                android:id="@+id/line_4"
+                style="@style/bubble_line"
+                android:layout_marginLeft="3dp"
+                tools:text="55"/>
+
+            <TextView
+                android:id="@+id/line_6"
+                style="@style/bubble_line"
+                android:layout_marginLeft="3dp"
+                tools:text="66"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

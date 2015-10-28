@@ -20,6 +20,6 @@ public class GetLinesColors
             }
         }
 
-        return "#000000";
+        return "000000";
     }
 }
