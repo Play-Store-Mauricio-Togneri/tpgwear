@@ -17,4 +17,6 @@ RELEASE_STORE_FILE     = ???
 
 Add your **Application Key** to the file `mobile/src/main/res/xml/keys.xml`.
 
-[![Get it on Google Play](https://developer.android.com/images/brand/en_generic_rgb_wo_60.png)](https://play.google.com/store/apps/details?id=com.mauriciotogneri.tpgwear)
+<a href="https://play.google.com/store/apps/details?id=com.mauriciotogneri.tpgwear" target="_blank">
+	<img src="https://play.google.com/intl/en_us/badges/images/apps/en-play-badge.png" align="left" height="72" >
+</a>
